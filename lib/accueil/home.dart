@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:terapiya_center/accueil/video_popup.dart';
 import 'package:terapiya_center/auth/login.dart';
 import 'package:terapiya_center/auth/register.dart';
 import 'package:terapiya_center/composants/button_decoration.dart';
@@ -33,7 +34,7 @@ class Home extends StatelessWidget {
           children: [
             Center(
               child: Text(
-                "Bienvenue ! \nTerapiya Center c'est :",
+                "Bienvenue \n Chez Terapiya Center !",
                 textAlign: TextAlign.center,
                 style: GoogleFonts.montserrat(
                   fontSize: 26,
@@ -44,7 +45,7 @@ class Home extends StatelessWidget {
             const SizedBox(height: 20,),
 
             SizedBox(
-              height: 400,
+              height: 350,
               child: PageView(
                 controller: _pageController,
                 children: const [
@@ -81,35 +82,51 @@ class Home extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(height: 50),
+            const SizedBox(height: 45),
         
             Center(
               child: CustomButton(
                     text: "Se connecter", 
-                    bgColor: Color.fromARGB(255, 53, 172, 177),
+                    bgColor: const Color.fromARGB(255, 53, 172, 177),
                     txtColor: Colors.white,
-                    borderColor: Color.fromARGB(255, 53, 172, 177),
+                    borderColor: const Color.fromARGB(255, 53, 172, 177),
                     paddingHorizontal: 14,
                     fontSize: 16,
                     onPressed: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => Login()));
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => const Login()));
                     }
                   ),
             ),
-            SizedBox(height: 14),
+            const SizedBox(height: 15),
         
             Center(
               child: CustomButton(
                     text: "S'inscrire", 
                     bgColor: Colors.white,
-                    txtColor: Color.fromARGB(255, 53, 172, 177),
-                    borderColor: Color.fromARGB(255, 53, 172, 177),
+                    txtColor: const Color.fromARGB(255, 53, 172, 177),
+                    borderColor: const Color.fromARGB(255, 53, 172, 177),
                     onPressed: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => Register()));
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => const Register()));
                     }
                   ),
             ),
-            const SizedBox(height: 15),
+            const SizedBox(height: 30),
+
+            GestureDetector(
+              onTap: () {
+                  showVideoPopup(context, "assets/presentation.mp4");
+                },          
+
+              child: const Center(
+                child: Text(
+                  "🎥 Vidéo de présentation 🎥",
+                  style: TextStyle(
+                    fontSize: 13,
+                    color: Color.fromARGB(255, 53, 172, 177),
+                  ),
+                )
+              ),
+            ),
         
           ],
         ),

@@ -32,8 +32,8 @@ class SliderItem extends StatelessWidget {
             child: ClipOval(
               child: Image.asset(
                 image, 
-                width: 300,
-                height: 300,
+                width: 250,
+                height: 250,
                 fit: BoxFit.cover,
               ),
             ),
@@ -41,15 +41,18 @@ class SliderItem extends StatelessWidget {
         ),
         const SizedBox(height: 10),
 
-        Center(
-          child: Text(
-            text,
-            textAlign: TextAlign.center,
-            style: GoogleFonts.montserrat(
-              color: Colors.black, 
-              fontSize: fontSize, 
-              fontWeight: FontWeight.bold,
-              backgroundColor: Colors.white
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: Center(
+            child: Text(
+              text,
+              textAlign: TextAlign.center,
+              style: GoogleFonts.montserrat(
+                color: Colors.black, 
+                fontSize: fontSize, 
+                fontWeight: FontWeight.bold,
+                backgroundColor: Colors.white
+              ),
             ),
           ),
         ),
