@@ -2,27 +2,44 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:terapiya_center/composants/button_decoration.dart';
 
-class Hijama extends StatefulWidget {
-  const Hijama({super.key});
+class Auriculotherapie extends StatefulWidget {
+  const Auriculotherapie({super.key});
 
   @override
-  State<Hijama> createState() => _HijamaState();
+  State<Auriculotherapie> createState() => _AuriculotherapieState();
 }
 
-class _HijamaState extends State<Hijama> {
+class _AuriculotherapieState extends State<Auriculotherapie> {
   bool _isExpanded = false;
   bool _isExpanded2 = false;
   bool _isExpanded3 = false;
   bool _isExpanded4 = false;
   bool _isExpanded5 = false;
 
+  List<String> protocoles = [
+      "Cigarette",
+      "Drogue",
+      "Médicaments",
+      "Ballons",
+      "Chichas",
+      "Sucre",
+      "Satiété",
+      "Alcool",
+      "Stress",
+      "Anxiété",
+      "Dépression",
+      "Insomnie",
+      "Allergie"
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('HIJAMA', style: TextStyle(fontSize: 15),),
+        title: const Text('AURICULOTHÉRAPIE LASER', style: TextStyle(fontSize: 15),),
         centerTitle: true,
       ),
+
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -30,7 +47,7 @@ class _HijamaState extends State<Hijama> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Text(
-                "UNE THÉRAPIE NATURELLE POUR VOTRE BIEN-ÊTRE",
+                "LA THÉRAPIE QUI VA VOUS SURPRENDRE",
                 style: GoogleFonts.montserrat(
                   color: const Color.fromARGB(255, 53, 172, 177),
                   fontSize: 24,
@@ -43,13 +60,13 @@ class _HijamaState extends State<Hijama> {
             const Padding(
               padding: EdgeInsets.symmetric(horizontal: 20),
               child: Text(
-                "La hijama, ou thérapie par ventouses, est une pratique ancestrale utilisée pour soulager les douleurs musculaires, améliorer la circulation sanguine et favoriser l’élimination des toxines. En appliquant des ventouses sur des points stratégiques du corps, cette méthode stimule la régénération cellulaire et aide à rééquilibrer l’énergie du corps. Simple, naturelle et efficace, la hijama est idéale pour ceux qui recherchent une solution alternative et complémentaire pour améliorer leur santé et leur bien-être au quotidien.",
+                "L'auriculothérapie laser est une approche non invasive qui utilise des faisceaux laser doux pour stimuler des points spécifiques de l'oreille, afin de traiter divers troubles comme le stress, la douleur, ou encore les addictions, telles que le sevrage tabagique. Grâce à sa précision et son efficacité, cette méthode agit directement sur le système nerveux pour rétablir l'équilibre du corps et favoriser la détente. Sans aiguilles et sans douleur, l'auriculothérapie laser est une solution naturelle idéale pour ceux qui recherchent un traitement doux et ciblé.",
                 textAlign: TextAlign.center,
               ),
             ),
             const SizedBox(height: 20),
 
-            Image.asset('assets/hijama.jpg'),
+            Image.asset('assets/auriculotherapie.jpg'),
             const SizedBox(height: 30,),
 
             Container(
@@ -83,7 +100,7 @@ class _HijamaState extends State<Hijama> {
                 ),
                 child: ExpansionTile(
                   title: Text(
-                    "Comment fonctionne la hijama ?",
+                    "Comment fonctionne l'auriculothérapie laser ?",
                     style: GoogleFonts.montserrat(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
@@ -102,7 +119,7 @@ class _HijamaState extends State<Hijama> {
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                       child: Text(
-                        "La hijama consiste à poser des ventouses sur des points spécifiques du corps. Elles créent une aspiration qui stimule la circulation sanguine, détoxifie et soulage les douleurs musculaires.",
+                        "L'auriculothérapie laser stimule des points spécifiques sur l'oreille en utilisant un faisceau laser de faible intensité. Ces points, reliés à différentes fonctions corporelles, sont activés pour favoriser un rééquilibrage énergétique, soulager la douleur, réduire le stress et aider à traiter certaines dépendances comme le tabagisme.",
                         textAlign: TextAlign.center,
                       ),
                     )
@@ -123,7 +140,7 @@ class _HijamaState extends State<Hijama> {
                 ),
                 child: ExpansionTile(
                   title: Text(
-                    "La hijama peut-elle être utilisée pour traiter des douleurs chroniques ?",
+                    "Est-ce que l'auriculothérapie laser est douleureuse ?",
                     style: GoogleFonts.montserrat(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
@@ -142,7 +159,7 @@ class _HijamaState extends State<Hijama> {
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                       child: Text(
-                        "Oui, la hijama est particulièrement efficace pour soulager les douleurs chroniques comme les douleurs lombaires, les maux de tête et les douleurs articulaires.",
+                        "Non, l'auriculothérapie laser est totalement indolore. Contrairement à l'acupuncture traditionnelle, cette méthode utilise un faisceau laser doux, sans aiguilles, ce qui la rend totalement non invasive et agréable. Vous pourriez ressentir une légère chaleur, mais aucune douleur.",
                         textAlign: TextAlign.center,
                       ),
                     )
@@ -163,7 +180,7 @@ class _HijamaState extends State<Hijama> {
                 ),
                 child: ExpansionTile(
                   title: Text(
-                    "Combien de temps dur une séance de hijama ?",
+                    "Est-ce que cette thérapie est sûre ?",
                     style: GoogleFonts.montserrat(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
@@ -182,7 +199,7 @@ class _HijamaState extends State<Hijama> {
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                       child: Text(
-                        "Une séance dure généralement entre 20 et 40 minutes, selon la zone traitée et les besoins spécifiques du patient.",
+                        "Oui, l'auriculothérapie laser est une méthode totalement sûre. En stimulant les terminaisons nerveuses situées sur le pavillon de l'oreille, nous activons un processus d'auto guérison, ce qui permet au corps de se soigner lui-même. Ce qui fait de cette thérapie, une thérapie très sûre",
                         textAlign: TextAlign.center,
                       ),
                     )
@@ -199,11 +216,11 @@ class _HijamaState extends State<Hijama> {
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(8),
-                  border: Border.all(color: const Color.fromARGB(255, 53, 172, 177), width: 2)
+                  border: Border.all(color: const Color.fromARGB(255, 53, 172, 177), width: 2),
                 ),
                 child: ExpansionTile(
                   title: Text(
-                    "Est-ce que la hijama peut aider à réduire le stress et l'anxiété ?",
+                    "L'auriculothérapie laser peut-elle traiter d'autres problèmes que le tabac ?",
                     style: GoogleFonts.montserrat(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
@@ -218,20 +235,35 @@ class _HijamaState extends State<Hijama> {
                       _isExpanded4 = expanded;
                     });
                   },
-        
-                  children: const [
-                    Padding(
+                  children: [
+                    const Padding(
                       padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                       child: Text(
-                        "Oui, la hijama stimule la production d'endorphines et aide à libérer les tensions, ce qui peut réduire considérablement le stress et l'anxiété.",
+                        "Oui, cette méthode peut traiter une large gamme de problèmes. Dans notre centre, nous vous proposons les protocoles suivants :",
                         textAlign: TextAlign.center,
                       ),
-                    )
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: protocoles.map((protocole) {
+                          return Row(
+                            children: [
+                              const Icon(Icons.circle, size: 8, color: Colors.black), 
+                              const SizedBox(width: 8),
+                              Text(protocole),
+                            ],
+                          );
+                        }).toList(),
+                      ),
+                    ),
                   ],
                 ),
               ),
             ),
-            const SizedBox(height: 5,),
+            const SizedBox(height: 5),
+
         
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -244,7 +276,7 @@ class _HijamaState extends State<Hijama> {
                 ),
                 child: ExpansionTile(
                   title: Text(
-                    "Ques sont les bénéfics imméiats après une séance de hijama ?",
+                    "Y a-t-il des effets secondaires ?",
                     style: GoogleFonts.montserrat(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
@@ -264,7 +296,48 @@ class _HijamaState extends State<Hijama> {
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                       child: Text(
-                        "Les bénéfices immédiats peuvent inclure une sensation de détente, de légèreté et une réduction des douleurs ou tensions musculaires.",
+                        "Non, les effets secondaires sont extrêmement rares. Vous pouvez parfois ressentir une légère sensation de chaleur ou de picotement au niveau de l'oreille, mais cela disparaît instantanément. Nous utilisons un laser doux/froid biostimulant qui est complètement indolore et sans effets secondaires",
+                        textAlign: TextAlign.center,
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            ),
+            const SizedBox(height: 20,),
+
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Container(
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(8),
+                  border: Border.all(color: const Color.fromARGB(255, 53, 172, 177), width: 2)
+                ),
+                child: ExpansionTile(
+                  title: Text(
+                    "Après combien de temps les résultats aparaissent ?",
+                    style: GoogleFonts.montserrat(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  trailing: Icon(
+                    _isExpanded5 ? Icons.remove : Icons.add,
+                    color: Colors.black,
+                  ),
+                  onExpansionChanged: (expanded) {
+                    setState(() {
+                      _isExpanded5 = expanded;
+                    });
+                  },
+        
+                  children: const [
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                      child: Text(
+                        "En ce qui concerne les addictions, le résultat est instantané, une seule suffit à vous sevrer complètement de votre addiction. Pour les troubles psychiques il faut, en moyenne, 3 séances. Cependant, des améliorations peuvent être perçues dès la première séance ",
                         textAlign: TextAlign.center,
                       ),
                     )
@@ -293,7 +366,9 @@ class _HijamaState extends State<Hijama> {
               ),
             ),
 
-            Image.asset("assets/hijamaprix.jpg"),
+            Image.asset("assets/auriculotherapieprix.jpg"),
+
+            Image.asset("assets/auriculotherapieprix2.jpg"),
             const SizedBox(height: 40,),
 
             CustomButton(

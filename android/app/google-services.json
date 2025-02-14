@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "731330200988",
-    "project_id": "terapiya-8b8ff",
-    "storage_bucket": "terapiya-8b8ff.firebasestorage.app"
+    "project_number": "15582756414",
+    "project_id": "terapiyacenter-b09dc",
+    "storage_bucket": "terapiyacenter-b09dc.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:731330200988:android:03630d4f3f77d61de27459",
+        "mobilesdk_app_id": "1:15582756414:android:ead61d61cfa8acbdff9b6f",
         "android_client_info": {
           "package_name": "com.example.terapiya_center"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyCf5tXcaHhoR5EO5iLBvv0Kfm1UQQ2Cq5Y"
+          "current_key": "AIzaSyBilMdAC96_4BCiW9aHIglZF33a_W3Mwo4"
         }
       ],
       "services": {

@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:terapiya_center/composants/button_decoration.dart';
 
-class Hijama extends StatefulWidget {
-  const Hijama({super.key});
+class Detatouage extends StatefulWidget {
+  const Detatouage({super.key});
 
   @override
-  State<Hijama> createState() => _HijamaState();
+  State<Detatouage> createState() => _DetatouageState();
 }
 
-class _HijamaState extends State<Hijama> {
+class _DetatouageState extends State<Detatouage> {
   bool _isExpanded = false;
   bool _isExpanded2 = false;
   bool _isExpanded3 = false;
@@ -20,9 +20,10 @@ class _HijamaState extends State<Hijama> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('HIJAMA', style: TextStyle(fontSize: 15),),
+        title: const Text('DÉTATOUAGE LASER', style: TextStyle(fontSize: 15),),
         centerTitle: true,
       ),
+
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -30,7 +31,7 @@ class _HijamaState extends State<Hijama> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Text(
-                "UNE THÉRAPIE NATURELLE POUR VOTRE BIEN-ÊTRE",
+                "LA SOLUTION SIMPLE ET EFFICACE POUR VOS TATOUAGES",
                 style: GoogleFonts.montserrat(
                   color: const Color.fromARGB(255, 53, 172, 177),
                   fontSize: 24,
@@ -43,13 +44,13 @@ class _HijamaState extends State<Hijama> {
             const Padding(
               padding: EdgeInsets.symmetric(horizontal: 20),
               child: Text(
-                "La hijama, ou thérapie par ventouses, est une pratique ancestrale utilisée pour soulager les douleurs musculaires, améliorer la circulation sanguine et favoriser l’élimination des toxines. En appliquant des ventouses sur des points stratégiques du corps, cette méthode stimule la régénération cellulaire et aide à rééquilibrer l’énergie du corps. Simple, naturelle et efficace, la hijama est idéale pour ceux qui recherchent une solution alternative et complémentaire pour améliorer leur santé et leur bien-être au quotidien.",
+                "Le détatouage laser est la méthode la plus moderne et efficace pour supprimer un tatouage de manière sûre et précise. Grâce à la technologie avancée des lasers, les pigments d’encre sont fragmentés et éliminés naturellement par le corps, sans endommager la peau environnante. Que vous souhaitiez enlever un tatouage indésirable ou corriger un ancien dessin, le détatouage laser offre une solution rapide, avec un minimum de douleur et de cicatrices. Notre équipe d’experts vous accompagne tout au long du processus pour vous garantir des résultats optimaux et une peau saine.",
                 textAlign: TextAlign.center,
               ),
             ),
             const SizedBox(height: 20),
 
-            Image.asset('assets/hijama.jpg'),
+            Image.asset('assets/detatouage.jpg'),
             const SizedBox(height: 30,),
 
             Container(
@@ -83,7 +84,7 @@ class _HijamaState extends State<Hijama> {
                 ),
                 child: ExpansionTile(
                   title: Text(
-                    "Comment fonctionne la hijama ?",
+                    "Comment fonctionne le détatouage laser ?",
                     style: GoogleFonts.montserrat(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
@@ -102,7 +103,7 @@ class _HijamaState extends State<Hijama> {
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                       child: Text(
-                        "La hijama consiste à poser des ventouses sur des points spécifiques du corps. Elles créent une aspiration qui stimule la circulation sanguine, détoxifie et soulage les douleurs musculaires.",
+                        "Le laser cible les pigments de l'encre du tatouage et les décompose en petites particules, qui sont ensuite éliminées naturellement par le corps.",
                         textAlign: TextAlign.center,
                       ),
                     )
@@ -123,7 +124,7 @@ class _HijamaState extends State<Hijama> {
                 ),
                 child: ExpansionTile(
                   title: Text(
-                    "La hijama peut-elle être utilisée pour traiter des douleurs chroniques ?",
+                    "Est-ce que le étatouage au laser est douleureux ?",
                     style: GoogleFonts.montserrat(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
@@ -142,7 +143,7 @@ class _HijamaState extends State<Hijama> {
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                       child: Text(
-                        "Oui, la hijama est particulièrement efficace pour soulager les douleurs chroniques comme les douleurs lombaires, les maux de tête et les douleurs articulaires.",
+                        "La douleur est généralement supportable, ressentie comme de petits picotements. Des crèmes anesthésiantes peuvent être utilisées pour minimiser l'inconfort.",
                         textAlign: TextAlign.center,
                       ),
                     )
@@ -163,7 +164,7 @@ class _HijamaState extends State<Hijama> {
                 ),
                 child: ExpansionTile(
                   title: Text(
-                    "Combien de temps dur une séance de hijama ?",
+                    "Combien de séances sont nécessaires pour enlever un tatouage ?",
                     style: GoogleFonts.montserrat(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
@@ -182,7 +183,7 @@ class _HijamaState extends State<Hijama> {
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                       child: Text(
-                        "Une séance dure généralement entre 20 et 40 minutes, selon la zone traitée et les besoins spécifiques du patient.",
+                        "Le nombre de séances varie en fonction de la taille, de la couleur et de l'âge du tatouage, généralement entre 4 et 8 séances, espacées de 6 à 8 semaines.",
                         textAlign: TextAlign.center,
                       ),
                     )
@@ -203,7 +204,48 @@ class _HijamaState extends State<Hijama> {
                 ),
                 child: ExpansionTile(
                   title: Text(
-                    "Est-ce que la hijama peut aider à réduire le stress et l'anxiété ?",
+                    "Y a-t-il des risques de cicarices ?",
+                    style: GoogleFonts.montserrat(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  trailing: Icon(
+                    _isExpanded3 ? Icons.remove : Icons.add,
+                    color: Colors.black,
+                  ),
+                  onExpansionChanged: (expanded) {
+                    setState(() {
+                      _isExpanded3 = expanded;
+                    });
+                  },
+                  children: const [
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                      child: Text(
+                        "Les risques de cicatrices sont faibles si les instructions post-traitement sont suivies correctement. La peau peut légèrement rougir ou gonfler après la séance, mais cela disparaît rapidement.",
+                        textAlign: TextAlign.center,
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            ),
+            const SizedBox(height: 5,),
+
+        
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Container(
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(8),
+                  border: Border.all(color: const Color.fromARGB(255, 53, 172, 177), width: 2)
+                ),
+                child: ExpansionTile(
+                  title: Text(
+                    "Puis-je reprendre mes activités après une séance de détatouage ?",
                     style: GoogleFonts.montserrat(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
@@ -223,7 +265,7 @@ class _HijamaState extends State<Hijama> {
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                       child: Text(
-                        "Oui, la hijama stimule la production d'endorphines et aide à libérer les tensions, ce qui peut réduire considérablement le stress et l'anxiété.",
+                        "Oui, vous pouvez reprendre vos activités normales, mais il est conseillé d'éviter l'exposition au soleil et de suivre les soins recommandés pour favoriser la guérison de la peau.",
                         textAlign: TextAlign.center,
                       ),
                     )
@@ -231,8 +273,8 @@ class _HijamaState extends State<Hijama> {
                 ),
               ),
             ),
-            const SizedBox(height: 5,),
-        
+            const SizedBox(height: 20,),
+
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Container(
@@ -244,7 +286,7 @@ class _HijamaState extends State<Hijama> {
                 ),
                 child: ExpansionTile(
                   title: Text(
-                    "Ques sont les bénéfics imméiats après une séance de hijama ?",
+                    "Après combien de temps les résultats aparaissent ?",
                     style: GoogleFonts.montserrat(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
@@ -264,7 +306,7 @@ class _HijamaState extends State<Hijama> {
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                       child: Text(
-                        "Les bénéfices immédiats peuvent inclure une sensation de détente, de légèreté et une réduction des douleurs ou tensions musculaires.",
+                        "En ce qui concerne les addictions, le résultat est instantané, une seule suffit à vous sevrer complètement de votre addiction. Pour les troubles psychiques il faut, en moyenne, 3 séances. Cependant, des améliorations peuvent être perçues dès la première séance ",
                         textAlign: TextAlign.center,
                       ),
                     )
@@ -293,7 +335,11 @@ class _HijamaState extends State<Hijama> {
               ),
             ),
 
-            Image.asset("assets/hijamaprix.jpg"),
+            Image.asset("assets/detatouageprix.jpg"),
+
+            Image.asset("assets/detatouageprix2.jpg"),
+
+            Image.asset("assets/detatouageprix3.jpg"),
             const SizedBox(height: 40,),
 
             CustomButton(

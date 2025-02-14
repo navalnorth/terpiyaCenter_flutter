@@ -22,7 +22,8 @@ class _MdpOublieState extends State<MdpOublie> {
         email: _emailController.text.trim(),
       );
       setState(() {
-        _message = "Si l'e-mail est inscrit, un lien de réinitialisation a été envoyé.";
+        _message =
+            "Si l'e-mail est inscrit, un lien de réinitialisation a été envoyé.";
         _messageColor = Colors.green;
       });
     } on FirebaseAuthException catch (_) {
@@ -46,7 +47,7 @@ class _MdpOublieState extends State<MdpOublie> {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         backgroundColor: Colors.white,
-        toolbarHeight: 350,
+        toolbarHeight: 300,
         centerTitle: true,
         title: SizedBox(
           height: 100,
@@ -61,8 +62,15 @@ class _MdpOublieState extends State<MdpOublie> {
         child: Column(
           children: [
             const Text(
-              "Entrez votre email et vous recevrez un lien pour réinitialiser votre mot de passe.",
-              style: TextStyle(fontWeight: FontWeight.bold),
+              "Réinitialiser \n mot de passe",
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 32),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(
+              height: 30,
+            ),
+            const Text(
+              "Entrez votre email et vous recevrez un lien pour la réinitialisation.",
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 20),
@@ -79,14 +87,12 @@ class _MdpOublieState extends State<MdpOublie> {
               onPressed: passwordReset,
             ),
             const SizedBox(height: 10),
-            
             Text(
               _message,
               style: TextStyle(
-                color: _messageColor,
-                fontWeight: FontWeight.bold,
-                fontSize: 10
-              ),
+                  color: _messageColor,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 10),
               textAlign: TextAlign.center,
             ),
           ],

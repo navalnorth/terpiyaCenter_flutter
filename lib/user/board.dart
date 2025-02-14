@@ -2,6 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:terapiya_center/read%20data/get_user_name.dart';
+import 'package:terapiya_center/rubriques/auriculotherapie.dart';
+import 'package:terapiya_center/rubriques/detatouage.dart';
 import 'package:terapiya_center/rubriques/hijama.dart';
 
 class Board extends StatefulWidget {
@@ -74,7 +76,7 @@ class _BoardState extends State<Board> {
 
                     GestureDetector(
                       onTap: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => Hijama()));
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => Auriculotherapie()));
                       },
 
                       child: Container(
@@ -108,7 +110,7 @@ class _BoardState extends State<Board> {
                   children: [
                     GestureDetector(
                       onTap: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => Hijama()));
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => Detatouage()));
                       },
 
                       child: Container(
@@ -183,7 +185,7 @@ class _BoardState extends State<Board> {
                         
                         child: Center(
                           child: Text(
-                            "Voyages Humanitaires",
+                            "Humanitaires et voyages",
                             textAlign: TextAlign.center,
                             style: GoogleFonts.montserrat(
                               color: Colors.white,
@@ -211,7 +213,7 @@ class _BoardState extends State<Board> {
                         
                         child: Center(
                           child: Text(
-                            "Historique des RDV",
+                            "Historique de vos RDV",
                             textAlign: TextAlign.center,
                             style: GoogleFonts.montserrat(
                               color: Colors.white,
@@ -245,7 +247,7 @@ class _BoardState extends State<Board> {
                         
                         child: Center(
                           child: Text(
-                            "Dons personnels",
+                            "Suivis des dons personnels",
                             textAlign: TextAlign.center,
                             style: GoogleFonts.montserrat(
                               color: Colors.white,
@@ -273,7 +275,7 @@ class _BoardState extends State<Board> {
                         
                         child: Center(
                           child: Text(
-                            "Dons généraux",
+                            "Suivis des dons généraux",
                             textAlign: TextAlign.center,
                             style: GoogleFonts.montserrat(
                               color: Colors.white,
