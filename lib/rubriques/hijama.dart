@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:terapiya_center/composants/button_decoration.dart';
+import 'package:terapiya_center/rdv/prendre_rdv.dart';
 
 class Hijama extends StatefulWidget {
   const Hijama({super.key});
@@ -301,7 +302,9 @@ class _HijamaState extends State<Hijama> {
               borderColor: const Color.fromARGB(255, 53, 172, 177), 
               bgColor: const Color.fromARGB(255, 53, 172, 177), 
               txtColor: Colors.white, 
-              onPressed: () {}
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => PrendreRdv()));
+              }
             ),
             const SizedBox(height: 20,)
           ],
