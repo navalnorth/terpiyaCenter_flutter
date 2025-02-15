@@ -123,7 +123,7 @@ class _RegisterState extends State<Register> {
         ),
       ),
       body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 50),
+        padding: const EdgeInsets.symmetric(horizontal: 50),
         child: SingleChildScrollView(
           child: Form(
             key: _formKey,
@@ -180,9 +180,9 @@ class _RegisterState extends State<Register> {
                   
                   CustomButton(
                       text: "S'inscrire",
-                      bgColor: Color.fromARGB(255, 53, 172, 177),
+                      bgColor: const Color.fromARGB(255, 53, 172, 177),
                       txtColor: Colors.white,
-                      borderColor: Color.fromARGB(255, 53, 172, 177),
+                      borderColor: const Color.fromARGB(255, 53, 172, 177),
                       onPressed: () {
                         signUp();
                       }

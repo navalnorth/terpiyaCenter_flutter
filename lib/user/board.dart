@@ -4,7 +4,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:terapiya_center/read%20data/get_user_name.dart';
 import 'package:terapiya_center/rubriques/auriculotherapie.dart';
 import 'package:terapiya_center/rubriques/detatouage.dart';
+import 'package:terapiya_center/rubriques/formations/formations_home.dart';
 import 'package:terapiya_center/rubriques/hijama.dart';
+import 'package:terapiya_center/rubriques/huamanitaires%20et%20voyages/humanitaires_voyages.dart';
 
 class Board extends StatefulWidget {
   const Board({super.key});
@@ -26,6 +28,15 @@ class _BoardState extends State<Board> {
           backgroundColor: const Color.fromARGB(255, 53, 172, 177),
           automaticallyImplyLeading: false,
           title: const GetUserName(),
+          centerTitle: true,
+          leading: IconButton(
+            onPressed: () {
+
+            },
+            icon: const Icon(Icons.email), 
+            color: Colors.white,
+            iconSize: 30,
+          ),
           actions: [
             IconButton(
               onPressed: () {
@@ -48,7 +59,7 @@ class _BoardState extends State<Board> {
                   children: [
                     GestureDetector(
                       onTap: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => Hijama()));
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => const Hijama()));
                       },
 
                       child: Container(
@@ -76,7 +87,7 @@ class _BoardState extends State<Board> {
 
                     GestureDetector(
                       onTap: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => Auriculotherapie()));
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => const Auriculotherapie()));
                       },
 
                       child: Container(
@@ -110,7 +121,7 @@ class _BoardState extends State<Board> {
                   children: [
                     GestureDetector(
                       onTap: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => Detatouage()));
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => const Detatouage()));
                       },
 
                       child: Container(
@@ -138,7 +149,7 @@ class _BoardState extends State<Board> {
 
                     GestureDetector(
                       onTap: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => Hijama()));
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => const FormationsHome()));
                       },
 
                       child: Container(
@@ -172,7 +183,7 @@ class _BoardState extends State<Board> {
                   children: [
                     GestureDetector(
                       onTap: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => Hijama()));
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => const HumanitairesVoyages()));
                       },
 
                       child: Container(
@@ -200,7 +211,7 @@ class _BoardState extends State<Board> {
 
                     GestureDetector(
                       onTap: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => Hijama()));
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => const Hijama()));
                       },
 
                       child: Container(
@@ -234,7 +245,7 @@ class _BoardState extends State<Board> {
                   children: [
                     GestureDetector(
                       onTap: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => Hijama()));
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => const Hijama()));
                       },
 
                       child: Container(
@@ -262,7 +273,7 @@ class _BoardState extends State<Board> {
 
                     GestureDetector(
                       onTap: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => Hijama()));
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => const Hijama()));
                       },
 
                       child: Container(

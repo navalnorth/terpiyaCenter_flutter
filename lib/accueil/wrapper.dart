@@ -13,9 +13,9 @@ class Wrapper extends StatelessWidget {
         stream: FirebaseAuth.instance.authStateChanges(), 
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            return Board();
+            return const Board();
           } else {
-            return Login();
+            return const Login();
           }
         }
       ),

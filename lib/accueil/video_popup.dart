@@ -33,8 +33,6 @@ class VideoPopupState extends State<VideoPopup> {
           _isInitialized = true;
         });
         _controller.play(); // Auto-play après initialisation
-      }).catchError((error) {
-        print("Erreur de chargement de la vidéo : $error");
       });
   }
 

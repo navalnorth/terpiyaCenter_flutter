@@ -7,6 +7,7 @@ class CustomButton extends StatelessWidget {
   final Color txtColor;
   final double paddingHorizontal;
   final double fontSize;
+  final Widget? image;
   final VoidCallback onPressed;
 
   const CustomButton({
@@ -17,6 +18,7 @@ class CustomButton extends StatelessWidget {
     required this.txtColor,
     this.paddingHorizontal = 23,
     this.fontSize = 18,
+    this.image,
     required this.onPressed,
   });
 
@@ -34,9 +36,17 @@ class CustomButton extends StatelessWidget {
         padding: EdgeInsets.symmetric(horizontal: paddingHorizontal, vertical: 12),
       ),
 
-      child: Text(
-        text,
-        style: TextStyle(color: txtColor, fontSize: fontSize),
+      child: Row(
+        mainAxisSize: MainAxisSize.min, // Pour que le Row ne prenne pas toute la largeur
+        children: [
+          Text(
+            text,
+            style: TextStyle(color: txtColor, fontSize: fontSize),
+          ),
+          const SizedBox(width: 10,),
+          if (image != null) image!,
+          if (image != null) const SizedBox(width: 8),
+        ],
       ),
     );
   }
