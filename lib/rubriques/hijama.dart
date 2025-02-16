@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:terapiya_center/composants/button_decoration.dart';
+import 'package:terapiya_center/composants/deroulant_explications.dart';
+import 'package:terapiya_center/composants/deroulant_prix.dart';
 import 'package:terapiya_center/rdv/prendre_rdv.dart';
 
 class Hijama extends StatefulWidget {
@@ -11,17 +13,14 @@ class Hijama extends StatefulWidget {
 }
 
 class _HijamaState extends State<Hijama> {
-  bool _isExpanded = false;
-  bool _isExpanded2 = false;
-  bool _isExpanded3 = false;
-  bool _isExpanded4 = false;
-  bool _isExpanded5 = false;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('HIJAMA', style: TextStyle(fontSize: 15),),
+        title: const Text(
+          'HIJAMA',
+          style: TextStyle(fontSize: 15),
+        ),
         centerTitle: true,
       ),
       body: SingleChildScrollView(
@@ -41,6 +40,7 @@ class _HijamaState extends State<Hijama> {
               ),
             ),
             const SizedBox(height: 15),
+
             const Padding(
               padding: EdgeInsets.symmetric(horizontal: 20),
               child: Text(
@@ -51,7 +51,7 @@ class _HijamaState extends State<Hijama> {
             const SizedBox(height: 20),
 
             Image.asset('assets/hijama.jpg'),
-            const SizedBox(height: 30,),
+            const SizedBox(height: 30),
 
             Container(
               width: double.infinity,
@@ -71,209 +71,47 @@ class _HijamaState extends State<Hijama> {
                 ),
               ),
             ),
-            const SizedBox(height: 20,),
-        
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Container(
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(8),
-                  border: Border.all(color: const Color.fromARGB(255, 53, 172, 177), width: 2)
-                ),
-                child: ExpansionTile(
-                  title: Text(
-                    "Comment fonctionne la hijama ?",
-                    style: GoogleFonts.montserrat(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  trailing: Icon(
-                    _isExpanded ? Icons.remove : Icons.add,
-                    color: Colors.black,
-                  ),
-                  onExpansionChanged: (expanded) {
-                    setState(() {
-                      _isExpanded = expanded;
-                    });
-                  },
-                  children: const [
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                      child: Text(
-                        "La hijama consiste à poser des ventouses sur des points spécifiques du corps. Elles créent une aspiration qui stimule la circulation sanguine, détoxifie et soulage les douleurs musculaires.",
-                        textAlign: TextAlign.center,
-                      ),
-                    )
-                  ],
-                ),
-              ),
+            const SizedBox(height: 20),
+
+            const DeroulantExplications(
+              title: "Comment fonctionne la hijama ?",
+              introText:
+                  "La hijama consiste à poser des ventouses sur des points spécifiques du corps. Elles créent une aspiration qui stimule la circulation sanguine, détoxifie et soulage les douleurs musculaires.",
             ),
-            const SizedBox(height: 5,),
-        
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Container(
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(8),
-                  border: Border.all(color: const Color.fromARGB(255, 53, 172, 177), width: 2)
-                ),
-                child: ExpansionTile(
-                  title: Text(
-                    "La hijama peut-elle être utilisée pour traiter des douleurs chroniques ?",
-                    style: GoogleFonts.montserrat(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  trailing: Icon(
-                    _isExpanded2 ? Icons.remove : Icons.add,
-                    color: Colors.black,
-                  ),
-                  onExpansionChanged: (expanded) {
-                    setState(() {
-                      _isExpanded2 = expanded;
-                    });
-                  },
-                  children: const [
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                      child: Text(
-                        "Oui, la hijama est particulièrement efficace pour soulager les douleurs chroniques comme les douleurs lombaires, les maux de tête et les douleurs articulaires.",
-                        textAlign: TextAlign.center,
-                      ),
-                    )
-                  ],
-                ),
-              ),
+            const SizedBox(height: 5),
+
+            const DeroulantExplications(
+              title:
+                  "La hijama peut-elle être utilisée pour traiter des douleurs chroniques ?",
+              introText:
+                  "Oui, la hijama est particulièrement efficace pour soulager les douleurs chroniques comme les douleurs lombaires, les maux de tête et les douleurs articulaires.",
             ),
-            const SizedBox(height: 5,),
-        
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Container(
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(8),
-                  border: Border.all(color: const Color.fromARGB(255, 53, 172, 177), width: 2)
-                ),
-                child: ExpansionTile(
-                  title: Text(
-                    "Combien de temps dur une séance de hijama ?",
-                    style: GoogleFonts.montserrat(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  trailing: Icon(
-                    _isExpanded3 ? Icons.remove : Icons.add,
-                    color: Colors.black,
-                  ),
-                  onExpansionChanged: (expanded) {
-                    setState(() {
-                      _isExpanded3 = expanded;
-                    });
-                  },
-                  children: const [
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                      child: Text(
-                        "Une séance dure généralement entre 20 et 40 minutes, selon la zone traitée et les besoins spécifiques du patient.",
-                        textAlign: TextAlign.center,
-                      ),
-                    )
-                  ],
-                ),
-              ),
+            const SizedBox(height: 5),
+
+            const DeroulantExplications(
+              title: "Combien de temps dur une séance de hijama ?",
+              introText:
+                  "Une séance dure généralement entre 20 et 40 minutes, selon la zone traitée et les besoins spécifiques du patient.",
             ),
-            const SizedBox(height: 5,),
-        
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Container(
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(8),
-                  border: Border.all(color: const Color.fromARGB(255, 53, 172, 177), width: 2)
-                ),
-                child: ExpansionTile(
-                  title: Text(
-                    "Est-ce que la hijama peut aider à réduire le stress et l'anxiété ?",
-                    style: GoogleFonts.montserrat(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  trailing: Icon(
-                    _isExpanded4 ? Icons.remove : Icons.add,
-                    color: Colors.black,
-                  ),
-                  onExpansionChanged: (expanded) {
-                    setState(() {
-                      _isExpanded4 = expanded;
-                    });
-                  },
-        
-                  children: const [
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                      child: Text(
-                        "Oui, la hijama stimule la production d'endorphines et aide à libérer les tensions, ce qui peut réduire considérablement le stress et l'anxiété.",
-                        textAlign: TextAlign.center,
-                      ),
-                    )
-                  ],
-                ),
-              ),
+            const SizedBox(
+              height: 5,
             ),
-            const SizedBox(height: 5,),
-        
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Container(
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(8),
-                  border: Border.all(color: const Color.fromARGB(255, 53, 172, 177), width: 2)
-                ),
-                child: ExpansionTile(
-                  title: Text(
-                    "Ques sont les bénéfics imméiats après une séance de hijama ?",
-                    style: GoogleFonts.montserrat(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  trailing: Icon(
-                    _isExpanded5 ? Icons.remove : Icons.add,
-                    color: Colors.black,
-                  ),
-                  onExpansionChanged: (expanded) {
-                    setState(() {
-                      _isExpanded5 = expanded;
-                    });
-                  },
-        
-                  children: const [
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                      child: Text(
-                        "Les bénéfices immédiats peuvent inclure une sensation de détente, de légèreté et une réduction des douleurs ou tensions musculaires.",
-                        textAlign: TextAlign.center,
-                      ),
-                    )
-                  ],
-                ),
-              ),
+
+            const DeroulantExplications(
+              title:
+                  "Est-ce que la hijama peut aider à réduire le stress et l'anxiété ?",
+              introText:
+                  "Oui, la hijama stimule la production d'endorphines et aide à libérer les tensions, ce qui peut réduire considérablement le stress et l'anxiété.",
             ),
-            const SizedBox(height: 20,),
+            const SizedBox(height: 5),
+
+            const DeroulantExplications(
+              title:
+                  "Quels sont les bénéfices immédiats après une séance de hijama ?",
+              introText:
+                  "Les bénéfices immédiats peuvent inclure une sensation de détente, de légèreté et une réduction des douleurs ou tensions musculaires.",
+            ),
+            const SizedBox(height: 20),
 
             Container(
               width: double.infinity,
@@ -293,20 +131,32 @@ class _HijamaState extends State<Hijama> {
                 ),
               ),
             ),
+            const SizedBox(height: 20),
 
-            Image.asset("assets/hijamaprix.jpg"),
-            const SizedBox(height: 40,),
+            const DeroulantPrix(
+              title: "Prix de la hijama",
+              prix: "30€",
+              introText: "Hijama classique du dos \n",
+              introText2: "Tête : +0€ \n",
+              introText3: "Cou : +0€ \n",
+              introText4: "Arrière des épaules : +0€ \n",
+              introText5: "Bas du corps : +5€ \n",
+              introText6: "L'avant du corps : +5€ \n",
+            ),
+            const SizedBox(height: 50),
 
             CustomButton(
-              text: "Réserver un créneau", 
-              borderColor: const Color.fromARGB(255, 53, 172, 177), 
-              bgColor: const Color.fromARGB(255, 53, 172, 177), 
-              txtColor: Colors.white, 
-              onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => const PrendreRdv()));
-              }
-            ),
-            const SizedBox(height: 20,)
+                text: "Réserver un créneau",
+                borderColor: const Color.fromARGB(255, 53, 172, 177),
+                bgColor: const Color.fromARGB(255, 53, 172, 177),
+                txtColor: Colors.white,
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const PrendreRdv()));
+                }),
+            const SizedBox(height: 20)
           ],
         ),
       ),

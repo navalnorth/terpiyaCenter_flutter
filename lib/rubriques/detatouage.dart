@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:terapiya_center/composants/button_decoration.dart';
+import 'package:terapiya_center/composants/deroulant_explications.dart';
+import 'package:terapiya_center/composants/deroulant_prix.dart';
 
 class Detatouage extends StatefulWidget {
   const Detatouage({super.key});
@@ -10,20 +12,16 @@ class Detatouage extends StatefulWidget {
 }
 
 class _DetatouageState extends State<Detatouage> {
-  bool _isExpanded = false;
-  bool _isExpanded2 = false;
-  bool _isExpanded3 = false;
-  bool _isExpanded4 = false;
-  bool _isExpanded5 = false;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('DÉTATOUAGE LASER', style: TextStyle(fontSize: 15),),
+        title: const Text(
+          'DÉTATOUAGE LASER',
+          style: TextStyle(fontSize: 15),
+        ),
         centerTitle: true,
       ),
-
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -49,10 +47,10 @@ class _DetatouageState extends State<Detatouage> {
               ),
             ),
             const SizedBox(height: 20),
-
             Image.asset('assets/detatouage.jpg'),
-            const SizedBox(height: 30,),
-
+            const SizedBox(
+              height: 30,
+            ),
             Container(
               width: double.infinity,
               decoration: const BoxDecoration(
@@ -71,251 +69,51 @@ class _DetatouageState extends State<Detatouage> {
                 ),
               ),
             ),
-            const SizedBox(height: 20,),
-        
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Container(
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(8),
-                  border: Border.all(color: const Color.fromARGB(255, 53, 172, 177), width: 2)
-                ),
-                child: ExpansionTile(
-                  title: Text(
-                    "Comment fonctionne le détatouage laser ?",
-                    style: GoogleFonts.montserrat(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  trailing: Icon(
-                    _isExpanded ? Icons.remove : Icons.add,
-                    color: Colors.black,
-                  ),
-                  onExpansionChanged: (expanded) {
-                    setState(() {
-                      _isExpanded = expanded;
-                    });
-                  },
-                  children: const [
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                      child: Text(
-                        "Le laser cible les pigments de l'encre du tatouage et les décompose en petites particules, qui sont ensuite éliminées naturellement par le corps.",
-                        textAlign: TextAlign.center,
-                      ),
-                    )
-                  ],
-                ),
-              ),
+            const SizedBox(
+              height: 20,
             ),
-            const SizedBox(height: 5,),
-        
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Container(
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(8),
-                  border: Border.all(color: const Color.fromARGB(255, 53, 172, 177), width: 2)
-                ),
-                child: ExpansionTile(
-                  title: Text(
-                    "Est-ce que le étatouage au laser est douleureux ?",
-                    style: GoogleFonts.montserrat(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  trailing: Icon(
-                    _isExpanded2 ? Icons.remove : Icons.add,
-                    color: Colors.black,
-                  ),
-                  onExpansionChanged: (expanded) {
-                    setState(() {
-                      _isExpanded2 = expanded;
-                    });
-                  },
-                  children: const [
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                      child: Text(
-                        "La douleur est généralement supportable, ressentie comme de petits picotements. Des crèmes anesthésiantes peuvent être utilisées pour minimiser l'inconfort.",
-                        textAlign: TextAlign.center,
-                      ),
-                    )
-                  ],
-                ),
-              ),
+            const DeroulantExplications(
+              title: "Comment fonctionne le détatouage laser ?",
+              introText:
+                  "Le laser cible les pigments de l'encre du tatouage et les décompose en petites particules, qui sont ensuite éliminées naturellement par le corps.",
             ),
-            const SizedBox(height: 5,),
-        
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Container(
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(8),
-                  border: Border.all(color: const Color.fromARGB(255, 53, 172, 177), width: 2)
-                ),
-                child: ExpansionTile(
-                  title: Text(
-                    "Combien de séances sont nécessaires pour enlever un tatouage ?",
-                    style: GoogleFonts.montserrat(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  trailing: Icon(
-                    _isExpanded3 ? Icons.remove : Icons.add,
-                    color: Colors.black,
-                  ),
-                  onExpansionChanged: (expanded) {
-                    setState(() {
-                      _isExpanded3 = expanded;
-                    });
-                  },
-                  children: const [
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                      child: Text(
-                        "Le nombre de séances varie en fonction de la taille, de la couleur et de l'âge du tatouage, généralement entre 4 et 8 séances, espacées de 6 à 8 semaines.",
-                        textAlign: TextAlign.center,
-                      ),
-                    )
-                  ],
-                ),
-              ),
+            const SizedBox(
+              height: 5,
             ),
-            const SizedBox(height: 5,),
-        
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Container(
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(8),
-                  border: Border.all(color: const Color.fromARGB(255, 53, 172, 177), width: 2)
-                ),
-                child: ExpansionTile(
-                  title: Text(
-                    "Y a-t-il des risques de cicarices ?",
-                    style: GoogleFonts.montserrat(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  trailing: Icon(
-                    _isExpanded3 ? Icons.remove : Icons.add,
-                    color: Colors.black,
-                  ),
-                  onExpansionChanged: (expanded) {
-                    setState(() {
-                      _isExpanded3 = expanded;
-                    });
-                  },
-                  children: const [
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                      child: Text(
-                        "Les risques de cicatrices sont faibles si les instructions post-traitement sont suivies correctement. La peau peut légèrement rougir ou gonfler après la séance, mais cela disparaît rapidement.",
-                        textAlign: TextAlign.center,
-                      ),
-                    )
-                  ],
-                ),
-              ),
+            const DeroulantExplications(
+              title: "Est-ce que le étatouage au laser est douleureux ?",
+              introText:
+                  "La douleur est généralement supportable, ressentie comme de petits picotements. Des crèmes anesthésiantes peuvent être utilisées pour minimiser l'inconfort.",
             ),
-            const SizedBox(height: 5,),
-
-        
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Container(
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(8),
-                  border: Border.all(color: const Color.fromARGB(255, 53, 172, 177), width: 2)
-                ),
-                child: ExpansionTile(
-                  title: Text(
-                    "Puis-je reprendre mes activités après une séance de détatouage ?",
-                    style: GoogleFonts.montserrat(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  trailing: Icon(
-                    _isExpanded4 ? Icons.remove : Icons.add,
-                    color: Colors.black,
-                  ),
-                  onExpansionChanged: (expanded) {
-                    setState(() {
-                      _isExpanded4 = expanded;
-                    });
-                  },
-        
-                  children: const [
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                      child: Text(
-                        "Oui, vous pouvez reprendre vos activités normales, mais il est conseillé d'éviter l'exposition au soleil et de suivre les soins recommandés pour favoriser la guérison de la peau.",
-                        textAlign: TextAlign.center,
-                      ),
-                    )
-                  ],
-                ),
-              ),
+            const SizedBox(
+              height: 5,
             ),
-            const SizedBox(height: 20,),
-
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Container(
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(8),
-                  border: Border.all(color: const Color.fromARGB(255, 53, 172, 177), width: 2)
-                ),
-                child: ExpansionTile(
-                  title: Text(
-                    "Après combien de temps les résultats aparaissent ?",
-                    style: GoogleFonts.montserrat(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  trailing: Icon(
-                    _isExpanded5 ? Icons.remove : Icons.add,
-                    color: Colors.black,
-                  ),
-                  onExpansionChanged: (expanded) {
-                    setState(() {
-                      _isExpanded5 = expanded;
-                    });
-                  },
-        
-                  children: const [
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                      child: Text(
-                        "En ce qui concerne les addictions, le résultat est instantané, une seule suffit à vous sevrer complètement de votre addiction. Pour les troubles psychiques il faut, en moyenne, 3 séances. Cependant, des améliorations peuvent être perçues dès la première séance ",
-                        textAlign: TextAlign.center,
-                      ),
-                    )
-                  ],
-                ),
-              ),
+            const DeroulantExplications(
+              title:
+                  "Combien de séances sont nécessaires pour enlever un tatouage ?",
+              introText:
+                  "Le nombre de séances varie en fonction de la taille, de la couleur et de l'âge du tatouage, généralement entre 4 et 8 séances, espacées de 6 à 8 semaines.",
             ),
-            const SizedBox(height: 20,),
-
+            const SizedBox(
+              height: 5,
+            ),
+            const DeroulantExplications(
+              title: "Y a-t-il des risques de cicarices ?",
+              introText:
+                  "Les risques de cicatrices sont faibles si les instructions post-traitement sont suivies correctement. La peau peut légèrement rougir ou gonfler après la séance, mais cela disparaît rapidement.",
+            ),
+            const SizedBox(
+              height: 5,
+            ),
+            const DeroulantExplications(
+              title:
+                  "Puis-je reprendre mes activités après une séance de détatouage ?",
+              introText:
+                  "Oui, vous pouvez reprendre vos activités normales, mais il est conseillé d'éviter l'exposition au soleil et de suivre les soins recommandés pour favoriser la guérison de la peau.",
+            ),
+            const SizedBox(
+              height: 20,
+            ),
             Container(
               width: double.infinity,
               decoration: const BoxDecoration(
@@ -334,22 +132,46 @@ class _DetatouageState extends State<Detatouage> {
                 ),
               ),
             ),
+            const SizedBox(height: 20),
 
-            Image.asset("assets/detatouageprix.jpg"),
+            const DeroulantPrix(
+              title: "SMALL",
+              prix: "60€",
+              introText: "Ce prix est réservé aux tatouage mesurant moins de 10 cm \n",
+              introText2: "Durée de la séance :",
+              introText3: "30 min \n",
+            ),
+            const SizedBox(height: 5,),
 
-            Image.asset("assets/detatouageprix2.jpg"),
+            const DeroulantPrix(
+              title: "MEDIUM",
+              prix: "80€",
+              introText: "Ce prix est réservé aux tatouages mesurant de 10cm à 20cm \n",
+              introText2: "Durée de la séance :",
+              introText4: "30 min \n",
+            ),
+            const SizedBox(height: 5,),
 
-            Image.asset("assets/detatouageprix3.jpg"),
-            const SizedBox(height: 40,),
+            const DeroulantPrix(
+              title: "LARGE",
+              prix: "100€",
+              introText: "Ce prix est réservé pour les tatouages mesurant plus de 20cm \n",
+              introText2: "Durée de la séance :",
+              introText3: "30 min \n",
+            ),
+            const SizedBox(
+              height: 50,
+            ),
 
             CustomButton(
-              text: "Réserver un créneau", 
-              borderColor: const Color.fromARGB(255, 53, 172, 177), 
-              bgColor: const Color.fromARGB(255, 53, 172, 177), 
-              txtColor: Colors.white, 
-              onPressed: () {}
-            ),
-            const SizedBox(height: 20,)
+                text: "Réserver un créneau",
+                borderColor: const Color.fromARGB(255, 53, 172, 177),
+                bgColor: const Color.fromARGB(255, 53, 172, 177),
+                txtColor: Colors.white,
+                onPressed: () {}),
+            const SizedBox(
+              height: 20,
+            )
           ],
         ),
       ),
