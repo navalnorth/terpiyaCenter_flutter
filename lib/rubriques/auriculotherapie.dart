@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:terapiya_center/composants/button_decoration.dart';
 import 'package:terapiya_center/composants/deroulant_explications.dart';
 import 'package:terapiya_center/composants/deroulant_prix.dart';
+import 'package:terapiya_center/rdv/prendre_rdv.dart';
 
 class Auriculotherapie extends StatefulWidget {
   const Auriculotherapie({super.key});
@@ -171,8 +172,7 @@ class _AuriculotherapieState extends State<Auriculotherapie> {
                 ),
               ),
             ),
-            const SizedBox(height: 20),
-
+            const SizedBox(height: 50),
             const DeroulantPrix(
               title: "Troubles Psychiques",
               prix: "50€",
@@ -184,7 +184,6 @@ class _AuriculotherapieState extends State<Auriculotherapie> {
               introText6: "Insomnie \n",
             ),
             const SizedBox(height: 5),
-
             const DeroulantPrix(
               title: "Addictions",
               prix: "180€",
@@ -195,18 +194,20 @@ class _AuriculotherapieState extends State<Auriculotherapie> {
               introText5: "Alcool \n",
               introText6: "Sucre \n",
               introText7: "Satiété \n",
-              introText8: "Garantie d'une année : \n 2 séances gratuites en cas de rechute",
+              introText8:
+                  "Garantie d'une année : \n 2 séances gratuites en cas de rechute",
             ),
             const SizedBox(
               height: 50,
             ),
-
             CustomButton(
                 text: "Réserver un créneau",
                 borderColor: const Color.fromARGB(255, 53, 172, 177),
                 bgColor: const Color.fromARGB(255, 53, 172, 177),
                 txtColor: Colors.white,
-                onPressed: () {}),
+                onPressed: () {
+                  Navigator.push(context,MaterialPageRoute(builder: (context) => const PrendreRdv()));
+                }),
             const SizedBox(
               height: 20,
             )

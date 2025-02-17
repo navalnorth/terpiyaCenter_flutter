@@ -153,7 +153,7 @@ class _FormationDetatouageState extends State<FormationDetatouage> {
                 ),
               ),
             ),
-            const SizedBox(height: 15),
+            const SizedBox(height: 50),
             
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -212,7 +212,7 @@ class _FormationDetatouageState extends State<FormationDetatouage> {
             ),
 
             const SizedBox(
-              height: 40,
+              height: 50,
             ),
 
             CustomButton(

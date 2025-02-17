@@ -15,6 +15,8 @@ class DeroulantPrix extends StatefulWidget {
   final String? introText9;
   final String? introText10;
   final String? introText11;
+  final String? introText12;
+  final String? introText13;
 
   const DeroulantPrix({
     super.key,
@@ -31,6 +33,8 @@ class DeroulantPrix extends StatefulWidget {
     this.introText9,
     this.introText10,
     this.introText11,
+    this.introText12,
+    this.introText13,
   });
 
   @override
@@ -115,6 +119,7 @@ class DeroulantPrixState extends State<DeroulantPrix> {
                           GoogleFonts.montserrat(
                             fontWeight: FontWeight.w500
                           ),
+                          textAlign: TextAlign.center,
                     ),
                   ],
 
@@ -135,6 +140,7 @@ class DeroulantPrixState extends State<DeroulantPrix> {
                           GoogleFonts.montserrat(
                             fontWeight: FontWeight.w500
                           ),
+                        textAlign: TextAlign.center,
                     ),
                   ],
 
@@ -205,6 +211,28 @@ class DeroulantPrixState extends State<DeroulantPrix> {
                   if (widget.introText11 != null) ...[
                     Text(
                       widget.introText11!,
+                      textAlign: TextAlign.center,
+                      style:
+                          GoogleFonts.montserrat(
+                            fontWeight: FontWeight.w500,
+                          ),
+                    ),
+                  ],
+
+                  if (widget.introText12 != null) ...[
+                    Text(
+                      widget.introText12!,
+                      textAlign: TextAlign.center,
+                      style:
+                          GoogleFonts.montserrat(
+                            fontWeight: FontWeight.w500,
+                          ),
+                    ),
+                  ],
+
+                  if (widget.introText13 != null) ...[
+                    Text(
+                      widget.introText13!,
                       textAlign: TextAlign.center,
                       style:
                           GoogleFonts.montserrat(

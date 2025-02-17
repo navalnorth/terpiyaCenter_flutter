@@ -49,10 +49,9 @@ class _HijamaState extends State<Hijama> {
               ),
             ),
             const SizedBox(height: 20),
-
+            
             Image.asset('assets/hijama.jpg'),
             const SizedBox(height: 30),
-
             Container(
               width: double.infinity,
               decoration: const BoxDecoration(
@@ -72,14 +71,12 @@ class _HijamaState extends State<Hijama> {
               ),
             ),
             const SizedBox(height: 20),
-
             const DeroulantExplications(
               title: "Comment fonctionne la hijama ?",
               introText:
                   "La hijama consiste à poser des ventouses sur des points spécifiques du corps. Elles créent une aspiration qui stimule la circulation sanguine, détoxifie et soulage les douleurs musculaires.",
             ),
             const SizedBox(height: 5),
-
             const DeroulantExplications(
               title:
                   "La hijama peut-elle être utilisée pour traiter des douleurs chroniques ?",
@@ -87,7 +84,6 @@ class _HijamaState extends State<Hijama> {
                   "Oui, la hijama est particulièrement efficace pour soulager les douleurs chroniques comme les douleurs lombaires, les maux de tête et les douleurs articulaires.",
             ),
             const SizedBox(height: 5),
-
             const DeroulantExplications(
               title: "Combien de temps dur une séance de hijama ?",
               introText:
@@ -96,7 +92,6 @@ class _HijamaState extends State<Hijama> {
             const SizedBox(
               height: 5,
             ),
-
             const DeroulantExplications(
               title:
                   "Est-ce que la hijama peut aider à réduire le stress et l'anxiété ?",
@@ -104,7 +99,6 @@ class _HijamaState extends State<Hijama> {
                   "Oui, la hijama stimule la production d'endorphines et aide à libérer les tensions, ce qui peut réduire considérablement le stress et l'anxiété.",
             ),
             const SizedBox(height: 5),
-
             const DeroulantExplications(
               title:
                   "Quels sont les bénéfices immédiats après une séance de hijama ?",
@@ -112,7 +106,6 @@ class _HijamaState extends State<Hijama> {
                   "Les bénéfices immédiats peuvent inclure une sensation de détente, de légèreté et une réduction des douleurs ou tensions musculaires.",
             ),
             const SizedBox(height: 20),
-
             Container(
               width: double.infinity,
               decoration: const BoxDecoration(
@@ -131,8 +124,7 @@ class _HijamaState extends State<Hijama> {
                 ),
               ),
             ),
-            const SizedBox(height: 20),
-
+            const SizedBox(height: 50),
             const DeroulantPrix(
               title: "Prix de la hijama",
               prix: "30€",
@@ -144,17 +136,13 @@ class _HijamaState extends State<Hijama> {
               introText6: "L'avant du corps : +5€ \n",
             ),
             const SizedBox(height: 50),
-
             CustomButton(
                 text: "Réserver un créneau",
                 borderColor: const Color.fromARGB(255, 53, 172, 177),
                 bgColor: const Color.fromARGB(255, 53, 172, 177),
                 txtColor: Colors.white,
                 onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const PrendreRdv()));
+                  Navigator.push(context,MaterialPageRoute(builder: (context) => const PrendreRdv()));
                 }),
             const SizedBox(height: 20)
           ],

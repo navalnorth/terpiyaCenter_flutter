@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:intl/intl.dart';
+import 'package:terapiya_center/composants/button_decoration.dart';
 import 'package:terapiya_center/rdv/confirmation_rdv.dart';
 
 class PrendreRdv extends StatefulWidget {
@@ -169,11 +170,13 @@ class _PrendreRdvState extends State<PrendreRdv> {
             ),
             const SizedBox(height: 50),
 
-            ElevatedButton(
-              onPressed: _saveAppointment,
-              style: ElevatedButton.styleFrom(backgroundColor: const Color.fromARGB(255, 53, 172, 177)),
-              child: const Text("Confirmer le RDV", style: TextStyle(color: Colors.white)),
-            ),
+            CustomButton(
+                text: "Confirmer le RDV",
+                borderColor: const Color.fromARGB(255, 53, 172, 177),
+                bgColor: const Color.fromARGB(255, 53, 172, 177),
+                txtColor: Colors.white,
+                onPressed: _saveAppointment
+              ),
           ],
         ),
       ),

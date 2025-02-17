@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:terapiya_center/composants/button_decoration.dart';
 import 'package:terapiya_center/composants/deroulant_explications.dart';
 import 'package:terapiya_center/composants/deroulant_prix.dart';
+import 'package:terapiya_center/rdv/prendre_rdv.dart';
 
 class Detatouage extends StatefulWidget {
   const Detatouage({super.key});
@@ -132,7 +133,7 @@ class _DetatouageState extends State<Detatouage> {
                 ),
               ),
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 50),
 
             const DeroulantPrix(
               title: "SMALL",
@@ -168,7 +169,9 @@ class _DetatouageState extends State<Detatouage> {
                 borderColor: const Color.fromARGB(255, 53, 172, 177),
                 bgColor: const Color.fromARGB(255, 53, 172, 177),
                 txtColor: Colors.white,
-                onPressed: () {}),
+                onPressed: () {
+                  Navigator.push(context,MaterialPageRoute(builder: (context) => const PrendreRdv()));
+                }),
             const SizedBox(
               height: 20,
             )

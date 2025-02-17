@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class UnderlinedText extends StatelessWidget {
+class ChiffresActionHumanitaires extends StatelessWidget {
   final String number;
   final String label;
 
-  const UnderlinedText({
-    required this.number,
-    required this.label,
-    super.key
-  });
+  const ChiffresActionHumanitaires(
+      {required this.number, required this.label, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -25,8 +22,13 @@ class UnderlinedText extends StatelessWidget {
       padding: const EdgeInsets.only(bottom: 4),
       child: Column(
         children: [
-          Text(number, style: GoogleFonts.merriweather(fontWeight: FontWeight.bold, fontSize: 22)),
-          Text(label, style: const TextStyle(fontSize: 9),),
+          Text(number,
+              style: GoogleFonts.merriweather(
+                  fontWeight: FontWeight.bold, fontSize: 22)),
+          Text(
+            label,
+            style: const TextStyle(fontSize: 9),
+          ),
         ],
       ),
     );

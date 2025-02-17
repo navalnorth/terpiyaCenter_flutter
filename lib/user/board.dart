@@ -1,12 +1,14 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:terapiya_center/composants/rubrique_bard.dart';
 import 'package:terapiya_center/read%20data/get_user_name.dart';
 import 'package:terapiya_center/rubriques/auriculotherapie.dart';
+import 'package:terapiya_center/rubriques/contact.dart';
 import 'package:terapiya_center/rubriques/detatouage.dart';
 import 'package:terapiya_center/rubriques/formations/formations_home.dart';
 import 'package:terapiya_center/rubriques/hijama.dart';
-import 'package:terapiya_center/rubriques/huamanitaires%20et%20voyages/humanitaires_voyages.dart';
+import 'package:terapiya_center/rubriques/humanitaire.dart';
+import 'package:terapiya_center/rubriques/voyage.dart';
 
 class Board extends StatefulWidget {
   const Board({super.key});
@@ -20,7 +22,6 @@ class _BoardState extends State<Board> {
 
   @override
   Widget build(BuildContext context) {
-
     return PopScope(
       canPop: false,
       child: Scaffold(
@@ -30,10 +31,8 @@ class _BoardState extends State<Board> {
           title: const GetUserName(),
           centerTitle: true,
           leading: IconButton(
-            onPressed: () {
-
-            },
-            icon: const Icon(Icons.email), 
+            onPressed: () {},
+            icon: const Icon(Icons.email),
             color: Colors.white,
             iconSize: 30,
           ),
@@ -48,263 +47,97 @@ class _BoardState extends State<Board> {
             )
           ],
         ),
-        body: Padding(
-          padding: const EdgeInsets.all(20),
+        body: const Padding(
+          padding: EdgeInsets.symmetric(horizontal: 20),
           child: SingleChildScrollView(
             child: Column(
               children: [
-                const SizedBox(height: 20,),
+                SizedBox(height: 20),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => const Hijama()));
-                      },
-
-                      child: Container(
-                        width: 140,
-                        height: 140,
-                        decoration: BoxDecoration(
-                          color: const Color.fromARGB(255, 53, 172, 177),
-                          borderRadius: BorderRadius.circular(20)
-                        ),
-                        
-                        child: Center(
-                          child: Text(
-                            "Hijama",
-                            textAlign: TextAlign.center,
-                            style: GoogleFonts.montserrat(
-                              color: Colors.white,
-                              fontSize: 14,
-                              fontWeight: FontWeight.bold
-                            ),
-                          ),
-                        ),
-                      ),
+                    RubriqueBoard(
+                      text: "Hijama",
+                      destination: Hijama(),
                     ),
-                    const SizedBox(width: 30,),
-
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => const Auriculotherapie()));
-                      },
-
-                      child: Container(
-                        width: 140,
-                        height: 140,
-                        decoration: BoxDecoration(
-                          color: const Color.fromARGB(255, 53, 172, 177),
-                          borderRadius: BorderRadius.circular(20)
-                        ),
-                        
-                        child: Center(
-                          child: Text(
-                            "Auriculothérapie",
-                            textAlign: TextAlign.center,
-                            style: GoogleFonts.montserrat(
-                              color: Colors.white,
-                              fontSize: 14,
-                              fontWeight: FontWeight.bold
-                            ),
-                          ),
-                        ),
-                      ),
+                    SizedBox(width: 30),
+                    RubriqueBoard(
+                      text: "Auriculothérapie",
+                      destination: Auriculotherapie(),
                     ),
                   ],
                 ),
-                const SizedBox(height: 30,),
+                SizedBox(height: 30),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    RubriqueBoard(
+                      text: "Détatouage",
+                      destination: Detatouage(),
+                    ),
+                    SizedBox(width: 30),
+                    RubriqueBoard(
+                      text: "Formations",
+                      destination: FormationsHome(),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 30),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    RubriqueBoard(
+                      text: "Actions Humanitaires",
+                      destination: Humanitaire(),
+                    ),
+                    SizedBox(width: 30),
+                    RubriqueBoard(
+                      text: "Voyages Humanitaires",
+                      destination: Voyage(),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 30),
 
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => const Detatouage()));
-                      },
-
-                      child: Container(
-                        width: 140,
-                        height: 140,
-                        decoration: BoxDecoration(
-                          color: const Color.fromARGB(255, 53, 172, 177),
-                          borderRadius: BorderRadius.circular(20)
-                        ),
-                        
-                        child: Center(
-                          child: Text(
-                            "Détatouage",
-                            textAlign: TextAlign.center,
-                            style: GoogleFonts.montserrat(
-                              color: Colors.white,
-                              fontSize: 14,
-                              fontWeight: FontWeight.bold
-                            ),
-                          ),
-                        ),
-                      ),
+                    RubriqueBoard(
+                      text: "Historique\n des RDV",
+                      destination: Hijama(),
                     ),
-                    const SizedBox(width: 30,),
+                    SizedBox(width: 30),
 
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => const FormationsHome()));
-                      },
-
-                      child: Container(
-                        width: 140,
-                        height: 140,
-                        decoration: BoxDecoration(
-                          color: const Color.fromARGB(255, 53, 172, 177),
-                          borderRadius: BorderRadius.circular(20)
-                        ),
-                        
-                        child: Center(
-                          child: Text(
-                            "Formations",
-                            textAlign: TextAlign.center,
-                            style: GoogleFonts.montserrat(
-                              color: Colors.white,
-                              fontSize: 14,
-                              fontWeight: FontWeight.bold
-                            ),
-                          ),
-                        ),
-                      ),
+                    RubriqueBoard(
+                      text: "Suivi des\n dons généraux",
+                      destination: Hijama(),
                     ),
                   ],
                 ),
-                const SizedBox(height: 30,),
-
+                SizedBox(height: 30),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => const HumanitairesVoyages()));
-                      },
-
-                      child: Container(
-                        width: 140,
-                        height: 140,
-                        decoration: BoxDecoration(
-                          color: const Color.fromARGB(255, 53, 172, 177),
-                          borderRadius: BorderRadius.circular(20)
-                        ),
-                        
-                        child: Center(
-                          child: Text(
-                            "Humanitaires et voyages",
-                            textAlign: TextAlign.center,
-                            style: GoogleFonts.montserrat(
-                              color: Colors.white,
-                              fontSize: 14,
-                              fontWeight: FontWeight.bold
-                            ),
-                          ),
-                        ),
-                      ),
+                    RubriqueBoard(
+                      text: "Suivi des\n dons personnels",
+                      destination: Hijama(),
                     ),
-                    const SizedBox(width: 30,),
+                    SizedBox(width: 30),
 
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => const Hijama()));
-                      },
-
-                      child: Container(
-                        width: 140,
-                        height: 140,
-                        decoration: BoxDecoration(
-                          color: const Color.fromARGB(255, 53, 172, 177),
-                          borderRadius: BorderRadius.circular(20)
-                        ),
-                        
-                        child: Center(
-                          child: Text(
-                            "Historique de vos RDV",
-                            textAlign: TextAlign.center,
-                            style: GoogleFonts.montserrat(
-                              color: Colors.white,
-                              fontSize: 14,
-                              fontWeight: FontWeight.bold
-                            ),
-                          ),
-                        ),
-                      ),
+                    RubriqueBoard(
+                      text: "Contact",
+                      destination: Contact(),
                     ),
                   ],
                 ),
-                const SizedBox(height: 30,),
-
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => const Hijama()));
-                      },
-
-                      child: Container(
-                        width: 140,
-                        height: 140,
-                        decoration: BoxDecoration(
-                          color: const Color.fromARGB(255, 53, 172, 177),
-                          borderRadius: BorderRadius.circular(20)
-                        ),
-                        
-                        child: Center(
-                          child: Text(
-                            "Suivis des dons personnels",
-                            textAlign: TextAlign.center,
-                            style: GoogleFonts.montserrat(
-                              color: Colors.white,
-                              fontSize: 14,
-                              fontWeight: FontWeight.bold
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: 30,),
-
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => const Hijama()));
-                      },
-
-                      child: Container(
-                        width: 140,
-                        height: 140,
-                        decoration: BoxDecoration(
-                          color: const Color.fromARGB(255, 53, 172, 177),
-                          borderRadius: BorderRadius.circular(20)
-                        ),
-                        
-                        child: Center(
-                          child: Text(
-                            "Suivis des dons généraux",
-                            textAlign: TextAlign.center,
-                            style: GoogleFonts.montserrat(
-                              color: Colors.white,
-                              fontSize: 14,
-                              fontWeight: FontWeight.bold
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 30,),
-                
+                SizedBox(height: 30),
               ],
             ),
           ),
-        )
+        ),
       ),
     );
   }

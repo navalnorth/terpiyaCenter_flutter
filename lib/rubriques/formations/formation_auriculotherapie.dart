@@ -172,7 +172,7 @@ class _FormationAuriculotherapieState extends State<FormationAuriculotherapie> {
                 ),
               ),
             ),
-            const SizedBox(height: 15),
+            const SizedBox(height: 50),
 
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -233,7 +233,7 @@ class _FormationAuriculotherapieState extends State<FormationAuriculotherapie> {
               introText9: "Certificat d'aptitude",
             ),
             const SizedBox(
-              height: 40,
+              height: 50,
             ),
 
             CustomButton(
