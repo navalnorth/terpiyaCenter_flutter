@@ -4,10 +4,12 @@ import 'package:flutter/material.dart';
 
 class GetUserName extends StatefulWidget {
   final double fontSize;
+  final Color? txtcolor;
 
   const GetUserName({
     super.key,
     this.fontSize=17,
+    this.txtcolor= Colors.white,
   });
 
   @override
@@ -38,7 +40,7 @@ class _GetUserNameState extends State<GetUserName> {
 
         return Text(
           "Bonjour, ${data['prenom']} !",
-          style: TextStyle(color: Colors.white, fontSize: widget.fontSize),
+          style: TextStyle(color: widget.txtcolor, fontSize: widget.fontSize),
         );
       },
     );

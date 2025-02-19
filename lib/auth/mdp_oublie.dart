@@ -47,7 +47,7 @@ class _MdpOublieState extends State<MdpOublie> {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         backgroundColor: Colors.white,
-        toolbarHeight: 300,
+        toolbarHeight: 200,
         centerTitle: true,
         title: SizedBox(
           height: 100,
@@ -59,43 +59,45 @@ class _MdpOublieState extends State<MdpOublie> {
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 50),
-        child: Column(
-          children: [
-            const Text(
-              "Réinitialiser \n mot de passe",
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 32),
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(
-              height: 30,
-            ),
-            const Text(
-              "Entrez votre email et vous recevrez un lien pour la réinitialisation.",
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(height: 20),
-            TextField(
-              controller: _emailController,
-              decoration: textInputDecoration("E-mail"),
-            ),
-            const SizedBox(height: 20),
-            CustomButton(
-              text: "Réinitialiser",
-              borderColor: const Color.fromARGB(255, 53, 172, 177),
-              bgColor: const Color.fromARGB(255, 53, 172, 177),
-              txtColor: Colors.white,
-              onPressed: passwordReset,
-            ),
-            const SizedBox(height: 10),
-            Text(
-              _message,
-              style: TextStyle(
-                  color: _messageColor,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 10),
-              textAlign: TextAlign.center,
-            ),
-          ],
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              const Text(
+                "Réinitialiser \n mot de passe",
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 32),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(
+                height: 30,
+              ),
+              const Text(
+                "Entrez votre email et vous recevrez un lien pour la réinitialisation.",
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 20),
+              TextField(
+                controller: _emailController,
+                decoration: textInputDecoration("E-mail"),
+              ),
+              const SizedBox(height: 20),
+              CustomButton(
+                text: "Réinitialiser",
+                borderColor: const Color.fromARGB(255, 53, 172, 177),
+                bgColor: const Color.fromARGB(255, 53, 172, 177),
+                txtColor: Colors.white,
+                onPressed: passwordReset,
+              ),
+              const SizedBox(height: 10),
+              Text(
+                _message,
+                style: TextStyle(
+                    color: _messageColor,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 10),
+                textAlign: TextAlign.center,
+              ),
+            ],
+          ),
         ),
       ),
     );

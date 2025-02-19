@@ -78,9 +78,11 @@ class _PrendreRdvState extends State<PrendreRdv> {
     }
 
     final user = FirebaseAuth.instance.currentUser;
+    String formattedDate = DateFormat('yyyy-MM-dd').format(_selectedDate);
+
     await FirebaseFirestore.instance.collection('rendezvous').add({
       'userId': user!.uid,
-      'date': DateFormat('yyyy-MM-dd').format(_selectedDate),
+      'date': formattedDate,
       'time': _selectedTime,
       'gender': _selectedGender,
       'therapie': _selectedTherapie,
@@ -92,12 +94,19 @@ class _PrendreRdvState extends State<PrendreRdv> {
       const SnackBar(content: Text("Rendez-vous enregistré !")),
     );
 
-    setState(() {
-      _selectedTime = null;
-      _updateAvailableTimes();
-    });
+    if (_selectedTime == null) {
+  ScaffoldMessenger.of(context).showSnackBar(
+    const SnackBar(content: Text("Veuillez sélectionner un horaire.")),
+  );
+  return;
+}
 
-    Navigator.push(context, MaterialPageRoute(builder: (context) => const ConfirmationRdv()));
+    Navigator.push(context, MaterialPageRoute(builder: (context) => ConfirmationRdv(
+      date: formattedDate,
+      time: _selectedTime!,
+      gender: _selectedGender!,
+      therapie: _selectedTherapie!
+    )));
   }
 
   @override

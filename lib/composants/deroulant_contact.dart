@@ -13,6 +13,13 @@ class DeroulantContact extends StatefulWidget {
   final String? valeur3;
   final String? valeur4;
   final String? valeur5;
+  final Color? color;
+  final TextDecoration? underline;
+  final void Function(String)? onTapCallback;
+  final void Function(String)? onTapCallback2;
+  final void Function(String)? onTapCallback3;
+  final void Function(String)? onTapCallback4;
+  final void Function(String)? onTapCallback5;
 
   const DeroulantContact({
     super.key,
@@ -27,6 +34,13 @@ class DeroulantContact extends StatefulWidget {
     this.valeur3,
     this.valeur4,
     this.valeur5,
+    this.color,
+    this.underline,
+    this.onTapCallback,
+    this.onTapCallback2,
+    this.onTapCallback3,
+    this.onTapCallback4,
+    this.onTapCallback5,
   });
 
   @override
@@ -87,22 +101,31 @@ class DeroulantContactState extends State<DeroulantContact> {
                             fontWeight: FontWeight.w500,
                           ),
                         ),
-                        const SizedBox(height: 5),
                       ],
 
                       const Spacer(),
 
                       if (widget.valeur != null) ...[
-                        Text(
-                          widget.valeur!,
-                          style: GoogleFonts.montserrat(
-                            fontWeight: FontWeight.w500,
+                        GestureDetector(
+                          onTap: () {
+                            if (widget.onTapCallback != null) {
+                              widget.onTapCallback!(widget.valeur!);
+                            }
+                          },
+                          child: Text(
+                            widget.valeur!,
+                            style: GoogleFonts.montserrat(
+                              fontWeight: FontWeight.w500,
+                              color: widget.color,
+                              decoration: widget.underline,
+                              decorationColor: widget.color
+                            ),
                           ),
                         ),
-                        const SizedBox(height: 5),
                       ],
                     ],
                   ),
+                  const SizedBox(height: 10,),
 
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -114,22 +137,31 @@ class DeroulantContactState extends State<DeroulantContact> {
                             fontWeight: FontWeight.w500,
                           ),
                         ),
-                        const SizedBox(height: 5),
                       ],
 
                       const Spacer(),
                       
                       if (widget.valeur2 != null) ...[
-                        Text(
-                          widget.valeur2!,
-                          style: GoogleFonts.montserrat(
-                            fontWeight: FontWeight.w500,
+                        GestureDetector(
+                          onTap: () {
+                            if (widget.onTapCallback2 != null) {
+                              widget.onTapCallback2!(widget.valeur2!);
+                            }
+                          },
+                          child: Text(
+                            widget.valeur2!,
+                            style: GoogleFonts.montserrat(
+                              fontWeight: FontWeight.w500,
+                              color: widget.color,
+                              decoration: widget.underline,
+                              decorationColor: widget.color
+                            ),
                           ),
                         ),
-                        const SizedBox(height: 5),
                       ],
                     ],
                   ),
+                  const SizedBox(height: 10,),
 
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -141,22 +173,31 @@ class DeroulantContactState extends State<DeroulantContact> {
                             fontWeight: FontWeight.w500,
                           ),
                         ),
-                        const SizedBox(height: 5),
                       ],
 
                       const Spacer(),
                       
                       if (widget.valeur3 != null) ...[
-                        Text(
-                          widget.valeur3!,
-                          style: GoogleFonts.montserrat(
-                            fontWeight: FontWeight.w500,
+                        GestureDetector(
+                          onTap: () {
+                            if (widget.onTapCallback3 != null) {
+                              widget.onTapCallback3!(widget.valeur3!);
+                            }
+                          },
+                          child: Text(
+                            widget.valeur3!,
+                            style: GoogleFonts.montserrat(
+                              fontWeight: FontWeight.w500,
+                              color: widget.color,
+                              decoration: widget.underline,
+                              decorationColor: widget.color
+                            ),
                           ),
                         ),
-                        const SizedBox(height: 5),
                       ],
                     ],
                   ),
+                  const SizedBox(height: 10,),
 
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -168,22 +209,31 @@ class DeroulantContactState extends State<DeroulantContact> {
                             fontWeight: FontWeight.w500,
                           ),
                         ),
-                        const SizedBox(height: 5),
                       ],
 
                       const Spacer(),
                       
                       if (widget.valeur4 != null) ...[
-                        Text(
-                          widget.valeur4!,
-                          style: GoogleFonts.montserrat(
-                            fontWeight: FontWeight.w500,
+                        GestureDetector(
+                          onTap: () {
+                            if (widget.onTapCallback4 != null) {
+                              widget.onTapCallback4!(widget.valeur4!);
+                            }
+                          },
+                          child: Text(
+                            widget.valeur4!,
+                            style: GoogleFonts.montserrat(
+                              fontWeight: FontWeight.w500,
+                              color: widget.color,
+                              decoration: widget.underline,
+                              decorationColor: widget.color
+                            ),
                           ),
                         ),
-                        const SizedBox(height: 5),
                       ],
                     ],
                   ),
+                  const SizedBox(height: 10,),
 
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -195,24 +245,31 @@ class DeroulantContactState extends State<DeroulantContact> {
                             fontWeight: FontWeight.w500,
                           ),
                         ),
-                        const SizedBox(height: 5),
                       ],
 
                       const Spacer(),
                       
                       if (widget.valeur5 != null) ...[
-                        Text(
-                          widget.valeur5!,
-                          style: GoogleFonts.montserrat(
-                            fontWeight: FontWeight.w500,
+                        GestureDetector(
+                          onTap: () {
+                            if (widget.onTapCallback5 != null) {
+                              widget.onTapCallback5!(widget.valeur5!);
+                            }
+                          },
+                          child: Text(
+                            widget.valeur5!,
+                            style: GoogleFonts.montserrat(
+                              fontWeight: FontWeight.w500,
+                              color: widget.color,
+                              decoration: widget.underline,
+                              decorationColor: widget.color
+                            ),
                           ),
                         ),
-                        const SizedBox(height: 5),
                       ],
                     ],
                   ),
-
-                  
+                  if (widget.cle5 != null) const SizedBox(height: 20,),
                 ],
               ),
             ),

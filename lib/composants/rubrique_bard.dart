@@ -4,11 +4,15 @@ import 'package:google_fonts/google_fonts.dart';
 class RubriqueBoard extends StatelessWidget {
   final String text;
   final Widget destination;
+  final Color? bgcolor;
+  final Color? textcolor;
 
   const RubriqueBoard({
     super.key,
     required this.text,
     required this.destination,
+    this.bgcolor = const Color.fromARGB(255, 53, 172, 177),
+    this.textcolor = Colors.white,
   });
 
   @override
@@ -24,7 +28,7 @@ class RubriqueBoard extends StatelessWidget {
         width: 150,
         height: 115,
         decoration: BoxDecoration(
-          color: const Color.fromARGB(255, 53, 172, 177),
+          color: bgcolor,
           borderRadius: BorderRadius.circular(20),
         ),
         child: Center(
@@ -34,7 +38,7 @@ class RubriqueBoard extends StatelessWidget {
               text,
               textAlign: TextAlign.center,
               style: GoogleFonts.montserrat(
-                color: Colors.white,
+                color: textcolor,
                 fontSize: 14,
                 fontWeight: FontWeight.bold,
               ),

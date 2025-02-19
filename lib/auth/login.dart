@@ -20,8 +20,8 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
   final _formKey = GlobalKey<FormState>();
-  final TextEditingController _emailController = TextEditingController(text: 'moha_naval@live.com');
-  final TextEditingController _mdpController = TextEditingController(text: 'teclas123');
+  final TextEditingController _emailController = TextEditingController(text: 'terapiyamobile@gmail.com');
+  final TextEditingController _mdpController = TextEditingController(text: 'admin123');
 
   bool isLoading = false;
   String? _errorMessage;
@@ -45,7 +45,8 @@ class _LoginState extends State<Login> {
     );
 
     if (!mounted) return;
-    Navigator.pushReplacement(context,MaterialPageRoute(builder: (context) => const Wrapper()));
+    Navigator.pushReplacement(context,MaterialPageRoute(builder: (context) => Wrapper()));
+    
   } on FirebaseAuthException catch (e) {
     setState(() {
       if (e.code == "user-not-found") {
@@ -57,9 +58,11 @@ class _LoginState extends State<Login> {
       }
     });
   } finally {
-    setState(() {
-      isLoading = false;
-    });
+    if (mounted) {
+      setState(() {
+        isLoading = false;
+      });
+    }
   }
 }
 

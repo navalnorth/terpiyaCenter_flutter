@@ -87,7 +87,7 @@ class _RegisterState extends State<Register> {
 
       //ramene vers le board
       if (!mounted) return;
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const Wrapper()));
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Wrapper()));
 
     } on FirebaseAuthException catch (e) {
       //validation

@@ -1,7 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:terapiya_center/composants/notifications_dialog.dart';
 import 'package:terapiya_center/composants/rubrique_bard.dart';
-import 'package:terapiya_center/read%20data/get_user_name.dart';
+import 'package:terapiya_center/rdv/historique_rdv.dart';
+import 'package:terapiya_center/data/get_user_name.dart';
 import 'package:terapiya_center/rubriques/auriculotherapie.dart';
 import 'package:terapiya_center/rubriques/contact.dart';
 import 'package:terapiya_center/rubriques/detatouage.dart';
@@ -31,7 +33,9 @@ class _BoardState extends State<Board> {
           title: const GetUserName(),
           centerTitle: true,
           leading: IconButton(
-            onPressed: () {},
+            onPressed: () {
+              NotificationsDialog.show(context);
+            },
             icon: const Icon(Icons.email),
             color: Colors.white,
             iconSize: 30,
@@ -47,6 +51,7 @@ class _BoardState extends State<Board> {
             )
           ],
         ),
+
         body: const Padding(
           padding: EdgeInsets.symmetric(horizontal: 20),
           child: SingleChildScrollView(
@@ -106,7 +111,7 @@ class _BoardState extends State<Board> {
                   children: [
                     RubriqueBoard(
                       text: "Historique\n des RDV",
-                      destination: Hijama(),
+                      destination: HistoriqueRdv(),
                     ),
                     SizedBox(width: 30),
 
