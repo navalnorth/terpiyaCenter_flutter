@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:terapiya_center/composants/notifications_dialog.dart';
-import 'package:terapiya_center/composants/rubrique_bard.dart';
+import 'package:terapiya_center/composants/rubrique_board.dart';
 import 'package:terapiya_center/rdv/historique_rdv.dart';
 import 'package:terapiya_center/data/get_user_name.dart';
 import 'package:terapiya_center/rubriques/auriculotherapie.dart';

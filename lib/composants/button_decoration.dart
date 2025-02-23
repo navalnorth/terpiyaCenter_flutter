@@ -38,12 +38,14 @@ class CustomButton extends StatelessWidget {
 
       child: Row(
         mainAxisSize: MainAxisSize.min, // Pour que le Row ne prenne pas toute la largeur
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Text(
             text,
             style: TextStyle(color: txtColor, fontSize: fontSize),
           ),
-          const SizedBox(width: 10,),
+          if (image != null) const SizedBox(width: 10,),
           if (image != null) image!,
           if (image != null) const SizedBox(width: 8),
         ],

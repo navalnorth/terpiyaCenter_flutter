@@ -1,15 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:terapiya_center/admin/rubriques/mes_rdv.dart';
-import 'package:terapiya_center/composants/rubrique_bard.dart';
+import 'package:terapiya_center/admin/rubriques/notifsadmin.dart';
+import 'package:terapiya_center/composants/rubrique_board.dart';
 import 'package:terapiya_center/data/get_user_name.dart';
 import 'package:terapiya_center/rubriques/detatouage.dart';
 import 'package:terapiya_center/rubriques/formations/formations_home.dart';
-import 'package:terapiya_center/rubriques/hijama.dart';
-// import 'package:terapiya_center/rubriques/humanitaire.dart';
-// import 'package:terapiya_center/rubriques/voyage.dart';
-// import 'package:terapiya_center/rdv/historique_rdv.dart';
-// import 'package:terapiya_center/rubriques/contact.dart';
 
 class Boardadmin extends StatefulWidget {
   const Boardadmin({super.key});
@@ -27,7 +23,7 @@ class _BoardadminState extends State<Boardadmin> {
       canPop: false,
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.amber,
+          backgroundColor: Colors.brown[200],
           automaticallyImplyLeading: false,
           title: const GetUserName(txtcolor: Colors.black,),
           centerTitle: true,
@@ -43,49 +39,49 @@ class _BoardadminState extends State<Boardadmin> {
           ],
         ),
 
-        body: const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20),
+        body: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
           child: SingleChildScrollView(
             child: Column(
               children: [
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     RubriqueBoard(
-                      text: "Notifications",bgcolor: Colors.amber,
+                      text: "Notifications",bgcolor: Colors.brown[200],
                       textcolor: Colors.black,
-                      destination: Hijama(),
+                      destination: const Notifsadmin(),
                     ),
-                    SizedBox(width: 30),
+                    const SizedBox(width: 30),
                     RubriqueBoard(
                       text: "Mes RDV",
-                      bgcolor: Colors.amber,
+                      bgcolor: Colors.brown[200],
                       textcolor: Colors.black,
-                      destination: MesRdv(),
+                      destination: const MesRdv(),
                     ),
                   ],
                 ),
-                SizedBox(height: 30),
+                const SizedBox(height: 30),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     RubriqueBoard(
                       text: "Changer chiffres Humantaire",
-                      bgcolor: Colors.amber,
+                      bgcolor: Colors.brown[200],
                       textcolor: Colors.black,
                       destination: Detatouage(),
                     ),
-                    SizedBox(width: 30),
+                    const SizedBox(width: 30),
                     RubriqueBoard(
                       text: "Dons reçus",
-                      bgcolor: Colors.amber,
+                      bgcolor: Colors.brown[200],
                       textcolor: Colors.black,
-                      destination: FormationsHome(),
+                      destination: const FormationsHome(),
                     ),
                   ],
                 ),
-                SizedBox(height: 30),
+                const SizedBox(height: 30),
                 // Row(
                 //   mainAxisAlignment: MainAxisAlignment.center,
                 //   crossAxisAlignment: CrossAxisAlignment.center,
