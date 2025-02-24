@@ -59,7 +59,28 @@ class _HistoriqueRdvState extends State<HistoriqueRdv> {
                 child: ListTile(
                   leading: const Icon(Icons.calendar_today, color: Color.fromARGB(255, 53, 172, 177)),
                   title: Text("Thérapie : $therapie", style: const TextStyle(fontWeight: FontWeight.bold)),
-                  subtitle: Text("📅 $formattedDate - ⏰ $time"),
+                  subtitle: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text("📅 $formattedDate - ⏰ $time"),
+                      const Text("👉 Restez appuyez pour voir votre image")
+                    ],
+                  ),
+                  onLongPress: () {
+                    showDialog(
+                      context: context, 
+                      builder: (context) => AlertDialog(
+                        title: const Text("Votre image de thérapie"),
+                        content: Image.asset("assets/therapie.jpg"),
+                        actions: [
+                          TextButton(
+                            onPressed: () => Navigator.pop(context), 
+                            child: const Text("Fermer")
+                          )
+                        ],
+                      )
+                    );
+                  },
                 ),
               );
             },

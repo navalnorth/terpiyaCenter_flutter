@@ -6,9 +6,12 @@ class UserRole {
 
     if (userDoc.exists && userDoc.data() != null) {
       Map<String, dynamic> data = userDoc.data() as Map<String, dynamic>;
-      return data['role'];
+
+      // Si le rôle existe, le renvoyer, sinon renvoyer 'user' par défaut
+      return data['role'] ?? 'user'; 
     } else {
-      return null;
+      // Si l'utilisateur n'existe pas, renvoyer 'user' par défaut
+      return 'user';
     }
   }
 }

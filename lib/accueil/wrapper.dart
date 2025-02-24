@@ -19,18 +19,23 @@ class Wrapper extends StatelessWidget {
           if (snapshot.hasData) {
             final user = snapshot.data!;
           
-            return FutureBuilder(
+            return FutureBuilder<String?>(
               future: userRole.getUserRole(user.uid), 
               builder: (context, roleSnapshot) {
                 if (roleSnapshot.connectionState == ConnectionState.waiting) {
                   return const Center(child: CircularProgressIndicator());
                 }
-                if (roleSnapshot.hasData && roleSnapshot.data == 'admin') {
+                if (roleSnapshot.hasError) {
+                  return const Center(child: Text("Erreur de chargement du rôle"));
+                }
+
+                String role = roleSnapshot.data ?? 'user';
+                if (role == 'admin') {
                   return const Boardadmin();
                 } else {
                   return const Board();
                 }
-              }
+              },
             );
           } else {
             return const Login();

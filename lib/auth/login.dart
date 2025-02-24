@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -20,13 +22,20 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
   final _formKey = GlobalKey<FormState>();
-  final TextEditingController _emailController = TextEditingController(text: 'terapiyamobile@gmail.com');
+  final TextEditingController _emailController = TextEditingController(text: 'terapiyamobil@gmail.com');
   final TextEditingController _mdpController = TextEditingController(text: 'admin123');
 
   bool isLoading = false;
   String? _errorMessage;
 
-
+  Future<void> saveTokenToDatabase(String userId) async {
+    String? token = await FirebaseMessaging.instance.getToken();
+    if (token != null) {
+      await FirebaseFirestore.instance.collection('users').doc(userId).update({
+        'fcmToken': token,
+      });
+    }
+  }
 
   Future<void> connexionMeth() async {
   if (!_formKey.currentState!.validate()) {
@@ -39,10 +48,15 @@ class _LoginState extends State<Login> {
   });
 
   try {
-    await FirebaseAuth.instance.signInWithEmailAndPassword(
+    UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
       email: _emailController.text.trim(),
       password: _mdpController.text.trim(),
     );
+
+    User? user = userCredential.user;
+    if (user != null) {
+      await saveTokenToDatabase(user.uid);
+    }
 
     if (!mounted) return;
     Navigator.pushReplacement(context,MaterialPageRoute(builder: (context) => Wrapper()));
@@ -54,7 +68,7 @@ class _LoginState extends State<Login> {
       } else if (e.code == "wrong-password") {
         _errorMessage = "Mot de passe incorrect.";
       } else {
-        _errorMessage = "Une erreur est survenue. Veuillez réessayer.";
+        _errorMessage = "Une erreur est survenue.  ${e.message}.";
       }
     });
   } finally {

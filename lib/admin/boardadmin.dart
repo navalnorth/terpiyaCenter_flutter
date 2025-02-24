@@ -70,7 +70,7 @@ class _BoardadminState extends State<Boardadmin> {
                       text: "Changer chiffres Humantaire",
                       bgcolor: Colors.brown[200],
                       textcolor: Colors.black,
-                      destination: Detatouage(),
+                      destination: const Detatouage(),
                     ),
                     const SizedBox(width: 30),
                     RubriqueBoard(

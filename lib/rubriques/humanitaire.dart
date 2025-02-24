@@ -19,8 +19,8 @@ class Humanitaire extends StatefulWidget {
   final String? orphelinat;
   final String? ecole;
 
-  const Humanitaire(
-      {this.petitsPuits,
+  const Humanitaire({
+      this.petitsPuits,
       this.grandPuits,
       this.moutons,
       this.maisons,
@@ -31,7 +31,8 @@ class Humanitaire extends StatefulWidget {
       this.mosquee,
       this.orphelinat,
       this.ecole,
-      super.key});
+      super.key
+  });
 
   @override
   State<Humanitaire> createState() => _HumanitaireState();
@@ -41,10 +42,7 @@ class _HumanitaireState extends State<Humanitaire> {
   Map<String, dynamic> chiffresHumanitaires = {};
 
   Future<void> _fetchChiffresHumanitaires() async {
-    final DocumentSnapshot docSnapchot = await FirebaseFirestore.instance
-        .collection("chiffresHumanitaires")
-        .doc("lRb5B9nI2LT0k1PpX5fq")
-        .get();
+    final DocumentSnapshot docSnapchot = await FirebaseFirestore.instance.collection("chiffresHumanitaires").doc("KPuKyPiYjBjkDRrB7axJ").get();
 
     if (docSnapchot.exists) {
       final Map<String, dynamic> data = docSnapchot.data() as Map<String, dynamic>;

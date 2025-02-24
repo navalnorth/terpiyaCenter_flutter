@@ -10,9 +10,8 @@ class Notifsadmin extends StatefulWidget {
 }
 
 class _NotifsadminState extends State<Notifsadmin> {
-
   Stream<QuerySnapshot> _fetchAllNotifs() {
-    return FirebaseFirestore.instance.collection('notifs').snapshots();
+    return FirebaseFirestore.instance.collection('notifs').orderBy('timestamp', descending: true).snapshots();
   }
 
   Future<void> _deleteRdv(String notifId) async {
@@ -26,51 +25,49 @@ class _NotifsadminState extends State<Notifsadmin> {
         title: const Text("Notifications"),
         centerTitle: true,
       ),
-
       body: StreamBuilder<QuerySnapshot>(
-        stream: _fetchAllNotifs(), 
+        stream: _fetchAllNotifs(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: SpinKitChasingDots(color: Color.fromARGB(255, 53, 172, 177), size: 50,),);
+            return const Center( child: SpinKitChasingDots( color: Color.fromARGB(255, 53, 172, 177), size: 50 ) );
           }
 
-          if (!snapshot.hasData && snapshot.data!.docs.isEmpty) {
-            return const Center(
-              child: Text("Aucun rendez-vous trouvé.", style: TextStyle(fontSize: 18)),
-            );
+          if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+            return const Center( child: Text("Aucune notification trouvée.", style: TextStyle(fontSize: 18)) );
           }
 
           final notifs = snapshot.data!.docs;
-            return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: ListView.builder(
-                itemCount: notifs.length,
-                itemBuilder: (context, index) {
-                  final notif = notifs[index];
-                  String notifId = notif.id;
-              
-                  return Container(
-                    decoration: BoxDecoration(
-                      color: index % 2 == 0 ? Colors.brown[200] ?? Colors.brown : Colors.white,
-                      borderRadius: BorderRadius.circular(8),
-                      border: Border.all(color: Colors.brown[200] ?? Colors.brown)
-                    ),
-                    margin: const EdgeInsets.symmetric(vertical: 5),
-                    
-                    child: Dismissible(
-                      key: Key(notifId),
-                      direction: DismissDirection.startToEnd,
-                      background: Container(
+          return Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: ListView.builder(
+              itemCount: notifs.length,
+              itemBuilder: (context, index) {
+                final notif = notifs[index];
+                String notifId = notif.id;
+
+                return Container(
+                  decoration: BoxDecoration(
+                    color: index % 2 == 0 ? Colors.brown[200] ?? Colors.brown : Colors.white,
+                    borderRadius: BorderRadius.circular(8),
+                    border: Border.all(color: Colors.brown[200] ?? Colors.brown),
+                  ),
+                  margin: const EdgeInsets.symmetric(vertical: 5),
+
+                  child: Dismissible(
+                    key: Key(notifId),
+                    direction: DismissDirection.startToEnd,
+                    background: Container(
                       color: Colors.red,
                       alignment: Alignment.centerRight,
                       padding: const EdgeInsets.symmetric(horizontal: 20),
-                      child: const Icon(Icons.delete, color: Colors.white,),
+                      child: const Icon( Icons.delete, color: Colors.white ),
                     ),
+
                     onDismissed: (direction) async {
                       final messenger = ScaffoldMessenger.of(context);
                       await _deleteRdv(notifId);
 
-                      if (!mounted) return; 
+                      if (!mounted) return;
                       messenger.showSnackBar(
                         const SnackBar(content: Text("Notification supprimée"), duration: Duration(seconds: 2)),
                       );
@@ -81,16 +78,12 @@ class _NotifsadminState extends State<Notifsadmin> {
                         notif['title'],
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
-                          color: index % 2 == 0 ? Colors.white : Colors.black
-                        ),
+                          color:index % 2 == 0 ? Colors.white : Colors.black),
                       ),
                       subtitle: Text(
-                        notif['subtitle'], 
-                        style: TextStyle(
-                          color: index % 2 == 0 ? Colors.white : Colors.black
-                        )
+                        notif['subtitle'],
+                        style: TextStyle(color: index % 2 == 0 ? Colors.white : Colors.black)
                       ),
-
                       onLongPress: () {
                         showDialog(
                           context: context,
@@ -104,9 +97,19 @@ class _NotifsadminState extends State<Notifsadmin> {
                               content: Column(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
-                                  TextField(controller: titleController, decoration: const InputDecoration(labelText: "Titre")),
-                                  TextField(controller: subtitleController, decoration: const InputDecoration(labelText: "Sous-titre")),
-                                  TextField(controller: linkController, decoration: const InputDecoration(labelText: "Lien")),
+                                  TextField(
+                                    controller: titleController,
+                                    decoration: const InputDecoration(labelText: "Titre"),
+                                  ),
+
+                                  TextField(
+                                    controller: subtitleController,
+                                    decoration: const InputDecoration(labelText: "Sous-titre"),
+                                  ),
+                                  TextField(
+                                    controller: linkController,
+                                    decoration: const InputDecoration(labelText: "Lien"),
+                                  ),
                                 ],
                               ),
                               actions: [
@@ -117,11 +120,7 @@ class _NotifsadminState extends State<Notifsadmin> {
                                 ElevatedButton(
                                   onPressed: () async {
                                     final navigator = Navigator.of(context);
-                                    await FirebaseFirestore.instance.collection('notifs').doc(notif.id).update({
-                                      'title': titleController.text,
-                                      'subtitle': subtitleController.text,
-                                      'link': linkController.text,
-                                    });
+                                    await FirebaseFirestore.instance.collection('notifs').doc(notif.id).update({'title': titleController.text,'subtitle': subtitleController.text,'link': linkController.text});
                                     
                                     if (!mounted) return;
                                     navigator.pop();
@@ -134,12 +133,12 @@ class _NotifsadminState extends State<Notifsadmin> {
                         );
                       },
                     ),
-                    ),
-                  );
-                },
-              ),
-            );
-        }
+                  ),
+                );
+              },
+            ),
+          );
+        },
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -148,10 +147,10 @@ class _NotifsadminState extends State<Notifsadmin> {
           TextEditingController linkController = TextEditingController();
 
           showDialog(
-            context: context, 
+            context: context,
             builder: (context) {
               return AlertDialog(
-                title: const Text("Aouter une notification"),
+                title: const Text("Ajouter une notification"),
                 content: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
@@ -159,47 +158,41 @@ class _NotifsadminState extends State<Notifsadmin> {
                       controller: titleController,
                       decoration: const InputDecoration(labelText: "Titre"),
                     ),
+
                     TextField(
                       controller: subtitleController,
                       decoration: const InputDecoration(labelText: "Sous-titre"),
                     ),
+
                     TextField(
                       controller: linkController,
                       decoration: const InputDecoration(labelText: "Lien"),
                     ),
                   ],
                 ),
+
                 actions: [
                   TextButton(
-                    onPressed: () => Navigator.pop(context), 
-                    child: const Text("Annuler")
+                    onPressed: () => Navigator.pop(context),
+                    child: const Text("Annuler"),
                   ),
+
                   ElevatedButton(
                     onPressed: () async {
                       final navigator = Navigator.of(context);
+                      await FirebaseFirestore.instance.collection('notifs').add({'title': titleController.text, 'subtitle': subtitleController.text,'link': linkController.text,'timestamp': FieldValue.serverTimestamp()});
 
-                      await FirebaseFirestore.instance.collection('notifs').add({
-                        'title': titleController.text,
-                        'subtitle': subtitleController.text,
-                        'link': linkController.text,
-                        'timestamp': FieldValue.serverTimestamp()
-                      });
-                      if (!mounted) return;
                       navigator.pop();
-                    }, 
-                    child: const Text("Enrgegistrer")
-                  )
+                    },
+                    child: const Text("Enregistrer"),
+                  ),
                 ],
               );
-            }
+            },
           );
         },
-        
-        backgroundColor: Colors.brown[200],
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(40)
-        ),
-        child: const Icon(Icons.add,size: 30, color: Colors.white,),
+
+        child: const Icon(Icons.add),
       ),
     );
   }

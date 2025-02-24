@@ -52,6 +52,7 @@ class _RegisterState extends State<Register> {
       "nom": nom,
       "age": age,
       "email": email,
+      "role": "user"
     });
   }
 

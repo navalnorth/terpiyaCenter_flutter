@@ -76,13 +76,15 @@ class _MesRdvState extends State<MesRdv> {
                       child: const Icon(Icons.delete, color: Colors.white,),
                     ),
                     onDismissed: (direction) async {
+                      final messenger = ScaffoldMessenger.of(context); // Capture le ScaffoldMessenger avant l'await
                       await _deleteRdv(rdvId);
 
-                      ScaffoldMessenger.of(context).showSnackBar(
+                      if (!mounted) return;
+                      messenger.showSnackBar(
                         const SnackBar(
                           content: Text("Rendez-vous supprimé"),
                           duration: Duration(seconds: 2),
-                        )
+                        ),
                       );
                     },
                     child: Card(

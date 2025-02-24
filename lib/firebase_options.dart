@@ -41,46 +41,47 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyDGolQpvm3tOIEzg36aALiWlofJs-dnrOM',
-    appId: '1:15582756414:web:2b6081372b95ce6cff9b6f',
-    messagingSenderId: '15582756414',
-    projectId: 'terapiyacenter-b09dc',
-    authDomain: 'terapiyacenter-b09dc.firebaseapp.com',
-    storageBucket: 'terapiyacenter-b09dc.firebasestorage.app',
+    apiKey: 'AIzaSyBqLA7qErKVpGkp706b4xD9BdX010DlCtg',
+    appId: '1:210145337925:web:4511d9d391d8b45d45b92c',
+    messagingSenderId: '210145337925',
+    projectId: 'terpaiyacenter',
+    authDomain: 'terpaiyacenter.firebaseapp.com',
+    storageBucket: 'terpaiyacenter.firebasestorage.app',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyBilMdAC96_4BCiW9aHIglZF33a_W3Mwo4',
-    appId: '1:15582756414:android:ead61d61cfa8acbdff9b6f',
-    messagingSenderId: '15582756414',
-    projectId: 'terapiyacenter-b09dc',
-    storageBucket: 'terapiyacenter-b09dc.firebasestorage.app',
+    apiKey: 'AIzaSyAxg8RM22OmkDmS0Ae68gEzjiNsbK15U0c',
+    appId: '1:210145337925:android:e1ab7e43feefe12345b92c',
+    messagingSenderId: '210145337925',
+    projectId: 'terpaiyacenter',
+    storageBucket: 'terpaiyacenter.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyD-cHiuB8LS4_dKGT4KUu6xo_3tG6Jn9n4',
-    appId: '1:15582756414:ios:c535df5eb1b139edff9b6f',
-    messagingSenderId: '15582756414',
-    projectId: 'terapiyacenter-b09dc',
-    storageBucket: 'terapiyacenter-b09dc.firebasestorage.app',
+    apiKey: 'AIzaSyC04pHkYlnKuH1Y7wjUaE3FxIDlbwhNZ-4',
+    appId: '1:210145337925:ios:ed08398a5ca01a5645b92c',
+    messagingSenderId: '210145337925',
+    projectId: 'terpaiyacenter',
+    storageBucket: 'terpaiyacenter.firebasestorage.app',
     iosBundleId: 'com.example.terapiyaCenter',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyD-cHiuB8LS4_dKGT4KUu6xo_3tG6Jn9n4',
-    appId: '1:15582756414:ios:c535df5eb1b139edff9b6f',
-    messagingSenderId: '15582756414',
-    projectId: 'terapiyacenter-b09dc',
-    storageBucket: 'terapiyacenter-b09dc.firebasestorage.app',
+    apiKey: 'AIzaSyC04pHkYlnKuH1Y7wjUaE3FxIDlbwhNZ-4',
+    appId: '1:210145337925:ios:ed08398a5ca01a5645b92c',
+    messagingSenderId: '210145337925',
+    projectId: 'terpaiyacenter',
+    storageBucket: 'terpaiyacenter.firebasestorage.app',
     iosBundleId: 'com.example.terapiyaCenter',
   );
 
   static const FirebaseOptions windows = FirebaseOptions(
-    apiKey: 'AIzaSyDGolQpvm3tOIEzg36aALiWlofJs-dnrOM',
-    appId: '1:15582756414:web:eaf9f27bd7428aeaff9b6f',
-    messagingSenderId: '15582756414',
-    projectId: 'terapiyacenter-b09dc',
-    authDomain: 'terapiyacenter-b09dc.firebaseapp.com',
-    storageBucket: 'terapiyacenter-b09dc.firebasestorage.app',
+    apiKey: 'AIzaSyBqLA7qErKVpGkp706b4xD9BdX010DlCtg',
+    appId: '1:210145337925:web:e9389ab83a27af3945b92c',
+    messagingSenderId: '210145337925',
+    projectId: 'terpaiyacenter',
+    authDomain: 'terpaiyacenter.firebaseapp.com',
+    storageBucket: 'terpaiyacenter.firebasestorage.app',
   );
+
 }
