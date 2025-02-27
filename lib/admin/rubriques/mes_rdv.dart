@@ -58,6 +58,7 @@ class _MesRdvState extends State<MesRdv> {
               var rdvList = rdvSnapshot.data!.docs;
 
               return ListView.builder(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
                 itemCount: rdvList.length,
                 itemBuilder: (context, index) {
                   var rdv = rdvList[index];
@@ -66,35 +67,38 @@ class _MesRdvState extends State<MesRdv> {
                   String therapie = rdv['therapie'];
                   String rdvId = rdv.id;
 
-                  return Dismissible(
-                    key: Key(rdvId),
-                    direction: DismissDirection.startToEnd,
-                    background: Container(
-                      color: Colors.red,
-                      alignment: Alignment.centerRight,
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                      child: const Icon(Icons.delete, color: Colors.white,),
+                  return Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8),
                     ),
-                    onDismissed: (direction) async {
-                      final messenger = ScaffoldMessenger.of(context); // Capture le ScaffoldMessenger avant l'await
-                      await _deleteRdv(rdvId);
-
-                      if (!mounted) return;
-                      messenger.showSnackBar(
-                        const SnackBar(
-                          content: Text("Rendez-vous supprimé"),
-                          duration: Duration(seconds: 2),
+                    child: Dismissible(
+                      key: Key(rdvId),
+                      direction: DismissDirection.startToEnd,
+                      background: Container(
+                        alignment: Alignment.centerRight,
+                        decoration: BoxDecoration(
+                          color: Colors.red,
+                          borderRadius: BorderRadius.circular(8),
                         ),
-                      );
-                    },
-                    child: Card(
-                      margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                      elevation: 5,
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-                      child: ListTile(
-                        leading: const Icon(Icons.calendar_today, color: Color.fromARGB(255, 53, 172, 177)),
-                        title: Text("Thérapie: $therapie", style: const TextStyle(fontWeight: FontWeight.bold)),
-                        subtitle: Text("📅 $formattedDate - ⏰ $time"),
+                        child: const Icon(Icons.delete, color: Colors.white,),
+                      ),
+                      onDismissed: (direction) async {
+                        final messenger = ScaffoldMessenger.of(context); // Capture le ScaffoldMessenger avant l'await
+                        await _deleteRdv(rdvId);
+                    
+                        if (!mounted) return;
+                        messenger.showSnackBar(
+                          const SnackBar( content: Text("Rendez-vous supprimé"),duration: Duration(seconds: 2) ),
+                        );
+                      },
+                      child: Card(
+                        elevation: 5,
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                        child: ListTile(
+                          leading: const Icon(Icons.calendar_today, color: Color.fromARGB(255, 53, 172, 177)),
+                          title: Text("Thérapie: $therapie", style: const TextStyle(fontWeight: FontWeight.bold)),
+                          subtitle: Text("📅 $formattedDate - ⏰ $time"),
+                        ),
                       ),
                     ),
                   );

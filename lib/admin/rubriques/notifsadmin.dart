@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:terapiya_center/data/notif_fcm.dart';
 
 class Notifsadmin extends StatefulWidget {
   const Notifsadmin({super.key});
@@ -17,6 +19,14 @@ class _NotifsadminState extends State<Notifsadmin> {
   Future<void> _deleteRdv(String notifId) async {
     await FirebaseFirestore.instance.collection('notifs').doc(notifId).delete();
   }
+
+  Future<List<String>> getAllDeviceTokens() async {
+    QuerySnapshot querySnapshot = await FirebaseFirestore.instance.collection('tokens').get();
+
+    return querySnapshot.docs.map((doc) => doc['token'] as String).toList();
+  }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -57,9 +67,12 @@ class _NotifsadminState extends State<Notifsadmin> {
                     key: Key(notifId),
                     direction: DismissDirection.startToEnd,
                     background: Container(
-                      color: Colors.red,
                       alignment: Alignment.centerRight,
                       padding: const EdgeInsets.symmetric(horizontal: 20),
+                      decoration: BoxDecoration(
+                        color: Colors.red,
+                        borderRadius: BorderRadius.circular(8),
+                      ),
                       child: const Icon( Icons.delete, color: Colors.white ),
                     ),
 
@@ -141,7 +154,7 @@ class _NotifsadminState extends State<Notifsadmin> {
         },
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
+        onPressed: () async {
           TextEditingController titleController = TextEditingController();
           TextEditingController subtitleController = TextEditingController();
           TextEditingController linkController = TextEditingController();
@@ -158,29 +171,47 @@ class _NotifsadminState extends State<Notifsadmin> {
                       controller: titleController,
                       decoration: const InputDecoration(labelText: "Titre"),
                     ),
-
                     TextField(
                       controller: subtitleController,
                       decoration: const InputDecoration(labelText: "Sous-titre"),
                     ),
-
                     TextField(
                       controller: linkController,
                       decoration: const InputDecoration(labelText: "Lien"),
                     ),
                   ],
                 ),
-
                 actions: [
                   TextButton(
                     onPressed: () => Navigator.pop(context),
                     child: const Text("Annuler"),
                   ),
-
                   ElevatedButton(
                     onPressed: () async {
                       final navigator = Navigator.of(context);
-                      await FirebaseFirestore.instance.collection('notifs').add({'title': titleController.text, 'subtitle': subtitleController.text,'link': linkController.text,'timestamp': FieldValue.serverTimestamp()});
+                      String title = titleController.text;
+                      String body = subtitleController.text;
+                      String link = linkController.text;
+
+                      // 1️⃣ Récupérer tous les tokens
+                      List<String> deviceTokens = await getAllDeviceTokens();
+                      if (deviceTokens.isEmpty) {
+                        if (kDebugMode) {
+                          print("❌ Aucun utilisateur n'a de token FCM.");
+                        }
+                        return;
+                      }
+
+                      // 2️⃣ Ajouter la notification à Firestore
+                      await FirebaseFirestore.instance.collection('notifs').add({
+                        'title': titleController.text,
+                        'subtitle': subtitleController.text,
+                        'link': linkController.text,
+                        'timestamp': FieldValue.serverTimestamp(),
+                      });
+
+                      // 3️⃣ Envoyer la notification à tout le monde
+                      await sendNotification(title, body, link);
 
                       navigator.pop();
                     },
@@ -191,9 +222,9 @@ class _NotifsadminState extends State<Notifsadmin> {
             },
           );
         },
-
         child: const Icon(Icons.add),
       ),
+
     );
   }
 }

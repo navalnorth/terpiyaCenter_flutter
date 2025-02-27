@@ -30,9 +30,13 @@ class _LoginState extends State<Login> {
 
   Future<void> saveTokenToDatabase(String userId) async {
     String? token = await FirebaseMessaging.instance.getToken();
+
     if (token != null) {
-      await FirebaseFirestore.instance.collection('users').doc(userId).update({
-        'fcmToken': token,
+      // Stocke chaque token dans une collection séparée
+      await FirebaseFirestore.instance.collection('tokens').doc(token).set({
+        'token': token,
+        'userId': userId,
+        'createdAt': FieldValue.serverTimestamp(),
       });
     }
   }

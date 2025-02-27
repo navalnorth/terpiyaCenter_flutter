@@ -22,13 +22,16 @@ android {
         jvmTarget = JavaVersion.VERSION_1_8
     }
 
+    lint {
+          baseline = file("lint-baseline.xml")
+    }
+
     defaultConfig {
         applicationId = "com.example.terapiya_center"
         minSdk = 23
-        targetSdk = 33
+        targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName
-        multiDexEnabled true
     }
 
     buildTypes {
@@ -42,10 +45,4 @@ android {
 
 flutter {
     source = "../.."
-}
-
-dependencies {
-    implementation platform('com.google.firebase:firebase-bom:32.7.0')
-    implementation 'com.google.firebase:firebase-messaging'
-    implementation 'androidx.multidex:multidex:2.0.1'
 }

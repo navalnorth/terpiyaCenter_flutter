@@ -27,9 +27,11 @@ dependencies:
   firebase_messaging: ^15.2.3
   flutter_local_notifications: ^18.0.1
   http: ^1.3.0
-  googleapis_auth: ^1.6.0
+  flutter_native_splash: ^2.4.4
   googleapis: ^13.2.0
   extension_google_sign_in_as_googleapis_auth: ^2.0.12
+  lottie: ^3.2.0
+  google_sign_in: ^6.2.2
 
 dev_dependencies:
   flutter_test:
@@ -43,6 +45,7 @@ flutter:
     - assets/
     - assets/slide/
     - assets/formations/
+    - assets/terpaiyacenter-firebase-adminsdk-fbsvc-55ef5c5311.json
 
 flutter_launcher_icons:
   android: true
@@ -51,3 +54,9 @@ flutter_launcher_icons:
   image_path: "assets/logo.png"
   adaptive_icon_background: "#ffffff"
   adaptive_icon_foreground: "assets/logo.png"
+
+flutter_native_splash:
+  color: "#FFFFFF"
+  image: "assets/splash.png"
+  android_12:
+    image: "assets/splash.png"
