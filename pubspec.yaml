@@ -45,7 +45,6 @@ flutter:
     - assets/
     - assets/slide/
     - assets/formations/
-    - assets/terpaiyacenter-firebase-adminsdk-fbsvc-55ef5c5311.json
 
 flutter_launcher_icons:
   android: true
