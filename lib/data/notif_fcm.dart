@@ -24,8 +24,9 @@ Future<void> sendNotification(String title, String body, String link) async {
     "tokens": tokens,
     "title": title,
     "body": body,
-    "link": link,
-    "image": "https://i0.wp.com/www.terapiyacenter.com/wp-content/uploads/2023/01/cropped-Terapiya-Center-1.png?resize=150%2C150&ssl=1"
+    "data": {
+      "link": link
+    }
   };
 
   final response = await http.post(

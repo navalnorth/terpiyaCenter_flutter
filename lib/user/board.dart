@@ -93,7 +93,7 @@ class _BoardState extends State<Board> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     RubriqueBoard(
-                      text: "Actions Humanitaires",
+                      text: "Dons Humanitaires",
                       destination: Humanitaire(),
                     ),
                     SizedBox(width: 30),

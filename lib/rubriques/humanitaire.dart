@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:terapiya_center/composants/button_decoration.dart';
 import 'package:terapiya_center/composants/chiffres_action_humanitaires.dart';
+import 'package:terapiya_center/rubriques/dons/form_don.dart';
 import 'package:terapiya_center/composants/deroulant_prix.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -422,17 +423,12 @@ class _HumanitaireState extends State<Humanitaire> {
               height: 20,
             ),
             CustomButton(
-                text: "Contacter par Whatsapp",
+                text: "Faire un don",
                 borderColor: const Color.fromARGB(255, 53, 172, 177),
                 bgColor: const Color.fromARGB(255, 53, 172, 177),
                 txtColor: Colors.white,
-                image: Image.asset(
-                  "assets/whatsappLogo.png",
-                  width: 25,
-                  height: 25,
-                ),
                 onPressed: () async {
-                  _openWhatsApp();
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => const FormDon()));
                 }),
             const SizedBox(
               height: 20,

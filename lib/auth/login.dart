@@ -22,8 +22,8 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
   final _formKey = GlobalKey<FormState>();
-  final TextEditingController _emailController = TextEditingController(text: 'terapiyamobil@gmail.com');
-  final TextEditingController _mdpController = TextEditingController(text: 'admin123');
+  final TextEditingController _emailController = TextEditingController(text: 'nahladelices@gmail.com');
+  final TextEditingController _mdpController = TextEditingController(text: 'teclas123');
 
   bool isLoading = false;
   String? _errorMessage;
@@ -67,12 +67,8 @@ class _LoginState extends State<Login> {
     
   } on FirebaseAuthException catch (e) {
     setState(() {
-      if (e.code == "user-not-found") {
-        _errorMessage = "Utilisateur non trouvé.";
-      } else if (e.code == "wrong-password") {
-        _errorMessage = "Mot de passe incorrect.";
-      } else {
-        _errorMessage = "Une erreur est survenue.  ${e.message}.";
+      if (e.code == "user-not-found" || e.code == "wrong-password") {
+        _errorMessage = "Email ou Mot de passe incorrects";
       }
     });
   } finally {
