@@ -3,16 +3,16 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:terapiya_center/composants/button_decoration.dart';
 import 'package:terapiya_center/composants/deroulant_explications.dart';
 import 'package:terapiya_center/composants/deroulant_prix.dart';
-import 'package:terapiya_center/rdv/prendre_rdv.dart';
+import 'package:terapiya_center/rubriques/hommes/prendre_rdv_homme.dart';
 
-class Detatouage extends StatefulWidget {
-  const Detatouage({super.key});
+class DetatouageHomme extends StatefulWidget {
+  const DetatouageHomme({super.key});
 
   @override
-  State<Detatouage> createState() => _DetatouageState();
+  State<DetatouageHomme> createState() => _DetatouageHommeState();
 }
 
-class _DetatouageState extends State<Detatouage> {
+class _DetatouageHommeState extends State<DetatouageHomme> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -170,7 +170,7 @@ class _DetatouageState extends State<Detatouage> {
                 bgColor: const Color.fromARGB(255, 53, 172, 177),
                 txtColor: Colors.white,
                 onPressed: () {
-                  Navigator.push(context,MaterialPageRoute(builder: (context) => const PrendreRdv()));
+                  Navigator.push(context,MaterialPageRoute(builder: (context) => const PrendreRdvHomme()));
                 }),
             const SizedBox(
               height: 20,

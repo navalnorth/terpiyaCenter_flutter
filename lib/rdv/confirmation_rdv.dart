@@ -8,6 +8,7 @@ class ConfirmationRdv extends StatelessWidget {
   final String time;
   final String gender;
   final String therapie;
+  final int duree;
 
   const ConfirmationRdv({
     super.key,
@@ -15,6 +16,7 @@ class ConfirmationRdv extends StatelessWidget {
     required this.time,
     required this.gender,
     required this.therapie,
+    required this.duree,
   });
 
   @override
@@ -60,6 +62,7 @@ class ConfirmationRdv extends StatelessWidget {
                       children: [
                         Text("📅 Date : $formattedDate", style: const TextStyle(fontSize: 18)),
                         Text("⏰ Heure : $time", style: const TextStyle(fontSize: 18)),
+                        Text("⌛ Durée : $duree minutes", style: const TextStyle(fontSize: 18)),
                         Text("👤 Genre : $gender", style: const TextStyle(fontSize: 18)),
                         Text("💆‍♂️ Thérapie : $therapie", style: const TextStyle(fontSize: 18)),
                       ],

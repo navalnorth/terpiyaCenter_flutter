@@ -3,16 +3,16 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:terapiya_center/composants/button_decoration.dart';
 import 'package:terapiya_center/composants/deroulant_explications.dart';
 import 'package:terapiya_center/composants/deroulant_prix.dart';
-import 'package:terapiya_center/rdv/prendre_rdv.dart';
+import 'package:terapiya_center/rubriques/femmes/prendre_rdv_femme.dart';
 
-class Hijama extends StatefulWidget {
-  const Hijama({super.key});
+class HijamaFemme extends StatefulWidget {
+  const HijamaFemme({super.key});
 
   @override
-  State<Hijama> createState() => _HijamaState();
+  State<HijamaFemme> createState() => _HijamaFemmeState();
 }
 
-class _HijamaState extends State<Hijama> {
+class _HijamaFemmeState extends State<HijamaFemme> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,7 +50,7 @@ class _HijamaState extends State<Hijama> {
             ),
             const SizedBox(height: 20),
             
-            Image.asset('assets/hijama.jpg'),
+            Image.asset('assets/hijamafemme.jpg'),
             const SizedBox(height: 30),
             Container(
               width: double.infinity,
@@ -134,15 +134,17 @@ class _HijamaState extends State<Hijama> {
               introText4: "Arrière des épaules : +0€ \n",
               introText5: "Bas du corps : +5€ \n",
               introText6: "L'avant du corps : +5€ \n",
+              introText7: 'Massage: +20€',
             ),
             const SizedBox(height: 50),
+
             CustomButton(
                 text: "Réserver un créneau",
                 borderColor: const Color.fromARGB(255, 53, 172, 177),
                 bgColor: const Color.fromARGB(255, 53, 172, 177),
                 txtColor: Colors.white,
                 onPressed: () {
-                  Navigator.push(context,MaterialPageRoute(builder: (context) => const PrendreRdv()));
+                  Navigator.push(context,MaterialPageRoute(builder: (context) => const PrendreRdvFemme()));
                 }),
             const SizedBox(height: 20)
           ],

@@ -5,7 +5,6 @@ import 'package:terapiya_center/composants/button_decoration.dart';
 import 'package:terapiya_center/composants/chiffres_action_humanitaires.dart';
 import 'package:terapiya_center/rubriques/dons/form_don.dart';
 import 'package:terapiya_center/composants/deroulant_prix.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class Humanitaire extends StatefulWidget {
   final String? petitsPuits;
@@ -52,19 +51,6 @@ class _HumanitaireState extends State<Humanitaire> {
         chiffresHumanitaires = data.map((key, value) => MapEntry(key, value.toString()));
       });
     }
-  }
-
-  Future<void> _openWhatsApp() async {
-    const String phoneNumber = "+32488396428";
-    final Uri whatsappUrl = Uri.parse("https://wa.me/$phoneNumber");
-
-    try {
-      if (await canLaunchUrl(whatsappUrl)) {
-        await launchUrl(whatsappUrl, mode: LaunchMode.externalApplication);
-      } else {
-        throw Exception("Impossible d'ouvrir WhatsApp");
-      }
-    } catch (_) {}
   }
 
   @override
@@ -150,14 +136,11 @@ class _HumanitaireState extends State<Humanitaire> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      ChiffresActionHumanitaires(
-                          number: chiffresHumanitaires['petitsPuits'] ?? "1037", label: "PETITS PUITS"),
+                      ChiffresActionHumanitaires(number: chiffresHumanitaires['petitsPuits'] ?? "1037", label: "PETITS PUITS", fontSize: 28, fontSize2: 16,),
                       const SizedBox(width: 15),
-                      ChiffresActionHumanitaires(
-                          number: chiffresHumanitaires['grandPuits'] ?? "96", label: "GRAND PUITS"),
+                      ChiffresActionHumanitaires(number: chiffresHumanitaires['grandPuits'] ?? "96", label: "GRAND PUITS", fontSize: 28, fontSize2: 16,),
                       const SizedBox( width: 15),
-                      ChiffresActionHumanitaires(
-                          number: chiffresHumanitaires['moutons'] ?? "495", label: "MOUTONS"),
+                      ChiffresActionHumanitaires(number: chiffresHumanitaires['moutons'] ?? "495", label: "MOUTONS", fontSize: 28, fontSize2: 16,),
                     ],
                   ),
                   const SizedBox(height: 20),

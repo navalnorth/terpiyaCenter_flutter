@@ -24,9 +24,7 @@ Future<void> sendNotification(String title, String body, String link) async {
     "tokens": tokens,
     "title": title,
     "body": body,
-    "data": {
-      "link": link
-    }
+    "link": link,
   };
 
   final response = await http.post(

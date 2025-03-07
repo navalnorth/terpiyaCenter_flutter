@@ -14,10 +14,13 @@ class HistoriqueRdv extends StatefulWidget {
 class _HistoriqueRdvState extends State<HistoriqueRdv> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  /// Récupère les rendez-vous de l'utilisateur connecté
-  Stream<QuerySnapshot> _fetchRdv() {
+  Stream<List<QueryDocumentSnapshot>> _fetchRdv() {
     String? userId = _auth.currentUser?.uid;
-    return FirebaseFirestore.instance.collection('rendezvous').where('userId', isEqualTo: userId).orderBy('timestamp', descending: true).snapshots();
+    return FirebaseFirestore.instance.collection('rendezvous').where('userId', isEqualTo: userId).orderBy('timestamp', descending: true).snapshots().map((snapshot) => snapshot.docs);
+  }
+
+  Future<void> _cancelRdv(String rdvId) async {
+    await FirebaseFirestore.instance.collection('rendezvous').doc(rdvId).delete();
   }
 
   @override
@@ -28,62 +31,156 @@ class _HistoriqueRdvState extends State<HistoriqueRdv> {
         backgroundColor: const Color.fromARGB(255, 53, 172, 177),
         foregroundColor: Colors.white,
       ),
-
-      body: StreamBuilder<QuerySnapshot>(
+      body: StreamBuilder<List<QueryDocumentSnapshot>>(
         stream: _fetchRdv(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: SpinKitChasingDots(color: Color.fromARGB(255, 53, 172, 177), size: 50,));
+            return const Center(child: SpinKitChasingDots(color: Color.fromARGB(255, 53, 172, 177), size: 50));
           }
 
-          if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-            return const Center(
-              child: Text("Aucun rendez-vous trouvé.", style: TextStyle(fontSize: 18)),
-            );
+          if (!snapshot.hasData || snapshot.data!.isEmpty) {
+            return const Center(child: Text("Aucun rendez-vous trouvé.", style: TextStyle(fontSize: 18)));
           }
 
-          var rdvList = snapshot.data!.docs;
+          List<QueryDocumentSnapshot> rdvList = snapshot.data!.where((rdv) {
+            List<String> blockedTimes = List<String>.from(rdv['blockedTimes'] ?? []);
+            return blockedTimes.isEmpty || blockedTimes.first == rdv['time']; 
+          }).toList();
+          DateTime now = DateTime.now();
+          DateTime today = DateTime(now.year, now.month, now.day);
 
-          return ListView.builder(
-            itemCount: rdvList.length,
-            itemBuilder: (context, index) {
-              var rdv = rdvList[index];
-              String formattedDate = DateFormat('dd/MM/yyyy').format(DateTime.parse(rdv['date']));
-              String time = rdv['time'];
-              String therapie = rdv['therapie'];
+          List<QueryDocumentSnapshot> futureRdv = [];
+          List<QueryDocumentSnapshot> pastRdv = [];
 
-              return Card(
-                margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                elevation: 5,
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-                child: ListTile(
-                  leading: const Icon(Icons.calendar_today, color: Color.fromARGB(255, 53, 172, 177)),
-                  title: Text("Thérapie : $therapie", style: const TextStyle(fontWeight: FontWeight.bold)),
-                  subtitle: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text("📅 $formattedDate - ⏰ $time"),
-                      const Text("👉 Restez appuyez pour voir votre image")
-                    ],
-                  ),
-                  onLongPress: () {
-                    showDialog(
-                      context: context, 
-                      builder: (context) => AlertDialog(
-                        title: const Text("Votre image de thérapie"),
-                        content: Image.asset("assets/therapie.jpg"),
-                        actions: [
-                          TextButton(
-                            onPressed: () => Navigator.pop(context), 
-                            child: const Text("Fermer")
-                          )
-                        ],
-                      )
-                    );
-                  },
+          for (var rdv in rdvList) {
+            DateTime rdvDate = DateTime.parse(rdv['date']);
+            if (rdvDate.isAfter(today) || rdvDate.isAtSameMomentAs(today)) {
+              futureRdv.add(rdv);
+            } else {
+              pastRdv.add(rdv);
+            }
+          }
+
+          return Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: ListView(
+              children: [
+                if (futureRdv.isNotEmpty) ...[
+                  _buildSectionTitle("📅 Futurs Rendez-vous"),
+                  ...futureRdv.map((rdv) => _buildDismissibleRdvCard(rdv)),
+                ],
+                if (pastRdv.isNotEmpty) ...[
+                  _buildSectionTitle("⏳ Rendez-vous Passés"),
+                  ...pastRdv.map((rdv) => _buildDismissibleRdvCard(rdv)),
+                ],
+              ],
+            ),
+          );
+        },
+      ),
+    );
+  }
+
+  /// Affiche un titre pour séparer les sections
+  Widget _buildSectionTitle(String title) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+      child: Text(
+        title,
+        style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Color.fromARGB(255, 53, 172, 177)),
+      ),
+    );
+  }
+
+
+   Widget _buildDismissibleRdvCard(QueryDocumentSnapshot rdv) {
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 5),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: Dismissible(
+        key: Key(rdv.id),
+        direction: DismissDirection.startToEnd,
+        background: Container(
+          alignment: Alignment.centerRight,
+          decoration: BoxDecoration(
+            color: Colors.red,
+            borderRadius: BorderRadius.circular(8),
+          ),
+          child: const Icon(Icons.delete, color: Colors.white,),
+        ),
+        confirmDismiss: (direction) async {
+          return await showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+              title: const Text("Annuler le rendez-vous"),
+              content: const Text("Êtes-vous sûr d'annuler (Si acompte il y a le remboursement se fait si le RDV est annulé 24h avant la séance) ce rendez-vous ?"),
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.pop(context, false),
+                  child: const Text("Non"),
                 ),
-              );
-            },
+                TextButton(
+                  onPressed: () {
+                    _cancelRdv(rdv.id);
+                    Navigator.pop(context, true);
+                  },
+                  child: const Text("Oui"),
+                ),
+              ],
+            ),
+          );
+        },
+        onDismissed: (direction) async {
+          final messenger = ScaffoldMessenger.of(context); // Capture le ScaffoldMessenger avant l'await
+          await _cancelRdv(rdv.id);
+      
+          if (!mounted) return;
+          messenger.showSnackBar(
+            const SnackBar( content: Text("Rendez-vous supprimé"),duration: Duration(seconds: 2) ),
+          );
+        },
+        child: _buildRdvCard(rdv),
+      ),
+    );
+  }
+
+
+
+  /// Construit une carte pour afficher un rendez-vous
+  Widget _buildRdvCard(QueryDocumentSnapshot rdv) {
+    String formattedDate = DateFormat('dd/MM/yyyy').format(DateTime.parse(rdv['date']));
+    String time = rdv['time'];
+    String therapie = rdv['therapie'];
+    int duration = rdv['duration'];
+
+    return Card(
+      elevation: 5,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+      child: ListTile(
+        leading: const Icon(Icons.calendar_today, color: Color.fromARGB(255, 53, 172, 177)),
+        title: Text("Thérapie : $therapie", style: const TextStyle(fontWeight: FontWeight.bold)),
+        subtitle: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text("📅 $formattedDate - ⏰ $time - ⏳ $duration min"),
+            const Text("👉 Restez appuyé pour voir votre image"),
+          ],
+        ),
+        onLongPress: () {
+          showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+              title: const Text("Votre image de thérapie"),
+              content: Image.asset("assets/therapie.jpg"),
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.pop(context),
+                  child: const Text("Fermer"),
+                ),
+              ],
+            ),
           );
         },
       ),

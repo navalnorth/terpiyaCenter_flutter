@@ -4,8 +4,8 @@ import 'package:terapiya_center/admin/rubriques/mes_rdv.dart';
 import 'package:terapiya_center/admin/rubriques/notifsadmin.dart';
 import 'package:terapiya_center/composants/rubrique_board.dart';
 import 'package:terapiya_center/data/get_user_name.dart';
-import 'package:terapiya_center/rubriques/detatouage.dart';
 import 'package:terapiya_center/rubriques/formations/formations_home.dart';
+import 'package:terapiya_center/rubriques/hommes/detatouage_homme.dart';
 
 class Boardadmin extends StatefulWidget {
   const Boardadmin({super.key});
@@ -70,7 +70,7 @@ class _BoardadminState extends State<Boardadmin> {
                       text: "Changer chiffres Humantaire",
                       bgcolor: Colors.brown[200],
                       textcolor: Colors.black,
-                      destination: const Detatouage(),
+                      destination: const DetatouageHomme(),
                     ),
                     const SizedBox(width: 30),
                     RubriqueBoard(

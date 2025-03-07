@@ -4,9 +4,16 @@ import 'package:google_fonts/google_fonts.dart';
 class ChiffresActionHumanitaires extends StatelessWidget {
   final String number;
   final String label;
+  final double fontSize;
+  final double fontSize2;
 
-  const ChiffresActionHumanitaires(
-      {required this.number, required this.label, super.key});
+  const ChiffresActionHumanitaires({
+    required this.number, 
+    required this.label, 
+    this.fontSize = 22,
+    this.fontSize2 = 9,
+    super.key
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -22,12 +29,13 @@ class ChiffresActionHumanitaires extends StatelessWidget {
       padding: const EdgeInsets.only(bottom: 4),
       child: Column(
         children: [
-          Text(number,
-              style: GoogleFonts.merriweather(
-                  fontWeight: FontWeight.bold, fontSize: 22)),
+          Text(
+              number,
+              style: GoogleFonts.merriweather(fontWeight: FontWeight.bold, fontSize: fontSize)
+          ),
           Text(
             label,
-            style: const TextStyle(fontSize: 9),
+            style: TextStyle(fontSize: fontSize2),
           ),
         ],
       ),

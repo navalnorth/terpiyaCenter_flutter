@@ -3,16 +3,16 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:terapiya_center/composants/button_decoration.dart';
 import 'package:terapiya_center/composants/deroulant_explications.dart';
 import 'package:terapiya_center/composants/deroulant_prix.dart';
-import 'package:terapiya_center/rdv/prendre_rdv.dart';
+import 'package:terapiya_center/rubriques/hommes/prendre_rdv_homme.dart';
 
-class Auriculotherapie extends StatefulWidget {
-  const Auriculotherapie({super.key});
+class AuriculotherapieHomme extends StatefulWidget {
+  const AuriculotherapieHomme({super.key});
 
   @override
-  State<Auriculotherapie> createState() => _AuriculotherapieState();
+  State<AuriculotherapieHomme> createState() => _AuriculotherapieHommeState();
 }
 
-class _AuriculotherapieState extends State<Auriculotherapie> {
+class _AuriculotherapieHommeState extends State<AuriculotherapieHomme> {
   List<String> protocoles = [
     "Cigarette",
     "Drogue",
@@ -206,7 +206,7 @@ class _AuriculotherapieState extends State<Auriculotherapie> {
                 bgColor: const Color.fromARGB(255, 53, 172, 177),
                 txtColor: Colors.white,
                 onPressed: () {
-                  Navigator.push(context,MaterialPageRoute(builder: (context) => const PrendreRdv()));
+                  Navigator.push(context,MaterialPageRoute(builder: (context) => const PrendreRdvHomme()));
                 }),
             const SizedBox(
               height: 20,

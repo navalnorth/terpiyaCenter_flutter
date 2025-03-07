@@ -4,13 +4,12 @@ import 'package:terapiya_center/composants/notifications_dialog.dart';
 import 'package:terapiya_center/composants/rubrique_board.dart';
 import 'package:terapiya_center/rdv/historique_rdv.dart';
 import 'package:terapiya_center/data/get_user_name.dart';
-import 'package:terapiya_center/rubriques/auriculotherapie.dart';
 import 'package:terapiya_center/rubriques/contact.dart';
-import 'package:terapiya_center/rubriques/detatouage.dart';
 import 'package:terapiya_center/rubriques/formations/formations_home.dart';
-import 'package:terapiya_center/rubriques/hijama.dart';
+import 'package:terapiya_center/rubriques/hommes/hijama_homme.dart';
 import 'package:terapiya_center/rubriques/humanitaire.dart';
-import 'package:terapiya_center/rubriques/voyage.dart';
+import 'package:terapiya_center/rubriques/hommes/espace_hommes.dart';
+import 'package:terapiya_center/rubriques/femmes/espace_femmes.dart';
 
 class Board extends StatefulWidget {
   const Board({super.key});
@@ -52,60 +51,55 @@ class _BoardState extends State<Board> {
           ],
         ),
 
-        body: const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20),
+        body: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
           child: SingleChildScrollView(
             child: Column(
               children: [
-                SizedBox(height: 20),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                const SizedBox(height: 50),
+                Column(
                   children: [
-                    RubriqueBoard(
-                      text: "Hijama",
-                      destination: Hijama(),
+                    SizedBox(
+                      width: double.infinity,
+                      height: 50,
+                      child: RubriqueBoard(
+                        text: "Espace Hommes",
+                        bgcolor: Colors.blue.shade400,
+                        destination: const EspaceHommes(),
+                      ),
                     ),
-                    SizedBox(width: 30),
-                    RubriqueBoard(
-                      text: "Auriculothérapie",
-                      destination: Auriculotherapie(),
+                    const SizedBox(height: 20),
+                    SizedBox(
+                      width: double.infinity,
+                      height: 50,
+                      child: RubriqueBoard(
+                        text: "Espace Femmes",
+                        bgcolor: Colors.pink.shade400,
+                        destination: const EspaceFemmes(),
+                      ),
                     ),
                   ],
                 ),
-                SizedBox(height: 30),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    RubriqueBoard(
-                      text: "Détatouage",
-                      destination: Detatouage(),
-                    ),
-                    SizedBox(width: 30),
-                    RubriqueBoard(
-                      text: "Formations",
-                      destination: FormationsHome(),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 30),
-                Row(
+                const SizedBox(height: 50,),
+
+                const Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     RubriqueBoard(
-                      text: "Dons Humanitaires",
-                      destination: Humanitaire(),
+                      text: "Formations",
+                      destination: FormationsHome(),
                     ),
                     SizedBox(width: 30),
                     RubriqueBoard(
-                      text: "Voyages Humanitaires",
-                      destination: Voyage(),
+                      text: "Dons Humanitaires",
+                      destination: Humanitaire(),
                     ),
                   ],
                 ),
-                SizedBox(height: 30),
+                const SizedBox(height: 30),
 
-                Row(
+                const Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
@@ -117,18 +111,18 @@ class _BoardState extends State<Board> {
 
                     RubriqueBoard(
                       text: "Suivi des\n dons généraux",
-                      destination: Hijama(),
+                      destination: HijamaHomme(),
                     ),
                   ],
                 ),
-                SizedBox(height: 30),
-                Row(
+                const SizedBox(height: 30),
+                const Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     RubriqueBoard(
                       text: "Suivi des\n dons personnels",
-                      destination: Hijama(),
+                      destination: HijamaHomme(),
                     ),
                     SizedBox(width: 30),
 
@@ -138,7 +132,7 @@ class _BoardState extends State<Board> {
                     ),
                   ],
                 ),
-                SizedBox(height: 30),
+                const SizedBox(height: 30),
               ],
             ),
           ),
