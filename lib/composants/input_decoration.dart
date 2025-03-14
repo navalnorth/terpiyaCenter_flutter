@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 
-InputDecoration textInputDecoration(String hintText) {
+InputDecoration textInputDecoration(String hintText, {String? label}) {
   return InputDecoration(
     filled: true,
     fillColor: Colors.white,
 
     hintText: hintText,
+    labelText: label,
 
     // Bordure par défaut (quand l'input est inactif)
     border: OutlineInputBorder(

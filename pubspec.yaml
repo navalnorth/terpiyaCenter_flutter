@@ -28,11 +28,10 @@ dependencies:
   flutter_local_notifications: ^18.0.1
   http: ^1.3.0
   flutter_native_splash: ^2.4.4
-  googleapis: ^13.2.0
-  extension_google_sign_in_as_googleapis_auth: ^2.0.12
-  lottie: ^3.2.0
-  google_sign_in: ^6.2.2
   flutter_stripe: ^11.4.0
+  firebase_storage: ^12.4.4
+  image_picker: ^1.1.2
+  carousel_slider: ^5.0.0
 
 dev_dependencies:
   flutter_test:
@@ -46,6 +45,7 @@ flutter:
     - assets/
     - assets/slide/
     - assets/formations/
+    - assets/board/
 
 flutter_launcher_icons:
   android: true

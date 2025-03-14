@@ -8,6 +8,8 @@ class ConfirmationRdv extends StatelessWidget {
   final String time;
   final String gender;
   final String therapie;
+  final String prenom;
+  final String tel;
   final int duree;
 
   const ConfirmationRdv({
@@ -17,6 +19,8 @@ class ConfirmationRdv extends StatelessWidget {
     required this.gender,
     required this.therapie,
     required this.duree,
+    required this.prenom,
+    required this.tel,
   });
 
   @override

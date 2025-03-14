@@ -1,8 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:intl/intl.dart';
 import 'package:terapiya_center/data/admin_genre.dart';
+import 'dart:io';
+import 'package:image_picker/image_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 class MesRdv extends StatefulWidget {
   const MesRdv({super.key});
@@ -14,13 +18,40 @@ class MesRdv extends StatefulWidget {
 class _MesRdvState extends State<MesRdv> {
   final AdminGenre _getAdminGenre = AdminGenre();
 
-  // Fonction pour récupérer le stream des rendez-vous en fonction du genre
   Stream<QuerySnapshot> _fetchRdvByGenre(String genre) {
     return FirebaseFirestore.instance.collection('rendezvous').where('gender', isEqualTo: genre).orderBy('timestamp', descending: true).snapshots();
   }
 
   Future<void> _deleteRdv(String rdvId) async {
     await FirebaseFirestore.instance.collection('rendezvous').doc(rdvId).delete();
+  }
+
+  Future<void> _pickAndUploadImage(String rdvId) async {
+    final picker = ImagePicker();
+    final XFile? pickedFile = await picker.pickImage(source: ImageSource.gallery);
+
+    if (pickedFile != null) {
+      File file = File(pickedFile.path);
+
+      try {
+        String fileName = 'therapie_$rdvId.jpg';
+        Reference ref = FirebaseStorage.instance.ref().child('therapie_images/$fileName');
+
+        UploadTask uploadTask = ref.putFile(file);
+        TaskSnapshot snapshot = await uploadTask;
+
+        String imageUrl = await snapshot.ref.getDownloadURL();
+
+        await FirebaseFirestore.instance.collection('rendezvous').doc(rdvId).update({'imageUrl': imageUrl});
+
+        if (!mounted) return;
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Image ajoutée avec succès")));
+      } catch (e) {
+        if (kDebugMode) {
+          print("Erreur lors de l'upload: $e");
+        }
+      }
+    }
   }
 
   @override
@@ -95,9 +126,35 @@ class _MesRdvState extends State<MesRdv> {
                         elevation: 5,
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                         child: ListTile(
-                          leading: const Icon(Icons.calendar_today, color: Color.fromARGB(255, 53, 172, 177)),
+                          leading: ((rdv.data() as Map<String, dynamic>).containsKey('imageUrl') && rdv['imageUrl'] != null)
+                                  ? Image.network(rdv['imageUrl'], width: 50, height: 50, fit: BoxFit.cover,)
+                                  : const Icon(Icons.calendar_today, color: Color.fromARGB(255, 53, 172, 177)),
+
                           title: Text("Thérapie: $therapie", style: const TextStyle(fontWeight: FontWeight.bold)),
                           subtitle: Text("📅 $formattedDate - ⏰ $time"),
+                          onLongPress: () {
+                            showDialog(
+                              context: context, 
+                              builder: (context) => AlertDialog(
+                                title: const Text("Ajouter image"),
+                                content: const Text("Ajoutez une image de la galerie"),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                      _pickAndUploadImage(rdvId);
+                                    }, 
+                                    child: const Text("Caméra")
+                                  ),
+                                  
+                                  TextButton(
+                                    onPressed: () => Navigator.pop(context),
+                                    child: const Text("Annuler")
+                                  )
+                                ],
+                              )
+                            );
+                          },
                         ),
                       ),
                     ),

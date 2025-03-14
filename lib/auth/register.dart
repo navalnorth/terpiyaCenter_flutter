@@ -128,77 +128,75 @@ class _RegisterState extends State<Register> {
         child: SingleChildScrollView(
           child: Form(
             key: _formKey,
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
+            child: Column(
+              children: [
+                Text(
+                  "Inscription",
+                  style: GoogleFonts.montserrat(
+                    color: Colors.black,
+                    fontSize: 32,
+                    fontWeight: FontWeight.bold)
+                ),
+                const SizedBox(height: 40,),
+            
+                TextFormField(
+                  controller: _prenomController,
+                  decoration: textInputDecoration("Prénom"),
+                ),
+                const SizedBox(height: 20,),
+            
+                TextFormField(
+                  controller: _nomController,
+                  decoration: textInputDecoration("Nom"),
+                ),
+                const SizedBox(height: 20,),
+            
+                TextFormField(
+                  controller: _ageController,
+                  decoration: textInputDecoration("Age"),
+                  keyboardType: TextInputType.number,
+                ),
+                const SizedBox(height: 20,),
+                      
+                TextFormField(
+                  controller: _emailController,
+                  decoration: textInputDecoration("E-mail"),
+                ),
+                const SizedBox(height: 20,),
+                      
+                TextFormField(
+                  controller: _mdpController,
+                  decoration: textInputDecoration("Mot de passe"),
+                  obscureText: true,
+                ),
+                const SizedBox(height: 20,),
+                      
+                TextFormField(
+                  controller: _mdpConfirmController,
+                  decoration: textInputDecoration("Confirmer Mot de passe"),
+                  obscureText: true,
+                ),
+                const SizedBox(height: 40,),
+                
+                CustomButton(
+                    text: "S'inscrire",
+                    bgColor: const Color.fromARGB(255, 53, 172, 177),
+                    txtColor: Colors.white,
+                    borderColor: const Color.fromARGB(255, 53, 172, 177),
+                    onPressed: () {
+                      signUp();
+                    }
+                ),
+            
+                if (_errorMessage != null) ...[
+                  const SizedBox(height: 10),
                   Text(
-                    "Inscription",
-                    style: GoogleFonts.montserrat(
-                      color: Colors.black,
-                      fontSize: 32,
-                      fontWeight: FontWeight.bold)
+                    _errorMessage!,
+                    style: const TextStyle(color: Colors.red, fontSize: 12),
+                    textAlign: TextAlign.center,
                   ),
-                  const SizedBox(height: 40,),
-
-                  TextFormField(
-                    controller: _prenomController,
-                    decoration: textInputDecoration("Prénom"),
-                  ),
-                  const SizedBox(height: 20,),
-
-                  TextFormField(
-                    controller: _nomController,
-                    decoration: textInputDecoration("Nom"),
-                  ),
-                  const SizedBox(height: 20,),
-
-                  TextFormField(
-                    controller: _ageController,
-                    decoration: textInputDecoration("Age"),
-                    keyboardType: TextInputType.number,
-                  ),
-                  const SizedBox(height: 20,),
-          
-                  TextFormField(
-                    controller: _emailController,
-                    decoration: textInputDecoration("E-mail"),
-                  ),
-                  const SizedBox(height: 20,),
-          
-                  TextFormField(
-                    controller: _mdpController,
-                    decoration: textInputDecoration("Mot de passe"),
-                    obscureText: true,
-                  ),
-                  const SizedBox(height: 20,),
-          
-                  TextFormField(
-                    controller: _mdpConfirmController,
-                    decoration: textInputDecoration("Confirmer Mot de passe"),
-                    obscureText: true,
-                  ),
-                  const SizedBox(height: 40,),
-                  
-                  CustomButton(
-                      text: "S'inscrire",
-                      bgColor: const Color.fromARGB(255, 53, 172, 177),
-                      txtColor: Colors.white,
-                      borderColor: const Color.fromARGB(255, 53, 172, 177),
-                      onPressed: () {
-                        signUp();
-                      }
-                  ),
-
-                  if (_errorMessage != null) ...[
-                    const SizedBox(height: 10),
-                    Text(
-                      _errorMessage!,
-                      style: const TextStyle(color: Colors.red, fontSize: 12),
-                      textAlign: TextAlign.center,
-                    ),
-                  ],
                 ],
-              ),
+              ],
             ),
           ),
         ),

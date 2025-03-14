@@ -154,6 +154,7 @@ class _HistoriqueRdvState extends State<HistoriqueRdv> {
     String time = rdv['time'];
     String therapie = rdv['therapie'];
     int duration = rdv['duration'];
+    String? imageUrl = (rdv.data() as Map<String, dynamic>).containsKey('imageUrl') ? rdv['imageUrl'] : null;
 
     return Card(
       elevation: 5,
@@ -173,7 +174,9 @@ class _HistoriqueRdvState extends State<HistoriqueRdv> {
             context: context,
             builder: (context) => AlertDialog(
               title: const Text("Votre image de thérapie"),
-              content: Image.asset("assets/therapie.jpg"),
+              content: imageUrl != null
+                    ? Image.network(imageUrl, fit: BoxFit.cover,)
+                    : const Text("Aucune image disponible."),
               actions: [
                 TextButton(
                   onPressed: () => Navigator.pop(context),

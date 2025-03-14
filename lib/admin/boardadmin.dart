@@ -1,11 +1,14 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:terapiya_center/admin/rubriques/chiffres_humanitaire_admin.dart';
+import 'package:terapiya_center/admin/rubriques/creation_dons_generaux.dart';
+import 'package:terapiya_center/admin/rubriques/creation_parrainage_orphelin.dart';
+import 'package:terapiya_center/admin/rubriques/creation_parrainages_etudiant.dart';
+import 'package:terapiya_center/admin/rubriques/dons_recus.dart';
 import 'package:terapiya_center/admin/rubriques/mes_rdv.dart';
 import 'package:terapiya_center/admin/rubriques/notifsadmin.dart';
 import 'package:terapiya_center/composants/rubrique_board.dart';
 import 'package:terapiya_center/data/get_user_name.dart';
-import 'package:terapiya_center/rubriques/formations/formations_home.dart';
-import 'package:terapiya_center/rubriques/hommes/detatouage_homme.dart';
 
 class Boardadmin extends StatefulWidget {
   const Boardadmin({super.key});
@@ -70,60 +73,52 @@ class _BoardadminState extends State<Boardadmin> {
                       text: "Changer chiffres Humantaire",
                       bgcolor: Colors.brown[200],
                       textcolor: Colors.black,
-                      destination: const DetatouageHomme(),
+                      destination: const ChiffresHumanitaireAdmin(),
                     ),
                     const SizedBox(width: 30),
                     RubriqueBoard(
                       text: "Dons reçus",
                       bgcolor: Colors.brown[200],
                       textcolor: Colors.black,
-                      destination: const FormationsHome(),
+                      destination: const DonsRecus(),
                     ),
                   ],
                 ),
                 const SizedBox(height: 30),
-                // Row(
-                //   mainAxisAlignment: MainAxisAlignment.center,
-                //   crossAxisAlignment: CrossAxisAlignment.center,
-                //   children: [
-                //     RubriqueBoard(
-                //       text: "Actions Humanitaires",
-                //       bgcolor: Colors.amberAccent,
-                //       textcolor: Colors.black,
-                //       destination: Humanitaire(),
-                //     ),
-                //     SizedBox(width: 30),
-                //     RubriqueBoard(
-                //       text: "Voyages Humanitaires",
-                //       bgcolor: Colors.amberAccent,
-                //       textcolor: Colors.black,
-                //       destination: Voyage(),
-                //     ),
-                //   ],
-                // ),
-                // SizedBox(height: 30),
+                 Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    RubriqueBoard(
+                      text: "Envoi de Dons généreaux",
+                      bgcolor: Colors.brown[200],
+                      textcolor: Colors.black,
+                      destination: const CreationDonsGeneraux(),
+                    ),
+                    const SizedBox(width: 30),
+                    RubriqueBoard(
+                      text: "Parrainages orphelins",
+                      bgcolor: Colors.brown[200],
+                      textcolor: Colors.black,
+                      destination: const CreationParrainageOrphelin(),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 30),
 
-                // Row(
-                //   mainAxisAlignment: MainAxisAlignment.center,
-                //   crossAxisAlignment: CrossAxisAlignment.center,
-                //   children: [
-                //     RubriqueBoard(
-                //       text: "Historique\n des RDV",
-                //       bgcolor: Colors.amberAccent,
-                //       textcolor: Colors.black,
-                //       destination: HistoriqueRdv(),
-                //     ),
-                //     SizedBox(width: 30),
-
-                //     RubriqueBoard(
-                //       text: "Suivi des\n dons généraux",
-                //       bgcolor: Colors.amberAccent,
-                //       textcolor: Colors.black,
-                //       destination: Hijama(),
-                //     ),
-                //   ],
-                // ),
-                // SizedBox(height: 30),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    RubriqueBoard(
+                      text: "Parrainages etudiant",
+                      bgcolor: Colors.brown[200],
+                      textcolor: Colors.black,
+                      destination: const CreationParrainagesEtudiant(),
+                    ),
+                  ],
+                ),
+                // const SizedBox(height: 30),
                 // Row(
                 //   mainAxisAlignment: MainAxisAlignment.center,
                 //   crossAxisAlignment: CrossAxisAlignment.center,

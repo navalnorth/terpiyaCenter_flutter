@@ -49,6 +49,7 @@ class EspaceFemmes extends StatelessWidget {
                     SizedBox(width: 30),
                     RubriqueBoard(
                       text: "Auriculothérapie",
+                      txtsize: 11,
                       destination: AuriculotherapieFemme(),
                     ),
                   ],
@@ -67,6 +68,7 @@ class EspaceFemmes extends StatelessWidget {
 
                     RubriqueBoard(
                       text: "Microneedling",
+                      txtsize: 13,
                       destination: Microneedling(),
                     ),
                   ],

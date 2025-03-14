@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -28,58 +29,73 @@ class _LoginState extends State<Login> {
   bool isLoading = false;
   String? _errorMessage;
 
+  // Fonction pour sauvegarder le token après connexion
   Future<void> saveTokenToDatabase(String userId) async {
     String? token = await FirebaseMessaging.instance.getToken();
 
     if (token != null) {
-      // Stocke chaque token dans une collection séparée
-      await FirebaseFirestore.instance.collection('tokens').doc(token).set({
-        'token': token,
-        'userId': userId,
-        'createdAt': FieldValue.serverTimestamp(),
-      });
+      try {
+        await FirebaseFirestore.instance.collection('users').doc(userId).update({
+          'token': token,
+          'updatedAt': FieldValue.serverTimestamp(),
+        });
+
+        if (kDebugMode) {
+          print("✅ Token enregistré avec succès dans Firestore pour l'utilisateur $userId");
+        }
+      } catch (e) {
+        if (kDebugMode) {
+          print("❌ Erreur lors de l'enregistrement du token : $e");
+        }
+      }
     }
   }
+
 
   Future<void> connexionMeth() async {
-  if (!_formKey.currentState!.validate()) {
-    return;
-  }
-  
-  setState(() {
-    isLoading = true;
-    _errorMessage = null;
-  });
-
-  try {
-    UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
-      email: _emailController.text.trim(),
-      password: _mdpController.text.trim(),
-    );
-
-    User? user = userCredential.user;
-    if (user != null) {
-      await saveTokenToDatabase(user.uid);
+    if (!_formKey.currentState!.validate()) {
+      return;
     }
-
-    if (!mounted) return;
-    Navigator.pushReplacement(context,MaterialPageRoute(builder: (context) => Wrapper()));
     
-  } on FirebaseAuthException catch (e) {
     setState(() {
-      if (e.code == "user-not-found" || e.code == "wrong-password") {
-        _errorMessage = "Email ou Mot de passe incorrects";
-      }
+      isLoading = true;
+      _errorMessage = null;
     });
-  } finally {
-    if (mounted) {
+
+    try {
+      UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: _emailController.text.trim(),
+        password: _mdpController.text.trim(),
+      );
+
+      User? user = userCredential.user;
+
+      if (user != null) {
+        await saveTokenToDatabase(user.uid);  // Sauvegarde du token dans Firebase
+      }
+
+      if (!mounted) return;
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Wrapper()));
+      
+    } on FirebaseAuthException catch (e) {
       setState(() {
-        isLoading = false;
+        switch (e.code) {
+          default:
+            _errorMessage = "Email ou Mot de passe incorrects";
+        }
       });
+    } catch (e) {
+      setState(() {
+        _errorMessage = "Erreur inattendue : ${e.toString()}";
+      });
+    } finally {
+      if (mounted) {
+        setState(() {
+          isLoading = false;
+        });
+      }
     }
   }
-}
-
 
   @override
   void dispose() {
@@ -112,11 +128,7 @@ class _LoginState extends State<Login> {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                Text("Connexion",
-                    style: GoogleFonts.montserrat(
-                        color: Colors.black,
-                        fontSize: 32,
-                        fontWeight: FontWeight.bold)),
+                Text("Connexion", style: GoogleFonts.montserrat(color: Colors.black, fontSize: 32, fontWeight: FontWeight.bold)),
                 const SizedBox(height: 40),
 
                 TextFormField(
@@ -161,9 +173,7 @@ class _LoginState extends State<Login> {
                         },
                         child: const Text(
                           "Mot de passe oublié ?",
-                          style: TextStyle(
-                            color: Color.fromARGB(255, 53, 172, 177),
-                            fontSize: 12
+                          style: TextStyle(color: Color.fromARGB(255, 53, 172, 177), fontSize: 12
                           )
                         ),
                       ),

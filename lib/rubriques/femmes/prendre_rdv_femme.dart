@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:intl/intl.dart';
 import 'package:terapiya_center/composants/button_decoration.dart';
+import 'package:terapiya_center/composants/input_decoration.dart';
 import 'package:terapiya_center/rdv/confirmation_rdv.dart';
 
 class PrendreRdvFemme extends StatefulWidget {
@@ -20,7 +21,8 @@ class _PrendreRdvFemmeState extends State<PrendreRdvFemme> {
   String? _selectedTime;
   List<String> _availableTimes = [];
 
-
+  final TextEditingController _tel = TextEditingController();
+  final TextEditingController _prenom = TextEditingController();
 
   final Map<String, int> _therapieDurations = {
     "Hijama (30€)": 30,
@@ -96,7 +98,7 @@ class _PrendreRdvFemmeState extends State<PrendreRdvFemme> {
 
 
   Future<void> _saveAppointment() async {
-    if (_selectedTherapie == null || _selectedTime == null) {
+    if (_selectedTherapie == null || _selectedTime == null || _prenom.text.isEmpty || _tel.text.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text("Veuillez remplir tous les champs.")),
       );
@@ -112,6 +114,8 @@ class _PrendreRdvFemmeState extends State<PrendreRdvFemme> {
       'time': _selectedTime,
       'gender': _selectedGender,
       'therapie': _selectedTherapie,
+      'prenom': _prenom.text.trim(),
+      'telephone': _tel.text.trim(),
       'duration': duration,
       'blockedTimes': duration == 60 ? [_selectedTime, _getNextTimeSlot(_selectedTime!)] : [_selectedTime],
       'timestamp': FieldValue.serverTimestamp(),
@@ -123,6 +127,8 @@ class _PrendreRdvFemmeState extends State<PrendreRdvFemme> {
       time: _selectedTime!,
       gender: _selectedGender,
       therapie: _selectedTherapie!,
+      prenom: _prenom.text.trim(),
+      tel: _tel.text.trim(),
       duree: duration,
     )));
   }
@@ -136,89 +142,117 @@ class _PrendreRdvFemmeState extends State<PrendreRdvFemme> {
         backgroundColor: const Color.fromARGB(255, 53, 172, 177),
         foregroundColor: Colors.white,
       ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          children: [
-            TableCalendar(
-              focusedDay: _selectedDate,
-              firstDay: DateTime(2020, 1, 1),
-              lastDay: DateTime(2030, 12, 31),
-              locale: 'fr_FR',
-              headerStyle: const HeaderStyle(formatButtonVisible: false, titleCentered: true),
-              startingDayOfWeek: StartingDayOfWeek.monday,
-              onDaySelected: (selectedDay, focusedDay) {
-                setState(() => _selectedDate = selectedDay);
-                _updateAvailableTimes();
-              },
-              selectedDayPredicate: (day) => isSameDay(_selectedDate, day),
-            ),
-            const SizedBox(height: 20),
 
-            const Text(
-              '⚠️ Pour réserver plusieurs thérapies pour vous-même ou pour votre groupe, voyez les créneaux libres consécutifs, réservez le premier créneau puis revenez pour réserver les suivants. 😊',
-              style: TextStyle(fontSize: 15),
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(height: 20),
-
-            DropdownButtonFormField<String>(
-              value: _selectedTherapie,
-              hint: const Text("Sélectionnez une thérapie"),
-              items: [
-                "Hijama (30€)",
-                "Hijama + bas du corps (35€)",
-                "Hijama + avant du corps (35€)",
-                "Hijama + massage (50€)",
-                "Hijama totale (60€)",
-                "Auriculothérapie - Troubles Psychiques (50€)",
-                "Auriculothérapie - Addictions (180€)",
-                "Détatouage - Small (60€)",
-                "Détatouage - Medium (80€)",
-                "Détatouage - Large (100€)",
-                "Microneedling (70€)",
-                "Hydrafacial (65€)",
-                "Korean Facial (55€)",
-              ].map((value) => DropdownMenuItem(
-                value: value,
-                child: Text(
-                  value,
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 1,
-                ),
-              )).toList(),
-              onChanged: (newValue) {
-                setState(() {
-                  _selectedTherapie = newValue;
+      body: SafeArea(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(20),
+          child: Column(
+            children: [
+              TableCalendar(
+                focusedDay: _selectedDate,
+                firstDay: DateTime(2020, 1, 1),
+                lastDay: DateTime(2030, 12, 31),
+                locale: 'fr_FR',
+                headerStyle: const HeaderStyle(formatButtonVisible: false, titleCentered: true),
+                startingDayOfWeek: StartingDayOfWeek.monday,
+                onDaySelected: (selectedDay, focusedDay) {
+                  setState(() => _selectedDate = selectedDay);
                   _updateAvailableTimes();
-                });
-              },
-            ),
-            const SizedBox(height: 20),
+                },
+                selectedDayPredicate: (day) => isSameDay(_selectedDate, day),
+              ),
+              const SizedBox(height: 20),
+        
+              const Text(
+                "⚠️ Pour réserver plusieurs RDV pour vous-même ou votre groupe, consultez les créneaux libres, réservez le premier, puis répétez l'opération pour les RDV suivants. 😊",
+                style: TextStyle(fontSize: 15),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 20),
+        
+              DropdownButtonFormField<String>(
+                value: _selectedTherapie,
+                hint: const Text("Sélectionnez une thérapie"),
+                items: [
+                  "Hijama (30€)",
+                  "Hijama + bas du corps (35€)",
+                  "Hijama + avant du corps (35€)",
+                  "Hijama + massage (50€)",
+                  "Hijama totale (60€)",
+                  "Auriculothérapie - Troubles Psychiques (50€)",
+                  "Auriculothérapie - Addictions (180€)",
+                  "Détatouage - Small (60€)",
+                  "Détatouage - Medium (80€)",
+                  "Détatouage - Large (100€)",
+                  "Microneedling (70€)",
+                  "Hydrafacial (65€)",
+                  "Korean Facial (55€)",
+                ].map((value) => DropdownMenuItem(
+                  value: value,
+                  child: Text(
+                    value,
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
+                  ),
+                )).toList(),
+                onChanged: (newValue) {
+                  setState(() {
+                    _selectedTherapie = newValue;
+                    _updateAvailableTimes();
+                  });
+                },
+              ),
+              const SizedBox(height: 20),
+        
+              DropdownButtonFormField<String>(
+                value: _selectedTime,
+                hint: const Text("Sélectionnez un horaire"),
+                items: _availableTimes.map((time) => DropdownMenuItem(value: time, child: Text(time))).toList(),
+                onChanged: (newValue) => setState(() => _selectedTime = newValue),
+              ),
+              const SizedBox(height: 30),
 
-            DropdownButtonFormField<String>(
-              value: _selectedTime,
-              hint: const Text("Sélectionnez un horaire"),
-              items: _availableTimes.map((time) => DropdownMenuItem(value: time, child: Text(time))).toList(),
-              onChanged: (newValue) => setState(() => _selectedTime = newValue),
-            ),
-            const SizedBox(height: 30),
+              TextFormField(
+                controller: _tel,
+                decoration: textInputDecoration("0648573848", label: "Téléphone"),
+                keyboardType: TextInputType.number,
+                validator: (value) {
+                  if (value == null || value.trim().isEmpty) {
+                    return "Veuillez entrer un numéro de téléphone.";
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(height: 20),
 
-            if (_selectedTherapie != null) 
+              TextFormField(
+                controller: _prenom,
+                decoration: textInputDecoration("Oumaima", label: "Prénom"),
+                validator: (value) {
+                  if (value == null || value.trim().isEmpty) {
+                    return "Veuillez entrer un Prénom.";
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(height: 20),
+        
+              if (_selectedTherapie != null) 
               Text(
                 "Durée de la Thérapie : ${_therapieDurations[_selectedTherapie]} min",
                 style: const TextStyle(fontSize: 18),
               ),
-
-            const SizedBox(height: 50),
-            CustomButton(
-              text: "Confirmer le RDV",
-              borderColor: const Color.fromARGB(255, 53, 172, 177),
-              bgColor: const Color.fromARGB(255, 53, 172, 177),
-              txtColor: Colors.white,
-              onPressed: _saveAppointment,
-            ),
-          ],
+        
+              const SizedBox(height: 50),
+              CustomButton(
+                text: "Confirmer le RDV",
+                borderColor: const Color.fromARGB(255, 53, 172, 177),
+                bgColor: const Color.fromARGB(255, 53, 172, 177),
+                txtColor: Colors.white,
+                onPressed: _saveAppointment,
+              ),
+            ],
+          ),
         ),
       ),
     );

@@ -8,6 +8,7 @@ class RubriqueBoard extends StatelessWidget {
   final Color? textcolor;
   final double width;
   final double height;
+  final double txtsize;
 
   const RubriqueBoard({
     super.key,
@@ -17,6 +18,7 @@ class RubriqueBoard extends StatelessWidget {
     this.textcolor = Colors.white,
     this.height = 115,
     this.width = 150,
+    this.txtsize = 14,
   });
 
   @override
@@ -29,8 +31,8 @@ class RubriqueBoard extends StatelessWidget {
         );
       },
       child: Container(
-        width: 150,
-        height: 115,
+        width: width,
+        height: height,
         decoration: BoxDecoration(
           color: bgcolor,
           borderRadius: BorderRadius.circular(20),
@@ -38,14 +40,19 @@ class RubriqueBoard extends StatelessWidget {
         child: Center(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10),
-            child: Text(
-              text,
-              textAlign: TextAlign.center,
-              style: GoogleFonts.montserrat(
-                color: textcolor,
-                fontSize: 14,
-                fontWeight: FontWeight.bold,
-              ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  text.toUpperCase(),
+                  textAlign: TextAlign.center,
+                  style: GoogleFonts.montserrat(
+                    color: textcolor,
+                    fontSize: txtsize,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
             ),
           ),
         ),

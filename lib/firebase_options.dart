@@ -47,6 +47,7 @@ class DefaultFirebaseOptions {
     projectId: 'terpaiyacenter',
     authDomain: 'terpaiyacenter.firebaseapp.com',
     storageBucket: 'terpaiyacenter.firebasestorage.app',
+    measurementId: 'G-LY4GL4S69R',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
@@ -82,6 +83,7 @@ class DefaultFirebaseOptions {
     projectId: 'terpaiyacenter',
     authDomain: 'terpaiyacenter.firebaseapp.com',
     storageBucket: 'terpaiyacenter.firebasestorage.app',
+    measurementId: 'G-CZKE2GD81Z',
   );
 
 }

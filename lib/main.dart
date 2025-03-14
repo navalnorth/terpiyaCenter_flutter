@@ -25,7 +25,7 @@ void main() async {
 }
 
 
-void setupFCMListeners() {
+void setupFCMListeners() async {
   FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
     if (message.data.containsKey('link')) {
       String link = message.data['link'];
@@ -41,6 +41,8 @@ void setupFCMListeners() {
   });
 }
 
+
+
 void _openLink(String url) async {
   if (await canLaunchUrl(Uri.parse(url))) {
     await launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication);
@@ -48,6 +50,8 @@ void _openLink(String url) async {
     debugPrint("Impossible d'ouvrir le lien: $url");
   }
 }
+
+
 
 Future<void> requestPermission() async {
   FirebaseMessaging messaging = FirebaseMessaging.instance;
@@ -58,6 +62,8 @@ Future<void> requestPermission() async {
     sound: true,
   );
 }
+
+
 
 Future<void> _firebaseMessagingForegroundHandler(RemoteMessage message) async {
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();

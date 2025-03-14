@@ -1,13 +1,19 @@
+import 'dart:convert';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:http/http.dart' as http;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter_stripe/flutter_stripe.dart' as stripe;
-import 'package:http/http.dart' as http;
-import 'dart:convert';
+import 'package:terapiya_center/composants/input_decoration.dart';
+import 'package:terapiya_center/user/board.dart';
 
 class FormDon extends StatefulWidget {
-  const FormDon({super.key});
+  final Map<String, int> dons;
+
+  const FormDon({
+    super.key,
+    required this.dons,
+  });
 
   @override
   State<FormDon> createState() => _FormDonState();
@@ -15,264 +21,206 @@ class FormDon extends StatefulWidget {
 
 class _FormDonState extends State<FormDon> {
   final _formKey = GlobalKey<FormState>();
-  final TextEditingController _donTotal = TextEditingController(text: "0.00€");
+  final TextEditingController _message = TextEditingController();
+  final TextEditingController _email = TextEditingController();
+  final TextEditingController _tel = TextEditingController();
+  late List<TextEditingController> _controllers;
+  final Map<String, String> _nomsDons = {}; // Stocker les noms des dons
 
-  final Map<String, int> _quantites = {};
-  final Map<String, double> _prixDon = {};
-  String? _modePaiement;
+  Future<void> _fetchNomDons() async {
+    for (var donId in widget.dons.keys) {
+      DocumentSnapshot donDoc =
+          await FirebaseFirestore.instance.collection("dons").doc(donId).get();
 
-  void _updateQuantite(String donId, int delta) {
-    setState(() {
-      _quantites[donId] = (_quantites[donId] ?? 0) + delta;
-      if (_quantites[donId]! < 0) {
-        _quantites[donId] = 0;
-      }
-      _calculerTotal();
-    });
-  }
-
-  void _calculerTotal() {
-    double total = 0.0;
-    _quantites.forEach((donId, quantitte) {
-      total += (quantitte * (_prixDon[donId] ?? 0));
-    });
-    _donTotal.text = "${total.toStringAsFixed(2)}€";
-  }
-
-  Future<void> _processPaiement() async {
-    if (_modePaiement != "CB") {
-      _soumettre(); 
-      return;
-    }
-
-    try {
-      double montant = double.parse(_donTotal.text.replaceAll('€', '').trim()) * 100;
-
-      final response = await http.post(
-        Uri.parse("https://us-central1-terpaiyacenter.cloudfunctions.net/createPaymentIntent"),
-        headers: {'Content-Type': 'application/json'},
-        body: json.encode({'amount': montant.toInt(), 'currency':'eur'})
-      );
-      final paymentIntentData = json.decode(response.body);
-
-
-      await stripe.Stripe.instance.initPaymentSheet(
-        paymentSheetParameters: stripe.SetupPaymentSheetParameters(
-          paymentIntentClientSecret: paymentIntentData['client_secret'],
-          merchantDisplayName: 'Mon Organisation'
-        )
-      );
-
-      if (paymentIntentData['status'] != 'requires_payment_method') {
-        throw Exception("Paiement non valide !");
-      }
-
-      await stripe.Stripe.instance.presentPaymentSheet();
-
-      if (!mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Paiemet réussi !"))
-      );
-
-      await _soumettre();
-    } catch (e) {
-      if (e is stripe.StripeException) {
-      if (!mounted) return;
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text("❌ Paiement annulé ou échoué ")),
-        );
-      } else {
-        if (!mounted) return;
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text("❌ Erreur de paiement")),
-        );
+      if (donDoc.exists) {
+        _nomsDons[donId] = donDoc['nom'] ?? "Inconnu";
       }
     }
+
+    // Initialiser les contrôleurs après la récupération des noms
+    _initializeControllers();
+    setState(() {});
   }
 
-  Future<void> _soumettre() async {
+
+  void _initializeControllers() {
+    _controllers = widget.dons.entries.expand((entry) {
+      return List.generate(entry.value, (index) => TextEditingController());
+    }).toList();
+  }
+
+  Future<void> _enregistrerDon() async {
     if (_formKey.currentState!.validate()) {
-      User? user = FirebaseAuth.instance.currentUser;
-      Map<String, int> donsSelectionnes = _quantites.entries.where((entry) => entry.value > 0).fold({}, (map, entry) {
-        map[entry.key] = entry.value;
-        return map;
-      });
+      List<Map<String, String>> donInfos = [];
+      int controllerIndex = 0;
 
-      if (donsSelectionnes.isEmpty) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text("Veuillez sélectionner au moins un don.")),
-        );
+      for (var entry in widget.dons.entries) {
+        String donId = entry.key;
+        int quantity = entry.value;
+        String nomDon = _nomsDons[donId] ?? "Inconnu";
+
+        for (int i = 0; i < quantity; i++) {
+          donInfos.add({
+            "id": donId,
+            "nom": nomDon,
+            "beneficiaire": _controllers[controllerIndex++].text.trim(),
+          });
+        }
+      }
+
+      await FirebaseFirestore.instance.collection("donInfos").add({
+        "userId": FirebaseAuth.instance.currentUser?.uid, 
+        "dons": donInfos,
+        "message": _message.text.trim(),
+        "email": _email.text.trim(),
+        "telephone": _tel.text.trim(),
+        "date": Timestamp.now(),
+      });
+      await _envoyerNotificationAdmin();
+
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Informations enregistrées !")));
+
+      Navigator.push(context, MaterialPageRoute(builder: (context) => const Board()));
+    }
+  }
+
+
+  Future<void> _envoyerNotificationAdmin() async {
+    try {
+      // Récupérer les tokens des administrateurs depuis la collection users
+      QuerySnapshot snapshot = await FirebaseFirestore.instance.collection("users").where("role", isEqualTo: "admin").where("token", isNotEqualTo: null).get();
+
+      List<String> adminTokens = snapshot.docs.map((doc) {
+        String token = doc["token"] as String;
+        String email = doc["email"] ?? "Email inconnu"; // Affiche l'email de l'admin
+        debugPrint("📩 Notification pour : $email | Token : $token");
+        return token;
+      }).toList();
+
+      if (adminTokens.isEmpty) {
+        debugPrint("❌ Aucun admin trouvé pour recevoir la notification.");
         return;
       }
 
-      // 🔥 Enregistrer dans Firestore (collection "transactions_dons")
-      await FirebaseFirestore.instance.collection("transactions_dons").add({
-        "userId": user!.uid,
-        "dons": donsSelectionnes,
-        'total': _donTotal.text,
-        "mode_paiement": _modePaiement,
-        "date": Timestamp.now(),
-      });
-
-      if (!mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Don enregistré avec succès!")),
+      final response = await http.post(
+        Uri.parse("https://sendnotification-hkzyphvo7q-uc.a.run.app"),
+        headers: {"Content-Type": "application/json"},
+        body: jsonEncode({
+          "tokens": adminTokens,
+          "title": "📢 Nouveau don reçu !",
+          "body": "Un utilisateur vient d'enregistrer un don.",
+          "link": "/admin/dons"
+        }),
       );
 
-      setState(() {
-        _quantites.clear();
-        _prixDon.clear();
-        _donTotal.text = "0.00€";
-        _modePaiement = null;
-      });
+      if (response.statusCode == 200) {
+        debugPrint("✅ Notification envoyée aux admins !");
+      } else {
+        debugPrint("❌ Erreur d'envoi de la notification : ${response.body}");
+      }
+    } catch (e) {
+      debugPrint("❌ Erreur : $e");
     }
+  }
+
+
+
+  @override
+  void initState() {
+    super.initState();
+    _controllers = [];
+    _fetchNomDons();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('FAIRE UN DON', style: TextStyle(fontSize: 15)),
-        centerTitle: true,
-      ),
+    if (_controllers.isEmpty) {
+      return const Scaffold(body: Center(child: SpinKitChasingDots(color: Color.fromARGB(255, 53, 172, 177), size: 50)));
+    }
 
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(20),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              children: [
-                Container(
-                  decoration: BoxDecoration(border: Border.all(color: Colors.black, width: 2)),
-                  child: SizedBox(
-                    height: 300,
-                    child: StreamBuilder(
-                      stream: FirebaseFirestore.instance.collection('dons').snapshots(),
-                      builder: (context, snapshot) {
-                        if (!snapshot.hasData) {
-                          return const Center(child: SpinKitChasingDots(color: Color.fromARGB(255, 53, 172, 177),size: 50));
-                        }
-                  
-                        var dons = snapshot.data!.docs;
-                        if (_prixDon.isEmpty) {
-                          for (var don in dons) {
-                            _prixDon[don.id] = don['prix'].toDouble();
-                          }
-                        }
-                        return ListView.builder(
-                          itemCount: dons.length,
-                          itemBuilder: (context, index) {
-                            var don = dons[index];
-                            String donId = don.id;
-                            String nom = don['nom'];
-                            double prix = don['prix'].toDouble();
-                  
-                            return Card(
-                              elevation: 3,
-                              margin: const EdgeInsets.only(bottom: 5),
-                              child: Padding(
-                                padding: const EdgeInsets.all(10),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Text( nom, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-                                        Text("$prix€",style: TextStyle(color: Colors.grey[700])),
-                                      ],
-                                    ),
-                                    Row(
-                                      children: [
-                                        IconButton(
-                                          onPressed: () => _updateQuantite(donId, -1),
-                                          icon: const Icon(Icons.remove, color: Colors.red),
-                                        ),
-                                        Text("${_quantites[donId] ?? 0}",style: const TextStyle(fontSize: 18)),
-                                        IconButton(
-                                          onPressed: () => _updateQuantite(donId, 1),
-                                          icon: const Icon(Icons.add, color: Colors.green),
-                                        ),
-                                      ],
-                                    )
-                                  ],
-                                ),
-                              ),
-                            );
+    int controllerIndex = 0;
+
+    return PopScope(
+      canPop: false,
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('Informations sur le Don',style: TextStyle(fontSize: 15)),
+          centerTitle: true,
+          automaticallyImplyLeading: false,
+        ),
+        body: SafeArea(
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                children: [
+                  ...widget.dons.entries.expand((entry) {
+                    String donId = entry.key;
+                    int count = entry.value;
+                    String nomDon = _nomsDons[donId] ?? "Chargement...";
+                      
+                    return List.generate(count, (index) {
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 8.0),
+                        child: TextFormField(
+                          controller: _controllers[controllerIndex++],
+                          decoration: textInputDecoration(
+                            "Nom du bénéficiaire",
+                            label: "$nomDon ${count > 1 ? index + 1 : ''}".trim(),
+                          ),
+                          validator: (value) {
+                            if (value == null || value.trim().isEmpty) {
+                              return "Veuillez entrer un nom.";
+                            }
+                            return null;
                           },
-                        );
-                      },
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 20),
-
-                TextFormField(
-                  controller: _donTotal,
-                  decoration: const InputDecoration(
-                    labelText: "Total des dons :",
-                    hintText: "0.00€",
-                    border: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.black, width: 2)
-                    )
-                  ),
-                  readOnly: true,
-                  style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: Colors.green),
-                ),
-                const SizedBox(height: 30,),
-
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Column(
-                      children: [
-                        const Text("Mode de paiement :", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-                        Row(
-                          children: [
-                            Radio<String>(
-                              value: "CB",
-                              groupValue: _modePaiement,
-                              onChanged: (value) {
-                                setState(() {
-                                  _modePaiement = value;
-                                });
-                              },
-                            ),
-                            const Text("CB"),
-                            Radio<String>(
-                              value: "PayPal",
-                              groupValue: _modePaiement,
-                              onChanged: (value) {
-                                setState(() {
-                                  _modePaiement = value;
-                                });
-                              },
-                            ),
-                            const Text("PayPal"),
-                            Radio<String>(
-                              value: "Espèces",
-                              groupValue: _modePaiement,
-                              onChanged: (value) {
-                                setState(() {
-                                  _modePaiement = value;
-                                });
-                              },
-                            ),
-                            const Text("Espèces"),
-                          ],
                         ),
-                      ],
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 20,),
-
-                ElevatedButton(
-                  onPressed: _processPaiement,
-                  child: const Text("Soumettre"),
-                ),
-              ],
+                      );
+                    });
+                  }),
+                  const SizedBox(height: 20),
+                      
+                  TextFormField(
+                    controller: _email,
+                    decoration: textInputDecoration("email@exemple.com", label: "Email"),
+                    keyboardType: TextInputType.emailAddress,
+                    validator: (value) {
+                      if (value == null || value.trim().isEmpty) {
+                        return "Veuillez entrer un email.";
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(height: 20),
+                      
+                  TextFormField(
+                    controller: _tel,
+                    decoration: textInputDecoration("0648394838", label: "Téléphone"),
+                    keyboardType: TextInputType.number,
+                    validator: (value) {
+                      if (value == null || value.trim().isEmpty) {
+                        return "Veuillez entrer un numero de téléphone.";
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(height: 20),
+                      
+                  TextFormField(
+                    controller: _message,
+                    decoration: textInputDecoration("Message ou indication", label: "Message"),
+                    maxLines: 3,
+                  ),
+                  const SizedBox(height: 20),
+                      
+                  ElevatedButton(
+                    onPressed: _enregistrerDon,
+                    child: const Text("Enregistrer"),
+                  ),
+                ],
+              ),
             ),
           ),
         ),

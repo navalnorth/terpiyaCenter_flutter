@@ -224,7 +224,6 @@ class _NotifsadminState extends State<Notifsadmin> {
         },
         child: const Icon(Icons.add),
       ),
-
     );
   }
 }

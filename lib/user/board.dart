@@ -5,11 +5,13 @@ import 'package:terapiya_center/composants/rubrique_board.dart';
 import 'package:terapiya_center/rdv/historique_rdv.dart';
 import 'package:terapiya_center/data/get_user_name.dart';
 import 'package:terapiya_center/rubriques/contact.dart';
+import 'package:terapiya_center/rubriques/dons/historique_perso_don.dart';
+import 'package:terapiya_center/rubriques/dons_generaux.dart';
 import 'package:terapiya_center/rubriques/formations/formations_home.dart';
-import 'package:terapiya_center/rubriques/hommes/hijama_homme.dart';
 import 'package:terapiya_center/rubriques/humanitaire.dart';
 import 'package:terapiya_center/rubriques/hommes/espace_hommes.dart';
 import 'package:terapiya_center/rubriques/femmes/espace_femmes.dart';
+import 'package:terapiya_center/rubriques/parrainage/espace_parainage.dart';
 
 class Board extends StatefulWidget {
   const Board({super.key});
@@ -52,11 +54,10 @@ class _BoardState extends State<Board> {
         ),
 
         body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 55),
           child: SingleChildScrollView(
             child: Column(
               children: [
-                const SizedBox(height: 50),
                 Column(
                   children: [
                     SizedBox(
@@ -78,10 +79,20 @@ class _BoardState extends State<Board> {
                         destination: const EspaceFemmes(),
                       ),
                     ),
+                    const SizedBox(height: 20),
+            
+                    const SizedBox(
+                      width: double.infinity,
+                      height: 50,
+                      child: RubriqueBoard(
+                        text: "Espace Parrainages",
+                        destination: EspaceParainage(),
+                      ),
+                    ),
                   ],
                 ),
-                const SizedBox(height: 50,),
-
+                const SizedBox(height: 40,),
+            
                 const Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -98,7 +109,7 @@ class _BoardState extends State<Board> {
                   ],
                 ),
                 const SizedBox(height: 30),
-
+            
                 const Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -108,10 +119,10 @@ class _BoardState extends State<Board> {
                       destination: HistoriqueRdv(),
                     ),
                     SizedBox(width: 30),
-
+            
                     RubriqueBoard(
                       text: "Suivi des\n dons généraux",
-                      destination: HijamaHomme(),
+                      destination: DonsGeneraux(),
                     ),
                   ],
                 ),
@@ -122,10 +133,10 @@ class _BoardState extends State<Board> {
                   children: [
                     RubriqueBoard(
                       text: "Suivi des\n dons personnels",
-                      destination: HijamaHomme(),
+                      destination: HistoriquePersoDon(),
                     ),
                     SizedBox(width: 30),
-
+            
                     RubriqueBoard(
                       text: "Contact",
                       destination: Contact(),
