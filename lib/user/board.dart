@@ -65,6 +65,7 @@ class _BoardState extends State<Board> {
                       height: 50,
                       child: RubriqueBoard(
                         text: "Espace Hommes",
+                        txtsize: 15,
                         bgcolor: Colors.blue.shade400,
                         destination: const EspaceHommes(),
                       ),
@@ -75,6 +76,7 @@ class _BoardState extends State<Board> {
                       height: 50,
                       child: RubriqueBoard(
                         text: "Espace Femmes",
+                        txtsize: 15,
                         bgcolor: Colors.pink.shade400,
                         destination: const EspaceFemmes(),
                       ),
@@ -86,6 +88,7 @@ class _BoardState extends State<Board> {
                       height: 50,
                       child: RubriqueBoard(
                         text: "Espace Parrainages",
+                        txtsize: 15,
                         destination: EspaceParainage(),
                       ),
                     ),
@@ -100,11 +103,13 @@ class _BoardState extends State<Board> {
                     RubriqueBoard(
                       text: "Formations",
                       destination: FormationsHome(),
+                      path: "assets/board/formation.png",
                     ),
                     SizedBox(width: 30),
                     RubriqueBoard(
                       text: "Dons Humanitaires",
                       destination: Humanitaire(),
+                      path: "assets/board/don.png",
                     ),
                   ],
                 ),
@@ -117,12 +122,14 @@ class _BoardState extends State<Board> {
                     RubriqueBoard(
                       text: "Historique\n des RDV",
                       destination: HistoriqueRdv(),
+                      path: "assets/board/historique.png",
                     ),
                     SizedBox(width: 30),
             
                     RubriqueBoard(
                       text: "Suivi des\n dons généraux",
                       destination: DonsGeneraux(),
+                      path: "assets/board/generaux.png",
                     ),
                   ],
                 ),
@@ -134,12 +141,14 @@ class _BoardState extends State<Board> {
                     RubriqueBoard(
                       text: "Suivi des\n dons personnels",
                       destination: HistoriquePersoDon(),
+                      path: "assets/board/personel.png",
                     ),
                     SizedBox(width: 30),
             
                     RubriqueBoard(
                       text: "Contact",
                       destination: Contact(),
+                      path: "assets/board/contact.png",
                     ),
                   ],
                 ),

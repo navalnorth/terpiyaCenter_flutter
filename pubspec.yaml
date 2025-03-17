@@ -32,6 +32,10 @@ dependencies:
   firebase_storage: ^12.4.4
   image_picker: ^1.1.2
   carousel_slider: ^5.0.0
+  uuid: ^4.5.1
+  pdf: ^3.11.3
+  share_plus: ^10.1.4
+  path_provider: ^2.1.5
 
 dev_dependencies:
   flutter_test:
@@ -46,6 +50,14 @@ flutter:
     - assets/slide/
     - assets/formations/
     - assets/board/
+    - assets/board/formation.png
+    - assets/board/don.png
+    - assets/board/historique.png
+    - assets/board/generaux.png
+    - assets/board/personel.png
+    - assets/board/contact.png
+    - assets/fonts/Roboto-Regular.ttf
+    - assets/fonts/Roboto-Bold.ttf
 
 flutter_launcher_icons:
   android: true

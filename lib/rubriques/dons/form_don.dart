@@ -6,13 +6,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:terapiya_center/composants/input_decoration.dart';
 import 'package:terapiya_center/user/board.dart';
+import 'package:uuid/uuid.dart';
 
 class FormDon extends StatefulWidget {
   final Map<String, int> dons;
+  final String modePaiement;
+  final String total;
 
   const FormDon({
     super.key,
     required this.dons,
+    required this.modePaiement,
+    required this.total,
   });
 
   @override
@@ -22,6 +27,12 @@ class FormDon extends StatefulWidget {
 class _FormDonState extends State<FormDon> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _message = TextEditingController();
+  final TextEditingController _nom = TextEditingController();
+  final TextEditingController _prenom = TextEditingController();
+  final TextEditingController _adresse = TextEditingController();
+  final TextEditingController _cp = TextEditingController();
+  final TextEditingController _commune = TextEditingController();
+  final TextEditingController _pays = TextEditingController();
   final TextEditingController _email = TextEditingController();
   final TextEditingController _tel = TextEditingController();
   late List<TextEditingController> _controllers;
@@ -49,6 +60,9 @@ class _FormDonState extends State<FormDon> {
     }).toList();
   }
 
+
+  final Uuid uuid = const Uuid();
+
   Future<void> _enregistrerDon() async {
     if (_formKey.currentState!.validate()) {
       List<Map<String, String>> donInfos = [];
@@ -62,6 +76,7 @@ class _FormDonState extends State<FormDon> {
         for (int i = 0; i < quantity; i++) {
           donInfos.add({
             "id": donId,
+            "donId": uuid.v4(), // ✅ Génère un identifiant unique
             "nom": nomDon,
             "beneficiaire": _controllers[controllerIndex++].text.trim(),
           });
@@ -69,13 +84,22 @@ class _FormDonState extends State<FormDon> {
       }
 
       await FirebaseFirestore.instance.collection("donInfos").add({
-        "userId": FirebaseAuth.instance.currentUser?.uid, 
+        "userId": FirebaseAuth.instance.currentUser?.uid,
         "dons": donInfos,
         "message": _message.text.trim(),
         "email": _email.text.trim(),
+        "nom": _nom.text.trim(),
+        "prenom": _prenom.text.trim(),
+        "adresse": _adresse.text.trim(),
+        "cp": _cp.text.trim(),
+        "commune": _commune.text.trim(),
+        "pays": _pays.text.trim(),
         "telephone": _tel.text.trim(),
+        "mode_paiement": widget.modePaiement,
+        "total": widget.total,
         "date": Timestamp.now(),
       });
+
       await _envoyerNotificationAdmin();
 
       if (!mounted) return;
@@ -84,6 +108,7 @@ class _FormDonState extends State<FormDon> {
       Navigator.push(context, MaterialPageRoute(builder: (context) => const Board()));
     }
   }
+
 
 
   Future<void> _envoyerNotificationAdmin() async {
@@ -180,6 +205,79 @@ class _FormDonState extends State<FormDon> {
                       );
                     });
                   }),
+                  const SizedBox(height: 20),
+
+                  TextFormField(
+                    controller: _nom,
+                    decoration: textInputDecoration("Habib", label: "Nom"),
+                    validator: (value) {
+                      if (value == null || value.trim().isEmpty) {
+                        return "Veuillez entrer un nom.";
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(height: 20),
+
+                  TextFormField(
+                    controller: _prenom,
+                    decoration: textInputDecoration("Ahmed", label: "Prénom"),
+                    validator: (value) {
+                      if (value == null || value.trim().isEmpty) {
+                        return "Veuillez entrer un Prénom.";
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(height: 20),
+
+                  TextFormField(
+                    controller: _adresse,
+                    decoration: textInputDecoration("29 rue des Roses", label: "Adresse Postale"),
+                    validator: (value) {
+                      if (value == null || value.trim().isEmpty) {
+                        return "Veuillez entrer un Prénom.";
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(height: 20),
+
+                  TextFormField(
+                    controller: _cp,
+                    decoration: textInputDecoration("59000", label: "Code Postale"),
+                    keyboardType: TextInputType.number,
+                    validator: (value) {
+                      if (value == null || value.trim().isEmpty) {
+                        return "Veuillez entrer un code postale.";
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(height: 20),
+
+                  TextFormField(
+                    controller: _commune,
+                    decoration: textInputDecoration("Lille", label: "Commune"),
+                    validator: (value) {
+                      if (value == null || value.trim().isEmpty) {
+                        return "Veuillez entrer une ville.";
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(height: 20),
+
+                  TextFormField(
+                    controller: _pays,
+                    decoration: textInputDecoration("France", label: "Pays"),
+                    validator: (value) {
+                      if (value == null || value.trim().isEmpty) {
+                        return "Veuillez entrer un pays.";
+                      }
+                      return null;
+                    },
+                  ),
                   const SizedBox(height: 20),
                       
                   TextFormField(

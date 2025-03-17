@@ -173,17 +173,6 @@ class _HumanitaireState extends State<Humanitaire> {
                       ],
                     ),
                     const SizedBox(height: 20),
-        
-                    const SizedBox(height: 30),
-                    Text(
-                      "PRIX : 890€ PAR GROUPE",
-                      style: GoogleFonts.montserrat(
-                        color: const Color.fromARGB(255, 53, 172, 177),
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
                   ],
                 ),
               ),

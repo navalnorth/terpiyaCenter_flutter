@@ -1,12 +1,16 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:terapiya_center/admin/rubriques/arreter_dons.dart';
 import 'package:terapiya_center/admin/rubriques/chiffres_humanitaire_admin.dart';
 import 'package:terapiya_center/admin/rubriques/creation_dons_generaux.dart';
 import 'package:terapiya_center/admin/rubriques/creation_parrainage_orphelin.dart';
 import 'package:terapiya_center/admin/rubriques/creation_parrainages_etudiant.dart';
+import 'package:terapiya_center/admin/rubriques/deduction_fiscale.dart';
 import 'package:terapiya_center/admin/rubriques/dons_recus.dart';
 import 'package:terapiya_center/admin/rubriques/mes_rdv.dart';
 import 'package:terapiya_center/admin/rubriques/notifsadmin.dart';
+import 'package:terapiya_center/admin/rubriques/parrainage_etudiant_admin.dart';
+import 'package:terapiya_center/admin/rubriques/parrainage_orphelin_admin.dart';
 import 'package:terapiya_center/composants/rubrique_board.dart';
 import 'package:terapiya_center/data/get_user_name.dart';
 
@@ -19,6 +23,7 @@ class Boardadmin extends StatefulWidget {
 
 class _BoardadminState extends State<Boardadmin> {
   final currentUser = FirebaseAuth.instance.currentUser!;
+  Map<String, dynamic>? donData;
 
   @override
   Widget build(BuildContext context) {
@@ -44,103 +49,127 @@ class _BoardadminState extends State<Boardadmin> {
 
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                const SizedBox(height: 20),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    RubriqueBoard(
-                      text: "Notifications",bgcolor: Colors.brown[200],
-                      textcolor: Colors.black,
-                      destination: const Notifsadmin(),
-                    ),
-                    const SizedBox(width: 30),
-                    RubriqueBoard(
-                      text: "Mes RDV",
-                      bgcolor: Colors.brown[200],
-                      textcolor: Colors.black,
-                      destination: const MesRdv(),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 30),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    RubriqueBoard(
-                      text: "Changer chiffres Humantaire",
-                      bgcolor: Colors.brown[200],
-                      textcolor: Colors.black,
-                      destination: const ChiffresHumanitaireAdmin(),
-                    ),
-                    const SizedBox(width: 30),
-                    RubriqueBoard(
-                      text: "Dons reçus",
-                      bgcolor: Colors.brown[200],
-                      textcolor: Colors.black,
-                      destination: const DonsRecus(),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 30),
-                 Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    RubriqueBoard(
-                      text: "Envoi de Dons généreaux",
-                      bgcolor: Colors.brown[200],
-                      textcolor: Colors.black,
-                      destination: const CreationDonsGeneraux(),
-                    ),
-                    const SizedBox(width: 30),
-                    RubriqueBoard(
-                      text: "Parrainages orphelins",
-                      bgcolor: Colors.brown[200],
-                      textcolor: Colors.black,
-                      destination: const CreationParrainageOrphelin(),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 30),
-
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    RubriqueBoard(
-                      text: "Parrainages etudiant",
-                      bgcolor: Colors.brown[200],
-                      textcolor: Colors.black,
-                      destination: const CreationParrainagesEtudiant(),
-                    ),
-                  ],
-                ),
-                // const SizedBox(height: 30),
-                // Row(
-                //   mainAxisAlignment: MainAxisAlignment.center,
-                //   crossAxisAlignment: CrossAxisAlignment.center,
-                //   children: [
-                //     RubriqueBoard(
-                //       text: "Suivi des\n dons personnels",
-                //       bgcolor: Colors.amberAccent,
-                //       textcolor: Colors.black,
-                //       destination: Hijama(),
-                //     ),
-                //     SizedBox(width: 30),
-
-                //     RubriqueBoard(
-                //       text: "Contact",
-                //       bgcolor: Colors.amberAccent,
-                //       textcolor: Colors.black,
-                //       destination: Contact(),
-                //     ),
-                //   ],
-                // ),
-                // SizedBox(height: 30),
-              ],
+          child: SafeArea(
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  const SizedBox(height: 20),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      RubriqueBoard(
+                        text: "Notifications",bgcolor: Colors.brown[200],
+                        textcolor: Colors.black,
+                        destination: const Notifsadmin(),
+                      ),
+                      const SizedBox(width: 30),
+                      RubriqueBoard(
+                        text: "Mes RDV",
+                        bgcolor: Colors.brown[200],
+                        textcolor: Colors.black,
+                        destination: const MesRdv(),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 30),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      RubriqueBoard(
+                        text: "Changer chiffres Humantaire",
+                        bgcolor: Colors.brown[200],
+                        textcolor: Colors.black,
+                        destination: const ChiffresHumanitaireAdmin(),
+                      ),
+                      const SizedBox(width: 30),
+                      RubriqueBoard(
+                        text: "Dons reçus",
+                        bgcolor: Colors.brown[200],
+                        textcolor: Colors.black,
+                        destination: const DonsRecus(),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 30),
+                   Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      RubriqueBoard(
+                        text: "Envoi de Dons généreaux",
+                        bgcolor: Colors.brown[200],
+                        textcolor: Colors.black,
+                        destination: const CreationDonsGeneraux(),
+                      ),
+                      const SizedBox(width: 30),
+                      RubriqueBoard(
+                        text: "Parrainages orphelins messages",
+                        bgcolor: Colors.brown[200],
+                        textcolor: Colors.black,
+                        destination: const CreationParrainageOrphelin(),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 30),
+            
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      RubriqueBoard(
+                        text: "Parrainages etudiant messages",
+                        bgcolor: Colors.brown[200],
+                        textcolor: Colors.black,
+                        destination: const CreationParrainagesEtudiant(),
+                      ),
+                      const SizedBox(width: 30),
+                      RubriqueBoard(
+                        text: "Arrêter dons",
+                        bgcolor: Colors.brown[200],
+                        textcolor: Colors.black,
+                        destination: const ArreterDons(),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 30),
+            
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      RubriqueBoard(
+                        text: "Parraineurs etudiants",
+                        bgcolor: Colors.brown[200],
+                        textcolor: Colors.black,
+                        destination: const ParrainageEtudiantAdmin(),
+                      ),
+                      const SizedBox(width: 30),
+            
+                      RubriqueBoard(
+                        text: "Parraineurs orphelins",
+                        bgcolor: Colors.brown[200],
+                        textcolor: Colors.black,
+                        destination: const ParrainageOrphelinAdmin(),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 30),
+            
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      RubriqueBoard(
+                        text: "Infos dons deduction fiscale",
+                        bgcolor: Colors.brown[200],
+                        textcolor: Colors.black,
+                        destination: const DeductionFiscale(),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 30),
+                ],
+              ),
             ),
           ),
         ),

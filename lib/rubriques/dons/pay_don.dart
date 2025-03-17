@@ -26,7 +26,16 @@ class _PayDonState extends State<PayDon> {
 
 
 
-  void _updateQuantite(String donId, int delta) {
+  void _updateQuantite(String donId, int delta) async {
+    if (donId == "cPidTlmuvpO1qhsH8yYY" && delta > 0) {
+      await _maxetudiant();
+      return;
+    }
+    if (donId == "mhAvnurZZCaN8E2jqkCa" && delta > 0) {
+      await _maxorphelin();
+      return;
+    }
+
     setState(() {
       _quantites[donId] = (_quantites[donId] ?? 0) + delta;
       if (_quantites[donId]! < 0) {
@@ -43,7 +52,9 @@ class _PayDonState extends State<PayDon> {
     _quantites.forEach((donId, quantitte) {
       total += (quantitte * (_prixDon[donId] ?? 0));
     });
+    setState(() {
     _donTotal.text = "${total.toStringAsFixed(2)}€";
+  });
   }
 
 
@@ -115,6 +126,51 @@ class _PayDonState extends State<PayDon> {
 
 
 
+  Future<void> _maxetudiant() async {
+    final scaffold = ScaffoldMessenger.of(context);
+    QuerySnapshot existingDons = await FirebaseFirestore.instance.collection('transactions_dons').where("dons.cPidTlmuvpO1qhsH8yYY", isGreaterThan: 0).get();
+
+    int totalDonsEtudiants = existingDons.docs.fold(0, (summ, doc){
+      return summ + ((doc['dons']['cPidTlmuvpO1qhsH8yYY'] ?? 0) as num).toInt();
+    });
+
+    if (totalDonsEtudiants >= 50 || (_quantites["cPidTlmuvpO1qhsH8yYY"] ?? 0) >= 50) {
+      scaffold.showSnackBar(const SnackBar(content: Text("🚫 Limite atteinte : Vous ne pouvez parrainer qu'un seul étudiant."), backgroundColor: Colors.red));
+      return;
+    }
+
+    setState(() {
+    _quantites["cPidTlmuvpO1qhsH8yYY"] = (_quantites["cPidTlmuvpO1qhsH8yYY"] ?? 0) + 1;
+    _calculerTotal();
+  });
+  }
+
+  Future<void> _maxorphelin() async {
+    final scaffold = ScaffoldMessenger.of(context);
+    QuerySnapshot existingDons = await FirebaseFirestore.instance.collection('transactions_dons').where("dons.mhAvnurZZCaN8E2jqkCa", isGreaterThan: 0).get();
+
+    int totalDonsOrphelins = existingDons.docs.fold(0, (summ, doc){
+      return summ + ((doc['dons']['mhAvnurZZCaN8E2jqkCa'] ?? 0) as num).toInt();
+    });
+
+    if (totalDonsOrphelins >= 32) {
+      scaffold.showSnackBar(const SnackBar(content: Text("🚫 Limite atteinte : Impossible de faire plus de 1 dons pour le parrainage orphelin !")));
+      return;
+    }
+
+    if (totalDonsOrphelins >= 32 || (_quantites["mhAvnurZZCaN8E2jqkCa"] ?? 0) >= 32) {
+      scaffold.showSnackBar(const SnackBar(content: Text("🚫 Limite atteinte : Vous ne pouvez parrainer qu'un seul orphelin."), backgroundColor: Colors.red));
+      return;
+    }
+
+    setState(() {
+    _quantites["mhAvnurZZCaN8E2jqkCa"] = (_quantites["mhAvnurZZCaN8E2jqkCa"] ?? 0) + 1;
+    _calculerTotal();
+  });
+  }
+
+
+
   Future<void> _soumettre() async {
     if (_formKey.currentState!.validate()) {
       if (_donTotal.text == "0.00€") {
@@ -163,14 +219,7 @@ class _PayDonState extends State<PayDon> {
     if (!mounted) return;
     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Don enregistré avec succès !")));
 
-    setState(() {
-      _quantites.clear();
-      _prixDon.clear();
-      _donTotal.text = "0.00€";
-      _modePaiement = null;
-    });
-
-    Navigator.push(context, MaterialPageRoute(builder: (context) => FormDon(dons: donsSelectionnes)));
+    Navigator.push(context, MaterialPageRoute(builder: (context) => FormDon(dons: donsSelectionnes, modePaiement: _modePaiement ?? "Inconnu", total: _donTotal.text)));
   }
 
 

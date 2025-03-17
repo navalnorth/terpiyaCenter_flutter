@@ -9,6 +9,7 @@ class RubriqueBoard extends StatelessWidget {
   final double width;
   final double height;
   final double txtsize;
+  final String? path;
 
   const RubriqueBoard({
     super.key,
@@ -18,7 +19,8 @@ class RubriqueBoard extends StatelessWidget {
     this.textcolor = Colors.white,
     this.height = 115,
     this.width = 150,
-    this.txtsize = 14,
+    this.txtsize = 10,
+    this.path,
   });
 
   @override
@@ -43,6 +45,11 @@ class RubriqueBoard extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                if (path != null && path!.isNotEmpty) ...[
+                  Image.asset(path!, width: 50, height: 50, color: Colors.white),
+                  const SizedBox(height: 10),
+                ],
+
                 Text(
                   text.toUpperCase(),
                   textAlign: TextAlign.center,
