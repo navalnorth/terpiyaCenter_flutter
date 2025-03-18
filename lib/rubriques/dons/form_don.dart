@@ -4,6 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:terapiya_center/composants/button_decoration.dart';
 import 'package:terapiya_center/composants/input_decoration.dart';
 import 'package:terapiya_center/user/board.dart';
 import 'package:uuid/uuid.dart';
@@ -35,6 +36,7 @@ class _FormDonState extends State<FormDon> {
   final TextEditingController _pays = TextEditingController();
   final TextEditingController _email = TextEditingController();
   final TextEditingController _tel = TextEditingController();
+  final TextEditingController _paypalEmail = TextEditingController();
   late List<TextEditingController> _controllers;
   final Map<String, String> _nomsDons = {}; // Stocker les noms des dons
 
@@ -95,6 +97,7 @@ class _FormDonState extends State<FormDon> {
         "commune": _commune.text.trim(),
         "pays": _pays.text.trim(),
         "telephone": _tel.text.trim(),
+        "paypalEmail": _paypalEmail.text.trim(),
         "mode_paiement": widget.modePaiement,
         "total": widget.total,
         "date": Timestamp.now(),
@@ -207,6 +210,20 @@ class _FormDonState extends State<FormDon> {
                   }),
                   const SizedBox(height: 20),
 
+                  if (widget.modePaiement.toLowerCase() == 'paypal') ...[
+                    TextFormField(
+                      controller: _paypalEmail,
+                      decoration: textInputDecoration("Email PayPal", label: "Pseudo ou Email PayPal"),
+                      validator: (value) {
+                        if (value == null || value.trim().isEmpty) {
+                          return "Veuillez entrer un pseudo ou un email PayPal.";
+                        }
+                        return null;
+                      },
+                    ),
+                    const SizedBox(height: 20),
+                  ],
+
                   TextFormField(
                     controller: _nom,
                     decoration: textInputDecoration("Habib", label: "Nom"),
@@ -312,11 +329,16 @@ class _FormDonState extends State<FormDon> {
                     maxLines: 3,
                   ),
                   const SizedBox(height: 20),
-                      
-                  ElevatedButton(
-                    onPressed: _enregistrerDon,
-                    child: const Text("Enregistrer"),
+
+                  CustomButton(
+                    text: "Enregistrer", 
+                    borderColor: const Color.fromARGB(255, 53, 172, 177), 
+                    bgColor: const Color.fromARGB(255, 53, 172, 177), 
+                    txtColor: Colors.white, 
+                    onPressed: _enregistrerDon
                   ),
+                  const SizedBox(height: 20),
+
                 ],
               ),
             ),

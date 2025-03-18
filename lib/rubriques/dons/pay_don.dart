@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:terapiya_center/composants/button_decoration.dart';
 import 'package:terapiya_center/rubriques/dons/form_don.dart';
 import 'package:terapiya_center/user/board.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -120,8 +121,7 @@ class _PayDonState extends State<PayDon> {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Erreur lors de l'ouverture de PayPal.")));
     }
 
-    if (!mounted) return;
-    Navigator.push(context, MaterialPageRoute(builder: (context) => const Board()));
+    await _enregistrerDon();
   }
 
 
@@ -197,6 +197,13 @@ class _PayDonState extends State<PayDon> {
 
   Future<void> _enregistrerDon() async {
     User? user = FirebaseAuth.instance.currentUser;
+    if (user == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Utilisateur non authentifié. Veuillez vous connecter.")),
+      );
+      return;
+    }
+
     Map<String, int> donsSelectionnes = _quantites.entries.where((entry) => entry.value > 0).fold({}, (map, entry) {
       map[entry.key] = entry.value;
       return map;
@@ -209,7 +216,7 @@ class _PayDonState extends State<PayDon> {
 
     // 🔥 Enregistrer dans Firestore (collection "transactions_dons")
     await FirebaseFirestore.instance.collection("transactions_dons").add({
-      "userId": user!.uid,
+      "userId": user.uid,
       "dons": donsSelectionnes,
       'total': _donTotal.text,
       "mode_paiement": _modePaiement,
@@ -361,18 +368,9 @@ class _PayDonState extends State<PayDon> {
                 const SizedBox(height: 10,),
 
                 Visibility(
-                  visible: _modePaiement == 'CB',
-                  child: const Text(
-                    "Après avoir payé en CB vous serez rediriger pour remplir les infos du don 😊",
-                    style: TextStyle(fontSize: 15),
-                    textAlign: TextAlign.center,
-                  )
-                ),
-
-                Visibility(
                   visible: _modePaiement == 'PayPal',
                   child: const Text(
-                    "⚠️ Vous serez redirigés vers notre PayPal pour faire le don, VEUILLEZ PAYER EN PROCHES SINON VOTRE DON SERA REMBOURSE ! Si vous faites plusiers dons veuillez détailler chaque don avec: type de don et au nom de qui 😊",
+                    "⚠️ Redirection vers PayPal, VEUILLEZ PAYER EN PROCHES SINON VOTRE DON SERA REMBOURSE ! Quand c'est payé revenez pour remplir les infos 😊",
                     style: TextStyle(fontSize: 15),
                     textAlign: TextAlign.center,
                   )
@@ -388,10 +386,13 @@ class _PayDonState extends State<PayDon> {
                 ),
 
                 const SizedBox(height: 20,),
-                ElevatedButton(
-                  onPressed: _soumettre,
-                  child: const Text("Soumettre"),
-                ),
+                CustomButton(
+                  text: "Soumettre", 
+                  borderColor: const Color.fromARGB(255, 53, 172, 177), 
+                  bgColor: const Color.fromARGB(255, 53, 172, 177), 
+                  txtColor: Colors.white, 
+                  onPressed: _soumettre
+                )
               ],
             ),
           ),

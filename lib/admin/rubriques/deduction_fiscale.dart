@@ -56,6 +56,7 @@ class _DeductionFiscaleState extends State<DeductionFiscale> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          if (don.containsKey("paypalEmail")) _buildInfoRow("💰 PayPal Email", don["paypalEmail"]),
                           _buildInfoRow("📍 Adresse", don["adresse"]),
                           _buildInfoRow("🏙 Commune", don["commune"]),
                           _buildInfoRow("📮 Code Postal", don["cp"]),
